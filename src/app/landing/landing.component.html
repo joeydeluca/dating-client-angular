@@ -1,0 +1,148 @@
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">Ugly Schmucks</a>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Join <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contact us</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-md-0">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login Here</button>
+    </form>
+  </div>
+</nav>
+<header id="top" class="header">
+  <div class="text-vertical-center">
+    <h1>Join Now</h1>
+    <h3>Search our singles</h3>
+    <form [formGroup]="joinForm"  (ngSubmit)="onSubmit()">
+      <hr/>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-group input-group-lg">
+            <label class="sr-only" for="gender">I'm a</label>
+            <select id="gender" class="form-control" formControlName="gender">
+              <option value="">I'm a</option>
+              <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
+            </select>
+            <control-messages [control]="joinForm.controls.gender"></control-messages>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-group input-group-lg">
+            <label class="sr-only" for="gender-seeking">Seeking a</label>
+            <select id="gender-seeking" class="form-control" formControlName="genderSeeking">
+              <option value="">Seeking a</option>
+              <option *ngFor="let genderSeeking of genders" [value]="genderSeeking">{{genderSeeking}}</option>
+            </select>
+            <control-messages [control]="joinForm.controls.genderSeeking"></control-messages>
+          </div>
+        </div>
+      </div>
+      <div class="form-group input-group-lg">
+        <label class="sr-only" for="email">Email address</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email" formControlName="email" required>
+        <control-messages [control]="joinForm.controls.email"></control-messages>
+
+      </div>
+      <div class="form-group input-group-lg">
+        <label class="sr-only" for="username">Username</label>
+        <input type="text" class="form-control" id="username" placeholder="Enter username" formControlName="username">
+        <control-messages [control]="joinForm.controls.username"></control-messages>
+      </div>
+      <div class="form-group input-group-lg">
+        <label class="sr-only" for="password">Password</label>
+        <input type="password" class="form-control input-group-lg" id="password" placeholder="Enter password" formControlName="password">
+        <control-messages [control]="joinForm.controls.password"></control-messages>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg" [disabled]="!joinForm.valid">Join Now</button>
+    </form>
+  </div>
+</header>
+<section id="about" class="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2>#1 Ugly Dating Community</h2>
+        <p class="lead">For those who prefer genuine personality over outer appearance.</p>
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+</section>
+<section class="services bg-primary">
+  <div class="container">
+    <div class="text-center">
+      <h2>Featured Members</h2>
+      <hr class="small">
+
+      <div class="row">
+        <div class="col-lg-4">
+          <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+          <h2>Heading</h2>
+          <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+          <h2>Heading</h2>
+          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+
+    </div>
+  </div>
+</section>
+<section class="about">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2>Dating for unattractive singles</h2>
+        <div class="text-left lead">
+          <p>Are people not seeing your inner beauty, are you an Ugly Schmuck?!</p> <br/>
+          <p>Welcome to the elite <strong>ugly dating site</strong> exclusively for Ugly Schmucks </p> <br/>
+          <p>In today's day and age, searching for a partner can be such a daunting task. Especially if you're like a lot of us who are not that attractive. </p> <br/>
+          <p>Our Ugly Dating is geared towards people who may feel unattractive or uncomfortable in their own skin and is designed to help them succeed in meeting others who value genuine personality over outer appearance.</p> <br/>
+          <p>Why is the concept of <strong>ugly dating</strong> sound so absurd? Because it is the complete opposite of what society teaches. </p> <br/>
+          <p>Have you ever thought to yourself "<strong>I am Ugly</strong>"? All around us we see gorgeous people, on television, in movies and magazines. We see <strong>ugly people</strong> too, but they're not the main actors. They're the dish washers, the janitors, or the bad guys! The whole perception of ugly people is that they are of lower stature than everyone else. I find this perception amazingly ugly. </p> <br/>
+          <h2>I'm ugly, what can I do?</h2> <p>You can stand up and not back down. Go as far as you like. The sky is the limit for you. But you will face many challenges along the way. And that's where we come to <strong>ugly dating</strong>. </p> <br/>
+          <h2>Why ugly dating?</h2> <p>With ugly dating, you can <strong>date ugly people</strong> who know exactly how you feel. They can relate to you in ways a non ugly person could never understand. </p> <br/>
+          <p>People who choose <strong>ugly dating</strong> are looking for genuine personality over outer appearance and don't want to be judged for how they look, they want to be judged for what's on the inside. </p> <br/>
+          <p>In order to be successful in ugly dating, you must not let the illusions of society hold you back. You must not think that you would only be happy with a superstar. Those are unrealistic expectations. You can actually be very happy on an <strong>ugly date</strong>! </p> <br/>
+          <p>So what are you waiting for?</p> <p>Sign up free and explore this new world of ugly dating!</p>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
+</section>
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-lg-offset-1 text-center">
+        <hr class="small">
+        <p class="text-muted">Copyright &copy; Ugly Schmucks 2013</p>
+      </div>
+    </div>
+  </div>
+  <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+</footer>
