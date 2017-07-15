@@ -1,3 +1,4 @@
+<md-progress-bar mode="indeterminate" *ngIf="showLoader"></md-progress-bar>
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -65,7 +66,9 @@
         <input type="password" class="form-control input-group-lg" id="password" placeholder="Enter password" formControlName="password">
         <control-messages [control]="joinForm.controls.password"></control-messages>
       </div>
-      <button type="submit" class="btn btn-primary btn-lg" [disabled]="!joinForm.valid">Join Now</button>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-lg" [disabled]="!joinForm.valid || disabled">Join Now</button>
+      </div>
     </form>
   </div>
 </header>

@@ -1,3 +1,5 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 html,
 body {
   width: 100%;
@@ -11,4 +13,13 @@ body {
 
 .alert-sm {
   padding: .10rem 1.25rem;
+}
+
+md-progress-bar {
+  position: absolute !important;
+  z-index: 1;
+}
+
+.snackbar simple-snack-bar{
+  font-size:16px!important;
 }

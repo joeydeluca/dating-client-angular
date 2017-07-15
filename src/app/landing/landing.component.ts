@@ -2,6 +2,9 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder, Validators} from "@angular/forms";
 import {User} from "../models/User";
 import {ValidationService} from "../services/validation.service";
+import {UserService} from "../services/user.service";
+import {MdSnackBar} from "@angular/material";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'landing',
@@ -10,12 +13,15 @@ import {ValidationService} from "../services/validation.service";
 })
 export class LandingComponent {
   user = new User();
-
   joinForm: any;
-
   genders = ["Man", "Woman"];
+  submitting: boolean;
+  showLoader: boolean;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private userService: UserService,
+              private snackBar: MdSnackBar,
+              private router: Router) {
     this.joinForm = this.fb.group({
       'gender': ['', [Validators.required]],
       'genderSeeking': ['', [Validators.required]],
@@ -25,21 +31,27 @@ export class LandingComponent {
     });
   }
 
-  ngOnInit(): void {
-    //this.joinForm.buildForm();
-
-  }
 
   onSubmit() {
-    /*if(!this.joinForm.isValid()) {
-      return;
-    }*/
-
     if (this.joinForm.dirty && this.joinForm.valid) {
-      alert(`email: ${this.joinForm.value.email} `);
+      this.showLoader = true;
+      this.user = this.joinForm.value;
+      this.userService.createUser(this.user)
+        .subscribe(
+        (result) => {
+          this.submitting = false;
+          this.showLoader = false;
+          this.router.navigate(['/join-completion']);
+        },
+        (error) => {
+          this.submitting = false;
+          this.showLoader = false;
+          this.snackBar.open(error, null, {
+            duration: 4000,
+            extraClasses: ['bg-danger', 'snackbar']
+          });
+        }
+      );
     }
-
-    this.user = this.joinForm.value;
-
   }
 }
