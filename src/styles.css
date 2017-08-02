@@ -9,6 +9,7 @@ body {
 
 body {
   font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+  padding-top: 3.5rem;
 }
 
 .alert-sm {
@@ -16,10 +17,33 @@ body {
 }
 
 md-progress-bar {
-  position: absolute !important;
-  z-index: 1;
+  position: fixed !important;
+  z-index: 2000;
+  top: 0;
 }
 
 .snackbar simple-snack-bar{
   font-size:16px!important;
 }
+
+.mydp {
+  display: block !important;
+}
+
+.mydp .selection {
+  padding-left:14px !important;
+  font-size: 1rem !important;
+}
+
+.dropdown-item a {
+  color: #464a4c;
+}
+
+.dropdown-item a:hover, .dropdown-item a:focus {
+  text-decoration: none;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #f7f7f9;
+}
+

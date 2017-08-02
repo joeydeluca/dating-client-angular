@@ -24,12 +24,15 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.27",
+    "@types/cropperjs": "0.0.26",
     "angular-2-dropdown-multiselect": "^1.4.2",
     "bootstrap": "^4.0.0-alpha.6",
-    "core-js": "^2.4.1",
-    "ng-recaptcha": "^2.1.1",
-    "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+    "core-js": "2.4.1",
+    "cropperjs": "^1.0.0-rc.3",
+    "mydatepicker": "2.0.26",
+    "ng-recaptcha": "2.1.1",
+    "rxjs": "5.1.0",
+    "zone.js": "0.8.4"
   },
   "devDependencies": {
     "@angular/cli": "1.0.0",

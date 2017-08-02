@@ -1,5 +1,5 @@
 <md-progress-bar mode="indeterminate" *ngIf="showLoader"></md-progress-bar>
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
   <a class="navbar-brand" href="#">Ugly Schmucks</a>
 </nav>
 <div class="container">
@@ -8,16 +8,16 @@
     <h1>Complete your profile</h1>
     <p class="lead">Your almost done</p>
   </div>
-  <form [formGroup]="joinForm">
+  <form [formGroup]="joinForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="col-md-6">
         <div class="form-group row">
-          <label for="birthday" class="col-2 col-form-label">Birthday</label>
+          <label class="col-2 col-form-label">Birthday</label>
           <div class="col-10">
             <div class="input-group">
-            <input type="text" id="birthday" class="form-control" placeholder="yyyy-mm-dd"
-                   name="birthday" ngbDatepicker #d="ngbDatepicker" formControlName="birthday">
-            <span (click)="d.toggle()" class="input-group-addon" id="basic-addon1"><i class="material-icons">today</i></span>
+              <my-date-picker id="birthday" name="birthday" [options]="myDatePickerOptions"
+                              formControlName="birthday"></my-date-picker>
+
             </div>
             <control-messages [control]="joinForm.controls.birthday"></control-messages>
           </div>
@@ -27,7 +27,7 @@
           <div class="col-10">
             <select id="country" class="form-control" formControlName="country" (ngModelChange)="loadRegions($event)">
               <option value="">Select</option>
-              <option *ngFor="let country of countries" [value]="country.countryId">{{country.countryName}}</option>
+              <option *ngFor="let country of countries" [ngValue]="country">{{country.countryName}}</option>
             </select>
             <control-messages [control]="joinForm.controls.country"></control-messages>
           </div>
@@ -37,7 +37,7 @@
           <div class="col-10">
             <select id="region" class="form-control" formControlName="region" (ngModelChange)="loadCities($event)">
               <option value="">Select</option>
-              <option *ngFor="let region of regions" [value]="region.regionId">{{region.regionName}}</option>
+              <option *ngFor="let region of regions" [ngValue]="region">{{region.regionName}}</option>
             </select>
             <control-messages [control]="joinForm.controls.region"></control-messages>
           </div>
@@ -47,7 +47,7 @@
           <div class="col-10">
             <select id="city" class="form-control" formControlName="city">
               <option value="">Select</option>
-              <option *ngFor="let city of cities" [value]="city.cityId">{{city.cityName}}</option>
+              <option *ngFor="let city of cities" [ngValue]="city">{{city.cityName}}</option>
             </select>
             <control-messages [control]="joinForm.controls.city"></control-messages>
           </div>
@@ -55,12 +55,9 @@
       </div>
       <div class="col-md-6">
         <div class="form-group row">
-          <label for="ethnicity" class="col-2 col-form-label">Ethnicity</label>
+          <label class="col-2 col-form-label">Ethnicity</label>
           <div class="col-10">
-            <select id="ethnicity" class="form-control" formControlName="ethnicity">
-              <option value="">Select</option>
-              <option *ngFor="let ethnicity of fieldOptions?.ETHNICITY?.options" [value]="ethnicity.id">{{ethnicity.display}}</option>
-            </select>
+            <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" id="ethnicity" [options]="fieldOptions && fieldOptions['ETHNICITY']?.options" formControlName="ethnicity"></ss-multiselect-dropdown>
             <control-messages [control]="joinForm.controls.ethnicity"></control-messages>
           </div>
         </div>
@@ -69,7 +66,7 @@
           <div class="col-10">
             <select id="bodyType" class="form-control" formControlName="bodyType">
               <option value="">Select</option>
-              <option *ngFor="let bodyType of fieldOptions?.BODY_TYPE?.options" [value]="bodyType.id">{{bodyType.display}}</option>
+              <option *ngFor="let bodyType of fieldOptions && fieldOptions['BODY_TYPE']?.options" [value]="bodyType.id">{{bodyType.name}}</option>
             </select>
             <control-messages [control]="joinForm.controls.bodyType"></control-messages>
           </div>
@@ -79,7 +76,7 @@
           <div class="col-10">
             <select id="smoke" class="form-control" formControlName="smoke">
               <option value="">Select</option>
-              <option *ngFor="let smoke of fieldOptions?.SMOKE?.options" [value]="smoke.id">{{smoke.display}}</option>
+              <option *ngFor="let smoke of fieldOptions && fieldOptions['SMOKE']?.options" [value]="smoke.id">{{smoke.name}}</option>
             </select>
             <control-messages [control]="joinForm.controls.smoke"></control-messages>
           </div>
@@ -89,7 +86,7 @@
           <div class="col-10">
             <select id="childrenStatus" class="form-control" formControlName="childrenStatus">
               <option value="">Select</option>
-              <option *ngFor="let childrenStatus of fieldOptions?.CHILDREN_STATUS?.options" [value]="childrenStatus.id">{{childrenStatus.display}}</option>
+              <option *ngFor="let childrenStatus of fieldOptions && fieldOptions['CHILDREN_STATUS']?.options" [value]="childrenStatus.id">{{childrenStatus.name}}</option>
             </select>
             <control-messages [control]="joinForm.controls.childrenStatus"></control-messages>
           </div>
@@ -111,14 +108,14 @@
         </div>
         <div class="form-group">
           <re-captcha
-          (resolved)="resolved($event)"
-          siteKey="6Ld1AgwTAAAAAC_Uj9-BPEmDxYERXDf_mHRKvfmH"
+            #captchaRef="reCaptcha"
+            (resolved)="captchaSubmitted($event)"
+            siteKey="6Ld1AgwTAAAAAC_Uj9-BPEmDxYERXDf_mHRKvfmH"
           ></re-captcha>
         </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-lg" [disabled]="!joinForm.valid || disabled">Join Now</button>
+          <button type="submit" class="btn btn-primary btn-lg" [disabled]="!joinForm.valid">Join Now</button>
         </div>
-
       </div>
     </div>
   </form>

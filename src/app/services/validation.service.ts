@@ -28,7 +28,8 @@ export class ValidationService {
   }
 
   static birthdayValidator(control) {
-    const input = control.value;
+    const input = control.value.date;
+
     if(!input || !input.year || !input.month || !input.day) {
       return { 'invalidBirthdayFormat': true };
     }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {FormBuilder, Validators} from "@angular/forms";
 import {User} from "../models/User";
 import {ValidationService} from "../services/validation.service";
@@ -7,6 +7,12 @@ import {MdSnackBar} from "@angular/material";
 import {LocationService} from "../services/location.service";
 import {Country, Region, City} from "../models/Location";
 import {ProfileFieldService} from "../services/profile-field.service";
+import {IMultiSelectOption} from "angular-2-dropdown-multiselect";
+import {Profile} from "../models/Profile";
+import {RecaptchaComponent} from "ng-recaptcha";
+import {IMyDpOptions} from "mydatepicker";
+import {DatepickerConfig} from "../common/datepicker.config";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'join-completion',
@@ -14,7 +20,7 @@ import {ProfileFieldService} from "../services/profile-field.service";
   styleUrls: ['./join-completion.component.css']
 })
 export class JoinCompletionComponent implements OnInit {
-  user = new User();
+  @ViewChild(RecaptchaComponent) reCaptchaRef: RecaptchaComponent;
   joinForm: any;
   genders = ["Man", "Woman"];
   submitting: boolean;
@@ -23,18 +29,22 @@ export class JoinCompletionComponent implements OnInit {
   regions: Region[];
   cities: City[];
   fieldOptions: object;
+  captchaResponse: string;
+  myDatePickerOptions: IMyDpOptions = DatepickerConfig.config;
+
 
   constructor(private fb: FormBuilder,
               private userService: UserService,
               private locationService: LocationService,
               private snackBar: MdSnackBar,
-              private fieldsService: ProfileFieldService) {
+              private fieldsService: ProfileFieldService,
+              private router: Router) {
     this.joinForm = this.fb.group({
-      'birthday': ['', [Validators.required, ValidationService.birthdayValidator]],
+      'birthday': [{date: {year: new Date().getFullYear() - 18, month: 1, day: 1}}, [Validators.required, ValidationService.birthdayValidator]],
       'country': ['', [Validators.required]],
       'region': ['', [Validators.required]],
       'city': ['', [Validators.required]],
-      'ethnicity': ['', [Validators.required]],
+      'ethnicity': [[], [Validators.required]],
       'bodyType': ['', [Validators.required]],
       'smoke': ['', [Validators.required]],
       'childrenStatus': ['', [Validators.required]],
@@ -60,6 +70,7 @@ export class JoinCompletionComponent implements OnInit {
           });
         }
       );
+
   }
 
   loadCountries() {
@@ -80,13 +91,13 @@ export class JoinCompletionComponent implements OnInit {
       );
   }
 
-  loadRegions(countryId) {
-    if(!countryId) {
+  loadRegions(country: Country) {
+    if(!country.countryId) {
       return;
     }
 
     this.showLoader = true;
-    this.locationService.getRegions(countryId)
+    this.locationService.getRegions(country.countryId)
       .subscribe(
         (result) => {
           this.regions = result;
@@ -102,13 +113,13 @@ export class JoinCompletionComponent implements OnInit {
       );
   }
 
-  loadCities(regionId) {
-    if(!regionId) {
+  loadCities(region: Region) {
+    if(!region.regionId) {
       return;
     }
 
     this.showLoader = true;
-    this.locationService.getCities(regionId)
+    this.locationService.getCities(region.regionId)
       .subscribe(
         (result) => {
           this.cities = result;
@@ -124,24 +135,25 @@ export class JoinCompletionComponent implements OnInit {
       );
   }
 
-  resolved(captchaResponse: string) {
-    console.log(`Resolved captcha with response ${captchaResponse}:`);
+  captchaSubmitted(captcha: string) {
+    this.captchaResponse = captcha;
   }
 
   onSubmit() {
     if (this.joinForm.dirty && this.joinForm.valid) {
       this.showLoader = true;
-      this.user = this.joinForm.value;
-      this.userService.createUser(this.user)
+      let profile: Profile = this.joinForm.value;
+      this.userService.updateProfile(profile, this.captchaResponse)
         .subscribe(
         (result) => {
           this.submitting = false;
           this.showLoader = false;
-          alert('join success');
+          this.router.navigate(['/join-upload-photo']);
         },
         (error) => {
           this.submitting = false;
           this.showLoader = false;
+          this.reCaptchaRef.reset();
           this.snackBar.open(error, null, {
             duration: 4000,
             extraClasses: ['bg-danger', 'snackbar']

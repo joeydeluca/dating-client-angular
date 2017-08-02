@@ -17,12 +17,19 @@ import {LocationService} from "./services/location.service";
 import {RecaptchaModule} from "ng-recaptcha";
 import {RecaptchaFormsModule} from "ng-recaptcha/recaptcha/recaptcha-forms.module";
 import {ProfileFieldService} from "./services/profile-field.service";
+import {MultiselectDropdownModule} from "angular-2-dropdown-multiselect";
+import {AuthService} from "./services/auth.service";
+import {MyDatePickerModule} from "mydatepicker";
+import {JoinUploadPhotoComponent} from "./join-upload-photo/join-upload-photo.component";
+import {SearchComponent} from "./search/search.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     JoinCompletionComponent,
+    JoinUploadPhotoComponent,
+    SearchComponent,
     ControlMessages
   ],
   imports: [
@@ -36,9 +43,17 @@ import {ProfileFieldService} from "./services/profile-field.service";
     BrowserAnimationsModule,
     MdProgressBarModule,
     MdSnackBarModule,
+    MultiselectDropdownModule,
+    MyDatePickerModule,
     NgbModule.forRoot()
   ],
-  providers: [ValidationService, UserService, LocationService, ProfileFieldService],
+  providers: [
+    ValidationService,
+    UserService,
+    LocationService,
+    ProfileFieldService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
