@@ -1,0 +1,17 @@
+/*
+import {Directive, ElementRef, Input, OnInit} from '@angular/core';
+
+@Directive({
+  selector: '[ng2-cropper]'
+})
+export class Cropper implements OnInit {
+  @Input('options') options: any = {};
+  private cropper;
+  constructor(private _element: ElementRef) { }
+
+  ngOnInit(): void {
+    console.log(Cropper);
+    this.cropper = new Cropper(this._element.nativeElement, this.options);
+  }
+}
+*/

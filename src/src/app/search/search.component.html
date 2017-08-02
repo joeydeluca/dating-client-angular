@@ -1,0 +1,91 @@
+<md-progress-bar mode="indeterminate" *ngIf="showLoader"></md-progress-bar>
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+  <a class="navbar-brand" href="#">Ugly Schmucks</a>
+</nav>
+<div class="container">
+  <h1>Search</h1>
+  <hr/>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          Criteria <span class="pull-right" data-toggle="collapse" data-target="#criteria">aaa</span>
+        </div>
+        <div class="card-block" id="criteria">
+          <form>
+            <div class="form-group row">
+              <label class="col-2 col-form-label">Age</label>
+              <div class="col-10">
+                <div class="row">
+                  <div class="col-6">
+                    <select class="form-control"></select>
+                  </div>
+                  <div class="col-6">
+                    <select class="form-control"></select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-2 col-form-label">Country</label>
+              <div class="col-10">
+                <select class="form-control"></select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-2 col-form-label">Region</label>
+              <div class="col-10">
+                <select class="form-control"></select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-2 col-form-label">City</label>
+              <div class="col-10">
+                <select class="form-control"></select>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-top:20px">
+    <div class="col-md-12">
+      Searching for Women ages 18 to 60 from Canada, Ontario, Toronto. <a href="#">Edit <i class="material-icons align-middle">settings</i></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngFor="let n of [0,1,2,3,4]">
+        <div class="card" style="margin-top:20px" >
+          <div class="d-flex">
+            <div>
+              <img style="width:191px;height:212px" class="rounded" src="http://uglyschmucks.com/photo/getPhoto/cropped_32427_GSXuo.jpg" />
+            </div>
+            <div class="p-0">
+              <div class="card-block">
+                <h4 class="card-title">Samantha123</h4>
+                <p class="card-text">38 | Houston, Texas, United States</p>
+                <p class="card-text"><small class="text-muted">I do this all the time. I do it because I am being nice. Nothing more, nothing less. Just want to make friends. I find it annoying that I can't even make frien...</small></p>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-center">
+            <button type="button" class="btn btn-outline-primary btn-sm"><i class="material-icons align-middle">favorite_border</i> Favorite</button>
+            <button type="button" class="btn btn-outline-primary btn-sm"><i class="material-icons align-middle">whatshot</i> Send Flirt</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav aria-label="Page navigation">
+    <ul class="pagination pagination-lg justify-content-center">
+      <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1">Previous Page</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="#">Next Page</a>
+      </li>
+    </ul>
+  </nav>
+</div>
