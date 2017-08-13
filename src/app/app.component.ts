@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {NgbDatepickerConfig} from "@ng-bootstrap/ng-bootstrap";
+import {SharedService} from "./services/shared.service";
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,10 @@ import {NgbDatepickerConfig} from "@ng-bootstrap/ng-bootstrap";
 })
 export class AppComponent {
 
+  showLoader: boolean = false;
+
   constructor() {
+    SharedService.showLoader
+    .subscribe(val => this.showLoader = val);
   }
 }

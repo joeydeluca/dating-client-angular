@@ -9,8 +9,8 @@ import {AuthContext} from "../models/AuthContext";
 @Injectable()
 export class AuthService {
   private apiUrl = environment.apiUrl + '/auth-context';
-  headers: Headers;
-  authContext: AuthContext;
+  private headers: Headers;
+  private authContext: AuthContext;
 
   constructor(private http: Http) {
     this.headers = new Headers();
@@ -27,6 +27,10 @@ export class AuthService {
       })
       .catch(this.handleError);
   }*/
+
+  getAuthContext(): AuthContext {
+    return this.getAuthContextFromLocal();
+  }
 
   saveAuthContextToLocal(authContext: AuthContext):void {
     this.authContext = authContext;

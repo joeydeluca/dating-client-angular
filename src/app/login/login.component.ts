@@ -1,22 +1,22 @@
-import {Component, OnInit, Input} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {FormBuilder, Validators} from "@angular/forms";
 import {User} from "../models/User";
 import {ValidationService} from "../services/validation.service";
 import {UserService} from "../services/user.service";
 import {MdSnackBar} from "@angular/material";
 import {Router} from "@angular/router";
-import {SharedService} from "../services/shared.service";
 
 @Component({
-  selector: 'landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.css']
+  selector: 'login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class LandingComponent {
+export class LoginComponent {
   user = new User();
   joinForm: any;
   genders = ["Man", "Woman"];
   submitting: boolean;
+  showLoader: boolean;
 
   constructor(private fb: FormBuilder,
               private userService: UserService,
@@ -34,18 +34,18 @@ export class LandingComponent {
 
   onSubmit() {
     if (this.joinForm.dirty && this.joinForm.valid) {
-      SharedService.showLoader.next(true);
+      this.showLoader = true;
       this.user = this.joinForm.value;
       this.userService.createUser(this.user)
         .subscribe(
         (result) => {
           this.submitting = false;
-          SharedService.showLoader.next(false);
+          this.showLoader = false;
           this.router.navigate(['/join-completion']);
         },
         (error) => {
           this.submitting = false;
-          SharedService.showLoader.next(false);
+          this.showLoader = false;
           this.snackBar.open(error, null, {
             duration: 4000,
             extraClasses: ['bg-danger', 'snackbar']

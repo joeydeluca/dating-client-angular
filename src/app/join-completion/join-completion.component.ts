@@ -13,6 +13,7 @@ import {RecaptchaComponent} from "ng-recaptcha";
 import {IMyDpOptions} from "mydatepicker";
 import {DatepickerConfig} from "../common/datepicker.config";
 import {Router} from "@angular/router";
+import {SharedService} from "../services/shared.service";
 
 @Component({
   selector: 'join-completion',
@@ -24,7 +25,6 @@ export class JoinCompletionComponent implements OnInit {
   joinForm: any;
   genders = ["Man", "Woman"];
   submitting: boolean;
-  showLoader: boolean;
   countries: Country[];
   regions: Region[];
   cities: City[];
@@ -60,10 +60,10 @@ export class JoinCompletionComponent implements OnInit {
       .subscribe(
         (result) => {
           this.fieldOptions = result;
-          this.showLoader = false;
+          SharedService.showLoader.next(false);
         },
         (error) => {
-          this.showLoader = false;
+          SharedService.showLoader.next(false);
           this.snackBar.open('Error loading fields', null, {
             duration: 4000,
             extraClasses: ['bg-danger', 'snackbar']
@@ -74,15 +74,15 @@ export class JoinCompletionComponent implements OnInit {
   }
 
   loadCountries() {
-    this.showLoader = true;
+    SharedService.showLoader.next(true);
     this.locationService.getCountries()
       .subscribe(
         (result) => {
           this.countries = result;
-          this.showLoader = false;
+          SharedService.showLoader.next(false);
         },
         (error) => {
-          this.showLoader = false;
+          SharedService.showLoader.next(false);
           this.snackBar.open('Error fetching Country list', null, {
             duration: 4000,
             extraClasses: ['bg-danger', 'snackbar']
@@ -96,15 +96,15 @@ export class JoinCompletionComponent implements OnInit {
       return;
     }
 
-    this.showLoader = true;
+    SharedService.showLoader.next(true);
     this.locationService.getRegions(country.countryId)
       .subscribe(
         (result) => {
           this.regions = result;
-          this.showLoader = false;
+          SharedService.showLoader.next(false);
         },
         (error) => {
-          this.showLoader = false;
+          SharedService.showLoader.next(false);
           this.snackBar.open('Error fetching Region list', null, {
             duration: 4000,
             extraClasses: ['bg-danger', 'snackbar']
@@ -118,15 +118,15 @@ export class JoinCompletionComponent implements OnInit {
       return;
     }
 
-    this.showLoader = true;
+   SharedService.showLoader.next(true);
     this.locationService.getCities(region.regionId)
       .subscribe(
         (result) => {
           this.cities = result;
-          this.showLoader = false;
+          SharedService.showLoader.next(false);
         },
         (error) => {
-          this.showLoader = false;
+          SharedService.showLoader.next(false);
           this.snackBar.open('Error fetching City list', null, {
             duration: 4000,
             extraClasses: ['bg-danger', 'snackbar']
@@ -141,18 +141,18 @@ export class JoinCompletionComponent implements OnInit {
 
   onSubmit() {
     if (this.joinForm.dirty && this.joinForm.valid) {
-      this.showLoader = true;
+      SharedService.showLoader.next(true);
       let profile: Profile = this.joinForm.value;
       this.userService.updateProfile(profile, this.captchaResponse)
         .subscribe(
         (result) => {
           this.submitting = false;
-          this.showLoader = false;
+          SharedService.showLoader.next(false);
           this.router.navigate(['/join-upload-photo']);
         },
         (error) => {
           this.submitting = false;
-          this.showLoader = false;
+          SharedService.showLoader.next(false);
           this.reCaptchaRef.reset();
           this.snackBar.open(error, null, {
             duration: 4000,

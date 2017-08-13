@@ -4,18 +4,22 @@ import {LandingComponent} from "./landing/landing.component";
 import {JoinCompletionComponent} from "./join-completion/join-completion.component";
 import {JoinUploadPhotoComponent} from "./join-upload-photo/join-upload-photo.component";
 import {SearchComponent} from "./search/search.component";
+import {LoginComponent} from "./login/login.component";
+import {AuthGuard} from "./guards/auth.guard";
+
 
 const routes: Routes = [
   { path: '', component: LandingComponent},
-  { path: 'join-completion', component: JoinCompletionComponent},
-  { path: 'join-upload-photo', component: JoinUploadPhotoComponent},
-  { path: 'search', component: SearchComponent},
+  { path: 'login', component: LoginComponent},
+  { path: 'join-completion', component: JoinCompletionComponent, canActivate: [AuthGuard]},
+  { path: 'join-upload-photo', component: JoinUploadPhotoComponent, canActivate: [AuthGuard]},
+  { path: 'search', component: SearchComponent, canActivate: [AuthGuard]},
 ];
 
 const appRoutingProviders: any[] = [];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes)],
   providers: [appRoutingProviders],
   exports: [RouterModule]
 })
