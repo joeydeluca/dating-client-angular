@@ -5,17 +5,3 @@ body {
   padding: 3rem 1.5rem;
   text-align: center;
 }
-
-
-.preview_wrapper {
-  margin: 0 auto;
-  border:1px solid;
-}
-.preview_wrapper, .preview {
-  overflow: hidden;
-  width: 191px; height: 193px;
-}
-
-img {
-  max-width: 100%; /* This rule is very important, please do not ignore this! */
-}

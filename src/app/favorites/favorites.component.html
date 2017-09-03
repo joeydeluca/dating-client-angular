@@ -1,0 +1,24 @@
+<d-nav navType="MEMBER"></d-nav>
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header">
+          Favorites
+        </div>
+        <div class="card-block">
+            <ngb-tabset>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>My Favorites</ng-template>
+                    <ng-template ngbTabContent>
+                        <profile-list [list]="favoritedProfiles" [emptyListMessage]="emptyListMessageMyFavorites"></profile-list>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab>
+                    <ng-template ngbTabTitle>Favorited Me</ng-template>
+                    <ng-template ngbTabContent>
+                        <profile-list [list]="favoritedMeProfiles" [emptyListMessage]="emptyListMessageFavoritedMe"></profile-list>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </div>
+    </div>
+</div>

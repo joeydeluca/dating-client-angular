@@ -25,7 +25,22 @@ import {MyDatePickerModule} from "mydatepicker";
 import {JoinUploadPhotoComponent} from "./join-upload-photo/join-upload-photo.component";
 import {SearchComponent} from "./search/search.component";
 import {LoginComponent} from "./login/login.component";
+import {MessagesComponent} from "./messages/messages.component";
+import {ViewConversationComponent} from "./messages/view-conversation.component";
+import {ViewProfileComponent} from "./view-profile/view-profile.component";
+import {UpdateProfileComponent} from "./update-profile/update-profile.component";
 import {AuthGuard} from "./guards/auth.guard";
+import {LocationDisplayComponent} from "./components/location-display.component";
+import {FieldDisplayComponent} from "./components/field-display.component";
+import {FavoritesComponent} from "./favorites/favorites.component";
+import {RecipientProfileService} from "./services/recipient-profile.service";
+import {FlirtsComponent} from "./flirts/flirts.component";
+import {ProfileViewsComponent} from "./profile-views/profile-views.component";
+
+import {ProfileListComponent} from "./components/profile-list/profile-list.component";
+import {DNavComponent} from "./components/d-nav/d-nav.component";
+import {DPhotoUploadComponent} from "./components/d-photo-upload/d-photo-upload.component";
+
 import { FileDropDirective, FileSelectDirective, FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
@@ -36,7 +51,20 @@ import { FileDropDirective, FileSelectDirective, FileUploadModule } from 'ng2-fi
     JoinUploadPhotoComponent,
     SearchComponent,
     LoginComponent,
-    ControlMessages
+    ControlMessages,
+    ViewProfileComponent,
+    UpdateProfileComponent,
+    MessagesComponent,
+    ViewConversationComponent,
+    FavoritesComponent,
+    FlirtsComponent,
+    ProfileViewsComponent,
+
+    LocationDisplayComponent,
+    DNavComponent,
+    FieldDisplayComponent,
+    DPhotoUploadComponent,
+    ProfileListComponent
   ],
   imports: [
     AppRoutingModule,
@@ -61,7 +89,8 @@ import { FileDropDirective, FileSelectDirective, FileUploadModule } from 'ng2-fi
     ProfileFieldService,
     AuthService,
     AuthGuard,
-    PhotoService
+    PhotoService,
+    RecipientProfileService
   ],
   bootstrap: [AppComponent]
 })

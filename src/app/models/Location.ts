@@ -11,9 +11,9 @@ export class Region {
   regionId: string;
   regionName: string;
 
-  constructor(regionId: string) {
-    this.regionId = regionId;
-  }
+  // constructor(regionId: string) {
+  //   this.regionId = regionId;
+  // }
 }
 
 export class City {

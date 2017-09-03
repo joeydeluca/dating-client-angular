@@ -1,0 +1,251 @@
+<d-nav navType="MEMBER"></d-nav>
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header">
+          View Profile: <span class="text-primary">{{recipientProfile?.username}}</span>
+        </div>
+        <div class="card-block">
+            <div class="d-flex">
+                <div class="">
+                    <div class="row small">
+                        <div class="mr-3 mb-3">
+                            <img [src]="recipientProfile?.profilePhotoUrl" class="img-thumbnail profile-photo">
+                        </div>
+                        <div class="mb-3 mr-5">
+                            <div><span class="text-muted">Age:</span> <span class="text-primary">{{recipientProfile?.age}}</span></div>
+                            <div><span class="text-muted">From:</span> <span class="text-primary"><location-display [country]="recipientProfile?.profile.country" [region]="recipientProfile?.profile.region" [city]="recipientProfile?.profile.city"></location-display></span></div>
+                            <div><span class="text-muted">Ethnicity:</span> <span class="text-primary"><field-display type="ETHNICITY" [ids]="recipientProfile?.profile.ethnicity"></field-display></span></div>
+                            <div><span class="text-muted">Body:</span> <span class="text-primary"><field-display type="BODY_TYPE" [ids]="recipientProfile?.profile.bodyType"></field-display></span></div>
+                            <div><span class="text-muted">Children:</span> <span class="text-primary"><field-display type="CHILDREN_STATUS" [ids]="recipientProfile?.profile.childrenStatus"></field-display></span></div>
+                            <div><span class="text-muted">I am looking for:</span> <span class="text-primary">{{recipientProfile?.genderSeeking === 'M' ? 'Men' : 'Women'}}</span></div>
+                            <div class="mt-3">
+                                <button (click)="sendFlirt(recipientProfile?.userId, recipientProfile?.username)" class="btn btn-outline-primary btn-sm" type="button"><i class="material-icons align-middle">whatshot</i> Send Flirt</button>
+                                <button (click)="addFavorite(recipientProfile?.userId, recipientProfile?.username)" class="btn btn-outline-primary btn-sm" type="button"><i class="material-icons align-middle">favorite_border</i> Favorite</button>
+                            </div>
+                        </div>
+                        <div class="" style="width:300px;">
+                            <div class="text-muted small">Send message</div>
+                            <textarea [(ngModel)]="newMessageText" [disabled]="isSendingMessage" placeholder="write a message to {{recipientProfile?.username}}..." class="form-control mb-1"></textarea> 
+                            <div class="float-right"><button (click)="sendMessage()" [disabled]="isSendingMessage" class="btn btn-outline-primary btn-sm"><i class="material-icons align-middle">email</i> Send</button></div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="mt-3">
+                <ngb-tabset>
+                    <ngb-tab title="About Me">
+                        <ng-template ngbTabContent>
+                            <div class="row profile-fields pt-3">
+                                <div class="col-sm-7 mb-3">
+                                    <h6>Personal Details</h6>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label text-muted">Eye color</label>
+                                        <div class="col-sm-9">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="EYE_COLOR" [ids]="recipientProfile?.profile.eyeColor"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label text-muted">Hair color</label>
+                                        <div class="col-sm-9">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="HAIR_COLOR" [ids]="recipientProfile?.profile.hairColor"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label text-muted">Job</label>
+                                        <div class="col-sm-9">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="OCCUPATION" [ids]="recipientProfile?.profile.occupation"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label text-muted">Salary</label>
+                                        <div class="col-sm-9">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="SALARY" [ids]="recipientProfile?.profile.salary"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label text-muted">Smoke</label>
+                                        <div class="col-sm-9">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="SMOKE" [ids]="recipientProfile?.profile.smoke"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label text-muted">Drink</label>
+                                        <div class="col-sm-9">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="DRINK" [ids]="recipientProfile?.profile.drink"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label text-muted">Education</label>
+                                        <div class="col-sm-9">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="EDUCATION" [ids]="recipientProfile?.profile.education"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label text-muted">Language</label>
+                                        <div class="col-sm-9">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="LANGUAGE" [ids]="recipientProfile?.profile.language"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label text-muted">Religion</label>
+                                        <div class="col-sm-9">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="RELIGION" [ids]="recipientProfile?.profile.religion"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-3 col-form-label text-muted">Pets</label>
+                                        <div class="col-sm-9">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="FAVORITE_PETS" [ids]="recipientProfile?.profile.pet"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 partner-fields mb-3">
+                                    <div class="mb-3">
+                                        <h6>About Me</h6>
+                                        <p>{{getEssayText(recipientProfile?.profile.aboutMe)}}</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6>My Partner</h6>
+                                        <p>{{getEssayText(recipientProfile?.profile.partnerDescription)}}</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6>A Perfect Date</h6>
+                                        <p>{{getEssayText(recipientProfile?.profile.perfectDate)}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>Partner Preferences</ng-template>
+                        <ng-template ngbTabContent>
+                            <div class="row pt-3">
+                                <div class="col">
+                                    <h6>I Am Looking For</h6>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label text-muted">Eye color</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="EYE_COLOR" [ids]="recipientProfile?.profile.partnerEyeColor"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label text-muted">Hair color</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="HAIR_COLOR" [ids]="recipientProfile?.profile.partnerHairColor"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label text-muted">Body type</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="BODY_TYPE" [ids]="recipientProfile?.profile.partnerBodyType"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label text-muted">Occupation</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="OCCUPATION" [ids]="recipientProfile?.profile.partnerOccupation"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label text-muted">Salary</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="SALARY" [ids]="recipientProfile?.profile.partnerSalary"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label text-muted">Smoke</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="SMOKE" [ids]="recipientProfile?.profile.partnerSmoke"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label text-muted">Drink</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="DRINK" [ids]="recipientProfile?.profile.partnerDrink"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label text-muted">Education</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="EDUCATION" [ids]="recipientProfile?.profile.partnerEducation"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label text-muted">Language</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="LANGUAGE" [ids]="recipientProfile?.profile.partnerLanguage"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label text-muted">Religion</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="RELIGION" [ids]="recipientProfile?.profile.partnerReligion"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-sm-2 col-form-label text-muted">Pets</label>
+                                        <div class="col-sm-10">
+                                            <p class="form-control-static text-primary">
+                                                <field-display type="FAVORITE_PETS" [ids]="recipientProfile?.profile.partnerPet"></field-display>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>My Photos</ng-template>
+                        <ng-template ngbTabContent>
+                            <div class="text-center">
+                                <div *ngFor="let photo of recipientProfile?.profile.photos" class="p-3">
+                                    <img [src]="photo.largeUrl" />
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>

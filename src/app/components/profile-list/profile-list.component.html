@@ -1,0 +1,24 @@
+<div class="card-deck mt-3 text-center">
+    
+    <div *ngIf="emptyListMessage" class="col-md-12">
+        <div class="alert alert-warning" role="alert">
+            {{emptyListMessage}}
+        </div>
+    </div>
+
+    <div class="card mb-3" style="max-width:191px" *ngFor="let item of list">
+        <img class="card-img-top" width="191px" [src]="item.profilePhotoUrl" alt="Photo">
+        <div class="card-img-overlay">
+            <span class="float-right">
+                <button class="btn btn-outline-secondary btn-sm"><i class="material-icons">highlight_off</i></button>
+            </span>
+        </div>
+        <div class="card-block">
+            <h4 class="card-title">{{item.username}}</h4>
+            <p class="card-text text-muted">{{item.age}} | <location-display [country]="item.country" [region]="item.region" [city]="item.city"></location-display></p>
+        </div>
+            <div class="card-footer">
+            <small class="text-muted">Jan 23, 2017</small>
+        </div>
+    </div>
+</div>

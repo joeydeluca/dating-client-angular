@@ -10,6 +10,7 @@ body {
 body {
   font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
   padding-top: 3.5rem;
+  background: #F6F6F6;
 }
 
 .alert-sm {
@@ -47,3 +48,10 @@ md-progress-bar {
   background-color: #f7f7f9;
 }
 
+.bg-inverse {
+    background-color: #c3105b!important;
+}
+
+.text-primary {
+    color: #fb257e!important;
+}

@@ -1,0 +1,30 @@
+<d-nav navType="MEMBER"></d-nav>
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header">
+          Conversations
+        </div>
+        <div class="card-block">
+
+            <div *ngIf="!items" class="alert alert-warning text-center" role="alert">
+                You do not have any messages!
+            </div>
+
+            <div class="card card-outline-secondary mb-3" [class.card-outline-warning]="items[key.userId].numberOfUnreadMessagesReceived > 0" *ngFor="let key of keys">
+                <div class="card-block">
+                    <div class="media"  >
+                        <img routerLink="/messages/{{key.userId}}" class="d-flex mr-3" [src]="items[key.userId].recipientProfilePhotoUrl" alt="Photo">
+                        <div class="media-body">
+                            <h5 routerLink="/messages/{{key.userId}}" class="mt-0">{{items[key.userId].recipientUsername}}</h5> 
+                            <div class="pb-1 small text-muted">
+                                <div [class.text-warning]="items[key.userId].numberOfUnreadMessagesReceived > 0">{{items[key.userId].numberOfUnreadMessagesReceived}} unread message{{items[key.userId].numberOfUnreadMessagesReceived != 1 ? "s" : ""}}</div>
+                                <div>{{items[key.userId].numberOfSentMessages}} message{{items[key.userId].numberOfSentMessages > 1 ? "s" : ""}} sent</div>
+                            </div>
+                            <button routerLink="/messages/{{key.userId}}" class="btn btn-outline-primary btn-sm">view</button> <span class="float-right small text-muted">{{items[key.userId].lastMessageDate}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

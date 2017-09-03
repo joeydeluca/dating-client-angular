@@ -1,6 +1,7 @@
 import {City, Region, Country} from "./Location";
 
 export class Profile {
+  profilePhotoUrl: string;
   city: City;
   region: Region;
   country: Country;

@@ -9,3 +9,19 @@ body {
 .pagination {
   margin: 30px;
 }
+
+.edit-link, .edit-link i {
+  font-size: 12px;
+}
+
+.card img {
+  width:191px;
+  height:212px;
+}
+
+.card img, h5, .pagination li, .toggle-criteria-icon, .edit-link  {
+  cursor: pointer;
+}
+
+
+

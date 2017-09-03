@@ -1,46 +1,52 @@
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-  <a class="navbar-brand" href="#">Ugly Schmucks</a>
-</nav>
-<div class="container">
-  <h1>Search</h1>
-  <hr/>
+<d-nav></d-nav>
+<div class="container mt-3">
   <div class="row">
     <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          Criteria <span class="pull-right" data-toggle="collapse" data-target="#criteria">aaa</span>
+      <div class="card criteria-card">
+        <div class="card-header" data-toggle="collapse" data-target="#criteria">
+           Criteria <span class="float-right toggle-criteria-icon"><i class="material-icons align-middle">settings</i></span>
         </div>
-        <div class="card-block" id="criteria">
+        <div class="card-block collapse in" id="criteria">
           <form>
             <div class="form-group row">
               <label class="col-2 col-form-label">Age</label>
               <div class="col-10">
                 <div class="row">
                   <div class="col-6">
-                    <select class="form-control"></select>
+                    <select class="form-control" [(ngModel)]="selectedAgeFrom" name="age-from" (ngModelChange)="this.loadFirstPage()">
+                      <option *ngFor="let age of ages" [value]="age">{{age}}</option>
+                    </select>
                   </div>
                   <div class="col-6">
-                    <select class="form-control"></select>
+                    <select class="form-control" [(ngModel)]="selectedAgeTo" name="age-to" (ngModelChange)="this.loadFirstPage()">
+                      <option *ngFor="let age of ages" [value]="age">{{age}}</option>
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-2 col-form-label">Country</label>
+              <label for="country" class="col-2 col-form-label">Country</label>
               <div class="col-10">
-                <select class="form-control"></select>
+                <select id="country" class="form-control" name="country" [compareWith]="compareByCountryId" [(ngModel)]="selectedCountry" (ngModelChange)="clearRegions();clearCities();this.loadFirstPage();">
+                  <option *ngFor="let country of countries" [ngValue]="country">{{country.countryName}}</option>
+                </select>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-2 col-form-label">Region</label>
+              <label for="region" class="col-2 col-form-label">Region</label>
               <div class="col-10">
-                <select class="form-control"></select>
+                <select id="region" class="form-control" name="region" [compareWith]="compareByRegionId" [(ngModel)]="selectedRegion" (ngModelChange)="clearCities();this.loadFirstPage();">
+                  <option *ngFor="let region of regions" [ngValue]="region">{{region.regionName}}</option>
+                </select>
               </div>
             </div>
             <div class="form-group row">
-              <label class="col-2 col-form-label">City</label>
+              <label for="city" class="col-2 col-form-label">City</label>
               <div class="col-10">
-                <select class="form-control"></select>
+                <select id="city" class="form-control" [compareWith]="compareByCityId" name="city" [(ngModel)]="selectedCity" (ngModelChange)="this.loadFirstPage()">
+                  <option *ngFor="let city of cities" [ngValue]="city">{{city.cityName}}</option>
+                </select>
               </div>
             </div>
           </form>
@@ -48,43 +54,62 @@
       </div>
     </div>
   </div>
-  <div class="row" style="margin-top:20px">
-    <div class="col-md-12">
-      Searching for Women ages 18 to 60 from Canada, Ontario, Toronto. <a href="#">Edit <i class="material-icons align-middle">settings</i></a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div *ngFor="let n of [0,1,2,3,4]">
-        <div class="card" style="margin-top:20px" >
-          <div class="d-flex">
+
+<div class="card">
+        <div class="card-header">
+          Search
+        </div>
+        <div class="card-block">
             <div>
-              <img style="width:191px;height:212px" class="rounded" src="http://uglyschmucks.com/photo/getPhoto/cropped_32427_GSXuo.jpg" />
-            </div>
-            <div class="p-0">
-              <div class="card-block">
-                <h4 class="card-title">Samantha123</h4>
-                <p class="card-text">38 | Houston, Texas, United States</p>
-                <p class="card-text"><small class="text-muted">I do this all the time. I do it because I am being nice. Nothing more, nothing less. Just want to make friends. I find it annoying that I can't even make frien...</small></p>
+      <div class="row" style="margin-top:20px">
+        <div class="col-md-12">
+          <span class="text-muted">Searching for {{genderSeeking}} aged {{selectedAgeFrom}} to {{selectedAgeTo}}
+            from <location-display [country]="selectedCountry" [region]="selectedRegion" [city]="selectedCity"></location-display>
+          </span> 
+          <span class="edit-link text-primary" data-toggle="collapse" data-target="#criteria">Edit</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div *ngFor="let userDto of profilePage?.content">
+            <div class="card" style="margin-top:20px" >
+              <div class="d-flex">
+                <div>
+                  <img class="rounded" (click)="viewRecipientProfile(userDto.userId)" [src]="userDto.profilePhotoUrl" />
+                </div>
+                <div class="p-0">
+                  <div class="card-block">
+                    <h5 class="card-title" (click)="viewRecipientProfile(userDto.userId)">{{userDto.username}}</h5>
+                    <p class="card-text">{{userDto.age}} | from <location-display [country]="userDto.profile.country" [region]="userDto.profile.region" [city]="userDto.profile.city"></location-display></p>
+                    <p class="card-text"><small class="text-muted">I do this all the time. I do it because I am being nice. Nothing more, nothing less. Just want to make friends. I find it annoying that I can't even make frien...</small></p>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer text-center">
+                <button type="button" (click)="sendFlirt(userDto.userId, userDto.username)" class="btn btn-outline-primary btn-sm"><i class="material-icons align-middle">whatshot</i> Send Flirt</button>
               </div>
             </div>
           </div>
-          <div class="card-footer text-center">
-            <button type="button" class="btn btn-outline-primary btn-sm"><i class="material-icons align-middle">favorite_border</i> Favorite</button>
-            <button type="button" class="btn btn-outline-primary btn-sm"><i class="material-icons align-middle">whatshot</i> Send Flirt</button>
+          <div *ngIf="profilePage && profilePage.content.length === 0">
+            <div class="alert alert-warning mt-3" role="alert">
+              No profiles found that match your search results. Expand your search criteria and try again.
+            </div>
           </div>
         </div>
       </div>
+      <nav aria-label="Page navigation" *ngIf="profilePage?.content?.length">
+        <ul class="pagination pagination-lg justify-content-center">
+          <li class="page-item" [class.disabled]="profilePage?.first">
+            <a class="page-link" (click)="loadPreviousPage()">Previous Page</a>
+          </li>
+          <li class="page-item" [class.disabled]="profilePage?.last">
+            <a class="page-link" (click)="loadNextPage()">Next Page</a>
+          </li>
+        </ul>
+      </nav>
     </div>
-  </div>
-  <nav aria-label="Page navigation">
-    <ul class="pagination pagination-lg justify-content-center">
-      <li class="page-item disabled">
-        <a class="page-link" href="#" tabindex="-1">Previous Page</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next Page</a>
-      </li>
-    </ul>
-  </nav>
+        </div>
+    </div>
+
+    
 </div>

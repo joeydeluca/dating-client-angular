@@ -1,0 +1,12 @@
+textarea {
+    height:120px;
+}
+
+.text-link {
+    cursor: pointer;
+}
+
+.profile-photo {
+    width: 191px;
+    height: 200px;
+}

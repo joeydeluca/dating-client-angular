@@ -1,2 +1,2 @@
-<md-progress-bar mode="indeterminate" *ngIf="showLoader"></md-progress-bar>
+<md-progress-bar mode="indeterminate" [hidden]="!showLoader"></md-progress-bar>
 <router-outlet></router-outlet>

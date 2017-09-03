@@ -1,0 +1,364 @@
+<d-nav></d-nav>
+<div class="container mt-3 mb-3">
+    <div class="card">
+        <div class="card-header">
+          My Profile: <span class="text-primary">{{user?.username}}</span>
+        </div>
+        <div class="card-block">
+            
+            <div class="mt-3">
+                <ngb-tabset>
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>Details</ng-template>
+                        <ng-template ngbTabContent>
+                            <form [formGroup]="detailsForm" (ngSubmit)="onSubmitDetails()">
+                            <div class="row pt-3">
+                                <div class="col-md-6">
+                                    <h6>My Location</h6>
+                                    <div class="row mb-3">
+                                        <label for="country" class="col-3 col-form-label">Country</label>
+                                        <div class="col-9">
+                                            <select id="country" class="form-control" [compareWith]="compareByCountryId" formControlName="country" (ngModelChange)="loadRegions($event, true)">
+                                            <option *ngFor="let country of countries" [ngValue]="country">{{country.countryName}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.country"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="region" class="col-3 col-form-label">Region</label>
+                                        <div class="col-9">
+                                            <select id="region" class="form-control" [compareWith]="compareByRegionId" formControlName="region" (ngModelChange)="loadCities($event)">
+                                            <option *ngFor="let region of regions" [ngValue]="region">{{region.regionName}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.region"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="city" class="col-3 col-form-label">City</label>
+                                        <div class="col-9">
+                                            <select id="city" class="form-control" [compareWith]="compareByCityId" formControlName="city">
+                                            <option *ngFor="let city of cities" [ngValue]="city">{{city.cityName}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.city"></control-messages>
+                                        </div>
+                                    </div>
+
+                                    <h6>How I Look</h6>
+                                    <div class="row mb-3">
+                                        <label class="col-3 col-form-label">Ethnicity</label>
+                                        <div class="col-9">
+                                                <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" id="ethnicity" [options]="fieldOptions && fieldOptions['ETHNICITY']?.options" formControlName="ethnicity"></ss-multiselect-dropdown>
+                                            <control-messages [control]="detailsForm.controls.ethnicity"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-3 col-form-label">Height</label>
+                                        <div class="col">
+                                            <select class="form-control" formControlName="heightFeet">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let heightFeet of fieldOptions && fieldOptions['HEIGHT_FEET']?.options" [value]="heightFeet.id">{{heightFeet.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.heightFeet"></control-messages>
+                                        </div>
+                                        <div class="col">
+                                            <select class="form-control" formControlName="heightInches">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let heightInches of fieldOptions && fieldOptions['HEIGHT_INCH']?.options" [value]="heightInches.id">{{heightInches.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.heightInches"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-3 col-form-label">Body type</label>
+                                        <div class="col-9">
+                                            <select class="form-control" formControlName="bodyType">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let option of fieldOptions && fieldOptions['BODY_TYPE']?.options" [value]="option.id">{{option.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.bodyType"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-3 col-form-label">Eye color</label>
+                                        <div class="col-9">
+                                            <select class="form-control" formControlName="eyeColor">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let option of fieldOptions && fieldOptions['EYE_COLOR']?.options" [value]="option.id">{{option.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.eyeColor"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label class="col-3 col-form-label">Hair color</label>
+                                        <div class="col-9">
+                                            <select class="form-control" formControlName="hairColor">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let option of fieldOptions && fieldOptions['HAIR_COLOR']?.options" [value]="option.id">{{option.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.hairColor"></control-messages>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Personal Details</h6>
+                                    <div class="row form-group">
+                                        <label class="col-3 col-form-label">Favorite pets</label>
+                                        <div class="col-9">
+                                            <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['FAVORITE_PETS']?.options" formControlName="pet"></ss-multiselect-dropdown>
+                                            <control-messages [control]="detailsForm.controls.pet"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-3 col-form-label">Languages</label>
+                                        <div class="col-9">
+                                            <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['LANGUAGE']?.options" formControlName="language"></ss-multiselect-dropdown>
+                                            <control-messages [control]="detailsForm.controls.language"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-3 col-form-label">Religion</label>
+                                        <div class="col-9">
+                                            <select class="form-control" formControlName="religion">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let option of fieldOptions && fieldOptions['RELIGION']?.options" [value]="option.id">{{option.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.religion"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-3 col-form-label">Occupation</label>
+                                        <div class="col-9">
+                                            <select class="form-control" formControlName="occupation">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let option of fieldOptions && fieldOptions['OCCUPATION']?.options" [value]="option.id">{{option.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.occupation"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-3 col-form-label">Salary</label>
+                                        <div class="col-9">
+                                            <select class="form-control" formControlName="salary">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let option of fieldOptions && fieldOptions['SALARY']?.options" [value]="option.id">{{option.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.salary"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-3 col-form-label">Children</label>
+                                        <div class="col-9">
+                                            <select class="form-control" formControlName="childrenStatus">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let option of fieldOptions && fieldOptions['CHILDREN_STATUS']?.options" [value]="option.id">{{option.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.childrenStatus"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-3 col-form-label">Astro sign</label>
+                                        <div class="col-9">
+                                            <select class="form-control" formControlName="astroSign">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let option of fieldOptions && fieldOptions['ASTRO_SIGN']?.options" [value]="option.id">{{option.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.astroSign"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-3 col-form-label">Education</label>
+                                        <div class="col-9">
+                                            <select class="form-control" formControlName="education">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let option of fieldOptions && fieldOptions['EDUCATION']?.options" [value]="option.id">{{option.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.education"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-3 col-form-label">Smoke</label>
+                                        <div class="col-9">
+                                            <select class="form-control" formControlName="smoke">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let option of fieldOptions && fieldOptions['SMOKE']?.options" [value]="option.id">{{option.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.smoke"></control-messages>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label class="col-3 col-form-label">Drink</label>
+                                        <div class="col-9">
+                                            <select class="form-control" formControlName="drink">
+                                                <option value="">Select</option>
+                                                <option *ngFor="let option of fieldOptions && fieldOptions['DRINK']?.options" [value]="option.id">{{option.name}}</option>
+                                            </select>
+                                            <control-messages [control]="detailsForm.controls.drink"></control-messages>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-lg" [disabled]="!detailsForm.valid || submitting">Save</button>
+                                </div>
+                            </div>
+                            </form>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>Essays</ng-template>
+                        <ng-template ngbTabContent>
+                            <form [formGroup]="essaysForm" (ngSubmit)="onSubmitEssays()">
+                            <div class="row pt-3">
+                                <div class="col">
+                                    Tell us about yourself?
+                                    <textarea class="form-control" formControlName="aboutMe"></textarea>
+                                    <control-messages [control]="essaysForm.controls.aboutMe"></control-messages>
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col">
+                                    Tell us about your ideal partner?
+                                    <textarea class="form-control" formControlName="partnerDescription"></textarea>
+                                    <control-messages [control]="essaysForm.controls.partnerDescription"></control-messages>
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col">
+                                    What would be your perfect date?
+                                    <textarea class="form-control" formControlName="perfectDate"></textarea>
+                                    <control-messages [control]="essaysForm.controls.perfectDate"></control-messages>
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary btn-lg" [disabled]="!essaysForm.valid || submitting">Save</button>
+                                </div>
+                            </div>
+                            </form>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>Partner</ng-template>
+                        <ng-template ngbTabContent>
+                            <form [formGroup]="partnerForm" (ngSubmit)="onSubmitPartner()">
+                            <h6 class="pt-3">I want my partner to look...</h6>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Ethnicity</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['ETHNICITY']?.options" formControlName="partnerEthnicity"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Body Type</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['BODY_TYPE']?.options" formControlName="partnerBodyType"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Eye Color</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['EYE_COLOR']?.options" formControlName="partnerEyeColor"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Hair Color</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['HAIR_COLOR']?.options" formControlName="partnerHairColor"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+
+                            <h6 class="pt-3">Details I want my partner to have...</h6>
+
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Favorite pets</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['FAVORITE_PETS']?.options" formControlName="partnerPet"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Languages</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['LANGUAGE']?.options" formControlName="partnerLanguage"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Religion</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['RELIGION']?.options" formControlName="partnerReligion"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Occupation</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['OCCUPATION']?.options" formControlName="partnerOccupation"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Salary</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['SALARY']?.options" formControlName="partnerSalary"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Children</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['CHILDREN_STATUS']?.options" formControlName="partnerChildrenStatus"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Astro Sign</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['ASTRO_SIGN']?.options" formControlName="partnerAstroSign"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Education</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['EDUCATION']?.options" formControlName="partnerEducation"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Smoke</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['SMOKE']?.options" formControlName="partnerSmoke"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label class="col-3 col-form-label">Drink</label>
+                                <div class="col-9">
+                                    <ss-multiselect-dropdown [settings]="{buttonClasses:'form-control text-left', containerClasses: 'joe'}" buttonClasses="form-control" [options]="fieldOptions && fieldOptions['DRINK']?.options" formControlName="partnerDrink"></ss-multiselect-dropdown>
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary btn-lg" [disabled]="!partnerForm.valid || submitting">Save</button>
+                                </div>
+                            </div>
+                            </form>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab>
+                        <ng-template ngbTabTitle>Photos</ng-template>
+                        <ng-template ngbTabContent>
+                            <h6 class="pt-3">Upload your best photos</h6>
+                            <d-photo-upload (complete)="onPhotoUploadSuccess()"></d-photo-upload>
+
+                            <div class="pt-3 text-center">
+                                <div *ngFor="let photo of user?.profile.photos" class="p-4" [class.alert-success]="photo.profilePhoto">
+                                    <div class="pb-1" *ngIf="photo.profilePhoto"><i class="material-icons align-middle">face</i> This is your profile photo</div>
+                                    <div class="pb-1" *ngIf="!photo.profilePhoto">
+                                        <button (click)="setProfilePhoto(photo.id)" class="btn btn-primary btn-sm"><i class="material-icons align-middle">face</i> Make Profile Photo</button>
+                                        <button (click)="deletePhoto(photo.id)" class="btn btn-default btn-sm"><i class="material-icons align-middle">delete_forever</i></button>
+                                    </div>
+
+                                    <img [src]="photo.largeUrl" class="img-thumbnail" />
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>

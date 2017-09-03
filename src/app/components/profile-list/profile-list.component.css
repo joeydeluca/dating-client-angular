@@ -1,0 +1,11 @@
+.card {
+    margin-left: 0!important;
+}
+
+.card-img-overlay {
+    padding: 0.2rem;
+}
+
+.material-icons {
+    font-size: 18px;
+}

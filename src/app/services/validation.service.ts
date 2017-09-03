@@ -30,17 +30,16 @@ export class ValidationService {
   static birthdayValidator(control) {
     const input = control.value.date;
 
-    if(!input || !input.year || !input.month || !input.day) {
+    const date = new Date(input);
+    if(!date) {
       return { 'invalidBirthdayFormat': true };
     }
 
-    const minimumYear = new Date().getFullYear() - 18;
-
-    if(input.year > minimumYear) {
-      return { 'invalidBirthday': true };
-    }
-
     return null;
+  }
+
+  private isDate(date: Date): boolean {
+    return (date !== <any>"Invalid Date") && !isNaN(<any>date);
   }
 
 }

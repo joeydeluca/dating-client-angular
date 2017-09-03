@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 export class ProfileFieldService {
   private apiUrl = environment.apiUrl + '/fields';
   headers: Headers;
+  fields: object;
 
   constructor(private http: Http) {
     this.headers = new Headers();
@@ -14,17 +15,32 @@ export class ProfileFieldService {
   }
 
   getProfileFields(): Observable<object> {
+    if(this.fields) {
+      return Observable.of(this.fields);
+    }
+
+    const fieldsInLocalStorage = localStorage.getItem("fields");
+    if(!!fieldsInLocalStorage) {
+      return Observable.of(JSON.parse(fieldsInLocalStorage));
+    }
+
     return this.http
       .get(`${this.apiUrl}`, {headers: this.headers})
       .map(this.extractData)
       .catch(this.handleError);
   }
 
-  private extractData(res: Response) {
-    let body;
+   extractData(res: Response) {
+    let body: any;
+    
     if (res.text()) {
       body = res.json();
+      
+      // save to storage
+      this.fields = body;
+      localStorage.setItem("fields", JSON.stringify(body));
     }
+
     return body || {};
   }
 

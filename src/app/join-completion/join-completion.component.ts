@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnInit, ViewChild, ElementRef} from "@angular/core";
 import {FormBuilder, Validators} from "@angular/forms";
 import {User} from "../models/User";
 import {ValidationService} from "../services/validation.service";
@@ -10,7 +10,7 @@ import {ProfileFieldService} from "../services/profile-field.service";
 import {IMultiSelectOption} from "angular-2-dropdown-multiselect";
 import {Profile} from "../models/Profile";
 import {RecaptchaComponent} from "ng-recaptcha";
-import {IMyDpOptions} from "mydatepicker";
+import {IMyDpOptions, MyDatePicker} from "mydatepicker";
 import {DatepickerConfig} from "../common/datepicker.config";
 import {Router} from "@angular/router";
 import {SharedService} from "../services/shared.service";
@@ -31,6 +31,7 @@ export class JoinCompletionComponent implements OnInit {
   fieldOptions: object;
   captchaResponse: string;
   myDatePickerOptions: IMyDpOptions = DatepickerConfig.config;
+  @ViewChild('mydp') mydp: MyDatePicker;
 
 
   constructor(private fb: FormBuilder,
@@ -40,7 +41,7 @@ export class JoinCompletionComponent implements OnInit {
               private fieldsService: ProfileFieldService,
               private router: Router) {
     this.joinForm = this.fb.group({
-      'birthday': [{date: {year: new Date().getFullYear() - 18, month: 1, day: 1}}, [Validators.required, ValidationService.birthdayValidator]],
+      'birthday': [{date: `${new Date().getFullYear() - 18}-01-01`}, [Validators.required]],
       'country': ['', [Validators.required]],
       'region': ['', [Validators.required]],
       'city': ['', [Validators.required]],
@@ -51,7 +52,6 @@ export class JoinCompletionComponent implements OnInit {
       'aboutMe': ['', [Validators.maxLength(4000)]],
       'agreeToTerms': ['1', [ValidationService.checkboxValidator]]
     });
-
   }
 
   ngOnInit(): void {
@@ -142,8 +142,12 @@ export class JoinCompletionComponent implements OnInit {
   onSubmit() {
     if (this.joinForm.dirty && this.joinForm.valid) {
       SharedService.showLoader.next(true);
-      let profile: Profile = this.joinForm.value;
-      this.userService.updateProfile(profile, this.captchaResponse)
+      const user = new User();
+      const profile = this.joinForm.value;
+      user.profile = profile;      
+      user.birthDate = this.joinForm.value.birthday.date;
+
+      this.userService.completeUserJoin(user, this.captchaResponse)
         .subscribe(
         (result) => {
           this.submitting = false;

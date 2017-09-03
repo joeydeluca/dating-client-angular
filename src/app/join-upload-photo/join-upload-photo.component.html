@@ -3,36 +3,13 @@
 </nav>
 
 <div class="container">
-
   <div class="content">
-            
-
     <div class="card">
       <div class="card-block">
         <h4 class="card-title">Get Noticed</h4>
         <h6 class="card-subtitle mb-2 text-muted">Upload your photo</h6>
-        <div *ngIf="!isCroppingView">
-          <div style="padding:20px">
-            <input type="file" id="file" name="file" type="file" #file (change)="upload()">
-          </div>
-          <img class="img-thumbnail" src="http://uglyschmucks.com/application/views/images/photos/noimage.jpg" width="191px" height="212px">
-        </div> 
-        <div [hidden]="!isCroppingView" [@myAnimation]>
-          Crop Photo
-          <div style="margin-bottom:10px">
-            <img id="image" #image class="img-thumbnail" (load)="initCropper()" [src]='photo?.largeUrl || ""' width="50%" style="max-width:300px">
-          </div>
-          <div class="preview_wrapper">
-            <div class="preview"></div>
-          </div> 
-          <div class="form-group">
-          <button type="submit" class="btn btn-primary" style="margin-top:10px" (click)="crop()" >Crop</button>
-        </div>
-        </div>
-      </div>
+        <d-photo-upload (complete)="onPhotoUploadSuccess($event)"></d-photo-upload>
     </div>
-    
-    <small class="float-right"><a href="#" class="card-link text-muted text-sm">Skip<i class="material-icons align-middle">keyboard_arrow_right</i></a></small>
-
+    <small class="float-right"><a routerLink="/search" class="card-link text-muted text-sm float-right">Skip<i class="material-icons align-middle">keyboard_arrow_right</i></a></small>
   </div>
 </div>

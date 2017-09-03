@@ -1,0 +1,38 @@
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <a class="navbar-brand" routerLink="/">Ugly Schmucks</a>
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item active" *ngIf="navType === 'NON_MEMBER'">
+        <a class="nav-link" routerLink="/login">Login</a>
+      </li>
+
+      <li class="nav-item active" *ngIf="navType === 'MEMBER'">
+        <a class="nav-link" routerLink="/search">Search</a>
+      </li>
+      <li class="nav-item active" *ngIf="navType === 'MEMBER'">
+        <a class="nav-link" routerLink="/update-profile">My Profile</a>
+      </li>
+      <li class="nav-item active" *ngIf="navType === 'MEMBER'">
+        <a class="nav-link" routerLink="/messages">Messages</a>
+      </li>
+      <li class="nav-item active" *ngIf="navType === 'MEMBER'">
+        <a class="nav-link" routerLink="/favorites">Favorites</a>
+      </li>
+      <li class="nav-item active" *ngIf="navType === 'MEMBER'">
+        <a class="nav-link" routerLink="/flirts">Flirts</a>
+      </li>
+      <li class="nav-item active" *ngIf="navType === 'MEMBER'">
+        <a class="nav-link" routerLink="/profile-views">Profile Views</a>
+      </li>
+    </ul>
+    <button class="btn btn-outline-success my-2 my-sm-0" *ngIf="navType === 'MEMBER' && !isPaid">Upgrade</button>
+    <ul class="navbar-nav" *ngIf="navType === 'MEMBER'">
+      <a class="nav-link" (click)="logout()"><i class="material-icons align-middle">settings_power</i> Logout</a>
+    </ul>
+  </div>
+</nav>

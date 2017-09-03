@@ -18,7 +18,9 @@ export class PhotoService {
   supportedMimeTypes:Array<string> = ['image/jpeg', 'image/png']
   maxFileSizeMB:number = 15;
 
-  constructor(private http: Http, private authService: AuthService, private snackBar: MdSnackBar) {
+  constructor(private http: Http, 
+    private authService: AuthService, 
+    private snackBar: MdSnackBar) {
   }
 
   uploadPhoto(file: File): Observable<Photo> {
@@ -44,6 +46,20 @@ export class PhotoService {
       .catch((this.handleError));
   }
 
+  setProfilePhoto(photoId: number): Observable<Photo> {
+    return this.http
+          .put(`${this.apiUrl}/${photoId}/profile`, null, {headers: this.getHeaders()})
+          .map(this.extractData)
+          .catch((this.handleError));
+  }
+
+    deletePhoto(photoId: number): Observable<void> {
+      return this.http
+          .delete(`${this.apiUrl}/${photoId}`, {headers: this.getHeaders()})
+          .map(this.extractData)
+          .catch((this.handleError));
+  }
+
   cropPhoto(photoId: number, x: number, y: number, width: number, height: number): Observable<Photo> {
     const photoCrop = new PhotoCrop();
     photoCrop.x = x;
@@ -58,11 +74,7 @@ export class PhotoService {
 
     return this.http
       .put(`${this.apiUrl}/${photoId}/crop`, JSON.stringify(photoCrop), {headers: headers})
-      .map((res: Response) => {
-        let body = this.extractData(res);
-        this.authService.saveAuthContextToLocal(body);
-        return body;
-      })
+      .map((res: Response) => this.extractData(res))
       .catch(this.handleError);
   }
 
@@ -88,6 +100,14 @@ export class PhotoService {
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
 
     return Observable.throw(errMsg);
+  }
+
+  private getHeaders(): Headers {
+    const authContext = this.authService.getAuthContextFromLocal();
+    const headers = new Headers();
+    headers.set("authorization", authContext.token);
+    headers.set('Content-Type', 'application/json');
+    return headers;
   }
 
 }
