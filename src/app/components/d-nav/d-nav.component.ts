@@ -1,8 +1,6 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
-import {MdSnackBar} from "@angular/material";
-
+import {SharedService} from "../../services/shared.service";
 
 @Component({
   selector: 'd-nav',
@@ -12,24 +10,18 @@ import {MdSnackBar} from "@angular/material";
 export class DNavComponent implements OnInit {  
   @Input() navType: string = "MEMBER";
 
-  isPaid: boolean;
+  showUpgradeButton: boolean;
 
   constructor(
-    private authService: AuthService,
-    private snackBar: MdSnackBar,
-    private router: Router) {
+    private authService: AuthService) {
   }
 
   ngOnInit() {
-    if(this.navType == "MEMBER") {
-      this.isPaid = this.authService.getAuthContext().isPaid;
-    }
-  }
+    SharedService.showUpgradeButton.subscribe(val => this.showUpgradeButton = val);
 
-  logout(): void {
-    this.authService.logout();
-    this.snackBar.open('You have logged out', null, { duration: 4000, extraClasses: ['bg-success', 'snackbar'] });
-    this.router.navigate(['/login']);
+    if(this.navType === "MEMBER" && this.authService.getAuthContext()) {
+      this.showUpgradeButton = !this.authService.getAuthContext().paid;
+    }
   }
 }
 

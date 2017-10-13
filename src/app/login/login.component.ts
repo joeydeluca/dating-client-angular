@@ -5,7 +5,7 @@ import {ValidationService} from "../services/validation.service";
 import {UserService} from "../services/user.service";
 import {AuthService} from "../services/auth.service";
 import {MdSnackBar} from "@angular/material";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 import {SharedService} from "../services/shared.service";
 
 
@@ -21,7 +21,8 @@ export class LoginComponent {
               private userService: UserService,
               private authService: AuthService,
               private snackBar: MdSnackBar,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute,) {
     this.form = this.fb.group({
       'email': ['', [Validators.required]],
       'password': ['', [Validators.required]],
@@ -34,7 +35,11 @@ export class LoginComponent {
     this.authService.login(this.form.value.email, this.form.value.password).subscribe(
       () => {
         SharedService.showLoader.next(false);
-        this.router.navigate(['/search']);
+
+        const redirectUrl = this.route.snapshot.queryParams['redirect'] || '/search';
+        console.log(redirectUrl);
+        //this.router.navigate([redirectUrl]);
+        this.router.navigateByUrl(redirectUrl);
       }, 
       () => {
         SharedService.showLoader.next(false);

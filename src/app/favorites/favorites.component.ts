@@ -47,12 +47,36 @@ export class FavoritesComponent implements OnInit {
         );
     }
 
+    onDelete(userId: number): void {
+        SharedService.showLoader.next(true);
+        this.recipientProfileService.deleteFavorite(userId).subscribe(
+            () => {
+                SharedService.showLoader.next(false);
+                this.handleSuccess("Done");
+
+                this.ngOnInit();
+            },
+            () => {
+                SharedService.showLoader.next(false);
+                this.handleError("Unable to complete request");
+            }
+        );
+    }
+
     private handleError(message: string): void {
         this.snackBar.open(message, null, {
             duration: 4000,
             extraClasses: ['bg-danger', 'snackbar']
         });
     }
+
+        private handleSuccess(message: string): void {
+        this.snackBar.open(message, null, {
+            duration: 4000,
+            extraClasses: ['bg-success', 'snackbar']
+        });
+    }
+
 
 
 }

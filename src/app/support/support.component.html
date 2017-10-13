@@ -1,0 +1,41 @@
+<d-nav navType="{{isAuthenticated ? 'MEMBER' : 'NON_MEMBER'}}"></d-nav>
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header">
+            Contact Us
+        </div>
+        <div class="card-block">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <label>
+                    Questions or comments? Contact Us!
+                </label>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" formControlName="name">
+                        <control-messages [control]="form.controls.name"></control-messages>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" formControlName="email">
+                        <control-messages [control]="form.controls.email"></control-messages>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Message</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" formControlName="message"></textarea>
+                        <control-messages [control]="form.controls.message"></control-messages>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="offset-sm-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary" [disabled]="!form.valid || isSubmiting">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

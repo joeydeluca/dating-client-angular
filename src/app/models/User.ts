@@ -8,4 +8,13 @@ export class User {
   username: string;
   profile: Profile;
   birthDate: string
+  isPaid: boolean;
+  createdDate: string;
+  emailSubscription: EmailSubscription = new EmailSubscription();
+}
+
+export class EmailSubscription {
+  isSubscribedNewMailAlert: boolean;
+  isSubscribedNewFlirtAlert: boolean;
+  isSubscribedFavoritedMeAlert: boolean;
 }

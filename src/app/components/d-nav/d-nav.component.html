@@ -30,9 +30,12 @@
         <a class="nav-link" routerLink="/profile-views">Profile Views</a>
       </li>
     </ul>
-    <button class="btn btn-outline-success my-2 my-sm-0" *ngIf="navType === 'MEMBER' && !isPaid">Upgrade</button>
+    <button routerLink="/upgrade" class="btn btn-outline-success my-2 my-sm-0" *ngIf="navType === 'MEMBER' && showUpgradeButton">Upgrade</button>
     <ul class="navbar-nav" *ngIf="navType === 'MEMBER'">
-      <a class="nav-link" (click)="logout()"><i class="material-icons align-middle">settings_power</i> Logout</a>
+      <a class="nav-link" routerLink="/settings"><i class="material-icons align-middle">account_circle</i> Settings</a>
+    </ul>
+    <ul class="navbar-nav"  >
+      <a class="nav-link" routerLink="/support"><i class="material-icons align-middle">email</i> Support</a>
     </ul>
   </div>
 </nav>

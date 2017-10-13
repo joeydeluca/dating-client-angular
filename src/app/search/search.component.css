@@ -19,9 +19,13 @@ body {
   height:212px;
 }
 
-.card img, h5, .pagination li, .toggle-criteria-icon, .edit-link  {
+.card img, h5, .pagination li, .toggle-criteria-icon, .edit-link, .card-title  {
   cursor: pointer;
 }
 
+.criteria {
+  background-color: #FFFFFF;
+  margin-bottom:15px;
+}
 
 

@@ -15,7 +15,6 @@ import {SharedService} from "../services/shared.service";
 export class LandingComponent {
   user = new User();
   joinForm: any;
-  genders = ["Man", "Woman"];
   submitting: boolean;
 
   constructor(private fb: FormBuilder,

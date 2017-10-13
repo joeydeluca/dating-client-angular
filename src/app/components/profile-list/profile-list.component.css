@@ -9,3 +9,11 @@
 .material-icons {
     font-size: 18px;
 }
+
+.btn-delete {
+    position: absolute;
+    float: right;
+    right: 0;
+    padding: 5px;
+    top: 0;
+}

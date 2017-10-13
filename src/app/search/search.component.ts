@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, OnDestroy} from "@angular/core";
 import {FormBuilder} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {AuthService} from "../services/auth.service";
@@ -13,13 +13,12 @@ import {RecipientProfile} from "../models/RecipientProfile";
 import {AuthContext} from "../models/AuthContext";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 
-
 @Component({
   selector: 'search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css']
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
 
   SELECT_ALL: string = "All";
 
@@ -88,7 +87,7 @@ export class SearchComponent implements OnInit {
             const city = <any>{cityId: params['cityId'], cityName: params['cityName']};
             this.selectedCity = city;
           } else {
-            this.selectedCity = useProfileValues ? this.profile.city : this.getSelectAllCity();
+            this.selectedCity = this.getSelectAllCity();
           }
 
           this.loadProfiles(params['page'] ? params['page'] : 0);
@@ -107,11 +106,15 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    localStorage.setItem("search-scroll-y", window.scrollY.toString());
+  }
+
   getGenderSeeking(): string { 
       return this.authService.getAuthContextFromLocal().genderSeeking == "M" ? "Men" : "Women";
   }
 
-  loadCountries() {
+  loadCountries() {  
     this.locationService.getCountries()
       .subscribe(
         (result) => {
@@ -186,8 +189,19 @@ export class SearchComponent implements OnInit {
         .subscribe(
           (result) => {
             this.profilePage = result; 
-            window.scrollTo(0, 0);
+            
             SharedService.showLoader.next(false);
+
+            const scrollY = localStorage.getItem("search-scroll-y");
+              if(scrollY) {
+                setTimeout(() => {
+                window.scrollTo(0, parseInt(scrollY));
+                localStorage.removeItem("search-scroll-y");
+                }, 100);
+              } else {
+                window.scrollTo(0, 0);
+              }
+
           }, 
           (error) => {
             SharedService.showLoader.next(false);
@@ -237,6 +251,7 @@ export class SearchComponent implements OnInit {
   clearRegions():void {
     this.regions = [];
     this.regions.push(this.getSelectAllRegion());
+    this.selectedRegion = this.regions[0];
     
   }
 

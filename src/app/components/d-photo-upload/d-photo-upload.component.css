@@ -4,7 +4,8 @@
 }
 .preview_wrapper, .preview {
   overflow: hidden;
-  width: 191px; height: 193px;
+  width: 191px !important; 
+  height: 193px;
 }
 
 img {

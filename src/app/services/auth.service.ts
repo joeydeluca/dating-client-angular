@@ -53,6 +53,17 @@ export class AuthService {
     return JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_KEY));
   }
 
+  refreshContext(): Observable<AuthContext> {
+    return this.http
+      .post(`${this.apiUrl}/refresh`, null, {headers: this.getHeaders()})
+      .map((res: Response) => {
+        let body = this.extractData(res);
+        this.saveAuthContextToLocal(body);
+        return body;
+      })
+      .catch(this.handleError);
+  }
+
   private extractData(res: Response) {
     let body;
     if (res.text()) {
@@ -70,6 +81,14 @@ export class AuthService {
     const errMsg = (error && error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return Observable.throw(errMsg);
+  }
+
+  private getHeaders(): Headers {
+    const authContext = this.getAuthContextFromLocal();
+    const headers = new Headers();
+    headers.set("authorization", authContext.token);
+    headers.set('Content-Type', 'application/json');
+    return headers;
   }
 
 }

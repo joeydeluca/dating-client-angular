@@ -9,7 +9,7 @@
                 <ngb-tab>
                     <ng-template ngbTabTitle>My Favorites</ng-template>
                     <ng-template ngbTabContent>
-                        <profile-list [list]="favoritedProfiles" [emptyListMessage]="emptyListMessageMyFavorites"></profile-list>
+                        <profile-list [list]="favoritedProfiles" [emptyListMessage]="emptyListMessageMyFavorites" [showDelete]=true (delete)="onDelete($event)"></profile-list>
                     </ng-template>
                 </ngb-tab>
                 <ngb-tab>

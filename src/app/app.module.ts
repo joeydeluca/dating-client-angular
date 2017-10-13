@@ -21,6 +21,7 @@ import {MultiselectDropdownModule} from "angular-2-dropdown-multiselect";
 import {AuthService} from "./services/auth.service";
 import {PhotoService} from "./services/photo.service";
 import {SharedService} from "./services/shared.service";
+import {PaymentService} from "./services/payment.service";
 import {MyDatePickerModule} from "mydatepicker";
 import {JoinUploadPhotoComponent} from "./join-upload-photo/join-upload-photo.component";
 import {SearchComponent} from "./search/search.component";
@@ -30,16 +31,27 @@ import {ViewConversationComponent} from "./messages/view-conversation.component"
 import {ViewProfileComponent} from "./view-profile/view-profile.component";
 import {UpdateProfileComponent} from "./update-profile/update-profile.component";
 import {AuthGuard} from "./guards/auth.guard";
+import {PaidGuard} from "./guards/paid.guard";
+import {NonMemberGuard} from "./guards/nonmember.guard";
 import {LocationDisplayComponent} from "./components/location-display.component";
 import {FieldDisplayComponent} from "./components/field-display.component";
 import {FavoritesComponent} from "./favorites/favorites.component";
 import {RecipientProfileService} from "./services/recipient-profile.service";
 import {FlirtsComponent} from "./flirts/flirts.component";
 import {ProfileViewsComponent} from "./profile-views/profile-views.component";
+import {UpgradeComponent} from "./upgrade/upgrade.component";
+import {VerifyPaymentComponent} from "./upgrade/verify-payment.component";
+import {SettingsComponent} from "./settings/settings.component";
+import {SupportComponent} from "./support/support.component";
+import {SupportService} from "./services/support.service";
+
 
 import {ProfileListComponent} from "./components/profile-list/profile-list.component";
 import {DNavComponent} from "./components/d-nav/d-nav.component";
 import {DPhotoUploadComponent} from "./components/d-photo-upload/d-photo-upload.component";
+
+import {RoundPipe} from "./pipes/round.pipe";
+
 
 import { FileDropDirective, FileSelectDirective, FileUploadModule } from 'ng2-file-upload';
 
@@ -59,12 +71,18 @@ import { FileDropDirective, FileSelectDirective, FileUploadModule } from 'ng2-fi
     FavoritesComponent,
     FlirtsComponent,
     ProfileViewsComponent,
+    UpgradeComponent,
+    VerifyPaymentComponent,
+    SettingsComponent,
+    SupportComponent,
 
     LocationDisplayComponent,
     DNavComponent,
     FieldDisplayComponent,
     DPhotoUploadComponent,
-    ProfileListComponent
+    ProfileListComponent,
+
+    RoundPipe
   ],
   imports: [
     AppRoutingModule,
@@ -89,8 +107,12 @@ import { FileDropDirective, FileSelectDirective, FileUploadModule } from 'ng2-fi
     ProfileFieldService,
     AuthService,
     AuthGuard,
+    PaidGuard,
+    NonMemberGuard,
     PhotoService,
-    RecipientProfileService
+    RecipientProfileService,
+    PaymentService,
+    SupportService
   ],
   bootstrap: [AppComponent]
 })

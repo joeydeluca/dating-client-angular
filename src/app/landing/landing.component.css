@@ -1,4 +1,4 @@
-.header {
+ .header {
   display: table;
   position: relative;
   width: 100%;
@@ -20,6 +20,7 @@
   max-width: 400px;
   margin: 0 auto;
   text-align: left;
+  padding: 15px;
 }
 
 .text-vertical-center h1 {
@@ -44,4 +45,4 @@
 .bg-primary {
   color: #fff;
   background-color: #337ab7 !important;
-}
+} 

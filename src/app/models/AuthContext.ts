@@ -1,7 +1,7 @@
 export class AuthContext {
   token: string;
   userId: number;
-  isPaid: boolean;
+  paid: boolean;
   gender: string;
   genderSeeking: string;
   completionStatus: number;

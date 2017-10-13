@@ -1,0 +1,28 @@
+<d-nav navType="MEMBER"></d-nav>
+<div class="container mt-3">
+  <div class="content text-center">
+    
+    
+    <div class="card card-outline-info" *ngIf="state === 'verify'">
+      <div class="card-block">
+        <h4 class="card-title text-info"><i class="material-icons align-middle">cloud</i> Verifying Payment</h4>
+        <p class="text-muted">Give us a few moments while we verify your purchase.</p>
+      </div>
+    </div>
+
+    <div class="card card-outline-danger" *ngIf="state === 'verify-fail'">
+      <div class="card-block">
+        <h4 class="card-title text-danger"><i class="material-icons align-middle">cancel</i> Payment Failed</h4>
+        <p class="text-muted">We could not verify your payment. Please contact support <a routerLink="/support">here</a>.</p>
+      </div>
+    </div>
+
+    <div class="card card-outline-success" *ngIf="state === 'verify-pass'">
+      <div class="card-block">
+        <h4 class="card-title text-success"><i class="material-icons align-middle">check_circle</i> Congratulations</h4>
+        <p class="text-muted">Your membership has been upgraded!</p>
+      </div>
+    </div>
+
+  </div>
+</div>

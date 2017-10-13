@@ -66,7 +66,7 @@ export class DPhotoUploadComponent {
 
   initCropper(): void {
     this.cropper = new Cropper(this.imageSelector.nativeElement, {
-        aspectRatio: 9 / 9,
+        aspectRatio: 191 / 212,
         scalable: false,
         preview: '.preview',
         viewMode: 2,

@@ -4,6 +4,8 @@ import {Message} from "../models/Message";
 import {MdSnackBar} from "@angular/material";
 import {AuthService} from "../services/auth.service";
 import {SharedService} from "../services/shared.service";
+import {Router} from "@angular/router";
+
 
 @Component({
   selector: 'messages',
@@ -13,11 +15,13 @@ import {SharedService} from "../services/shared.service";
 export class MessagesComponent implements OnInit {
     items: any = {};
     keys = [];
+    displayZeroStateMessage: boolean = false;
 
   constructor(
         private recipientProfileService: RecipientProfileService, 
         private authService: AuthService,
-        private snackBar: MdSnackBar) {
+        private snackBar: MdSnackBar,
+        private router: Router) {
   }
 
   ngOnInit() {
@@ -63,6 +67,10 @@ export class MessagesComponent implements OnInit {
     // I want to sort the keys by the lastMessageId, there is probably a better way fo doing this but whatevs.
     this.keys = this.generateKeys();
     this.sortKeys();
+
+    if(this.keys && this.keys.length === 0) {
+        this.displayZeroStateMessage = true;
+    }
   }
 
   private generateKeys(): any {

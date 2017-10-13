@@ -1,0 +1,40 @@
+<d-nav navType="MEMBER"></d-nav>
+<div class="container mt-3">
+    <div class="row flex-items-xs-middle flex-items-xs-center">
+        <div class="col-xs-12 col-lg-4" *ngFor="let product of paymentPageData?.productPrices">
+            <div class="card text-xs-center">
+                <div class="card-header">
+                <h3 class="display-2"><span class="currency">$</span>{{(product.price / product.durationMonths) | round}}<span class="period">/month</span></h3>
+                </div>
+                <div class="card-block">
+                <h4 class="card-title"> 
+                    {{product.itemName}}
+                </h4>
+                <p class="small">${{product.price}} payment every {{product.durationMonths === 1 ? 'month' : product.durationMonths + ' months'}} </p>
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let feature of features">{{feature}}</li>
+                </ul>
+                <form ngNoForm action="{{paymentPageData.paypalPurchaseUrl}}" id="form" name="form{{x}}" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_xclick-subscriptions">
+                    <input type="hidden" name="business" value="{{paymentPageData.paypalBusinessName}}">
+                    <input type="hidden" name="currency_code" value="{{product.currency}}">
+                    <input type="hidden" name="item_name" value="{{product.durationText}} Membership">
+                    <input type="hidden" name="item_number" value="{{product.id}}">
+                    <input type="hidden" name="return" value="{{paymentPageData.paypalReturnUrl}}">
+                    <input type="hidden" name="cancel_return" value="{{paymentPageData.paypalCancelUrl}}">
+                    <input type="hidden" name="notify_url" value="{{paymentPageData.paypalNotifyUrl}}">
+                    <input type="hidden" name="a3" value="{{product.price}}">
+                    <input type="hidden" name="p3" value="{{product.durationMonths}}">
+                    <input type="hidden" name="t3" value="M">
+                    <input type="hidden" name="src" value="1">   
+                    <input type="hidden" name="custom" value="{{userId}}"> 
+                    <input type="hidden" name="no_note" value="1"> 
+
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
