@@ -239,7 +239,7 @@
                         <ng-template ngbTabContent>
                             <div class="text-center">
                                 <div *ngFor="let photo of recipientProfile?.profile.photos" class="p-3">
-                                    <img [src]="photo.largeUrl" />
+                                    <img [src]="photo.largeUrl" style="max-width:100%" />
                                 </div>
                             </div>
                         </ng-template>

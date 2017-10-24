@@ -79,6 +79,9 @@ export class JoinCompletionComponent implements OnInit {
       .subscribe(
         (result) => {
           this.countries = result;
+          this.countries.unshift(this.countries.find(c => c.countryName === 'Canada'));
+          this.countries.unshift(this.countries.find(c => c.countryName === 'United States'));
+          this.joinForm.patchValue({ country: this.countries[0] });
           SharedService.showLoader.next(false);
         },
         (error) => {
@@ -144,8 +147,8 @@ export class JoinCompletionComponent implements OnInit {
       SharedService.showLoader.next(true);
       const user = new User();
       const profile = this.joinForm.value;
-      user.profile = profile;      
-      user.birthDate = this.joinForm.value.birthday.date;
+      user.profile = profile;
+      user.birthDate = new Date(this.mydp.getDateModel(this.mydp.selectedDate).jsdate).toISOString().slice(0,10);
 
       this.userService.completeUserJoin(user, this.captchaResponse)
         .subscribe(
