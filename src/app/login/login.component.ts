@@ -11,8 +11,7 @@ import {SharedService} from "../services/shared.service";
 
 @Component({
   selector: 'login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
   form: any;

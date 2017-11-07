@@ -5,6 +5,8 @@ import {JoinCompletionComponent} from "./join-completion/join-completion.compone
 import {JoinUploadPhotoComponent} from "./join-upload-photo/join-upload-photo.component";
 import {SearchComponent} from "./search/search.component";
 import {LoginComponent} from "./login/login.component";
+import {ForgotPasswordComponent} from "./password-reset/forgot-password.component";
+import {PasswordResetComponent} from "./password-reset/password-reset.component";
 import {ViewProfileComponent} from "./view-profile/view-profile.component";
 import {UpdateProfileComponent} from "./update-profile/update-profile.component";
 import {MessagesComponent} from "./messages/messages.component";
@@ -25,6 +27,8 @@ import {NonMemberGuard} from "./guards/nonmember.guard";
 const routes: Routes = [
   { path: '', component: LandingComponent, canActivate: [NonMemberGuard]},
   { path: 'login', component: LoginComponent, canActivate: [NonMemberGuard]},
+  { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NonMemberGuard]},
+  { path: 'password-reset', component: PasswordResetComponent, canActivate: [NonMemberGuard]},
   { path: 'support', component: SupportComponent},
   { path: 'join-completion', component: JoinCompletionComponent, canActivate: [AuthGuard]},
   { path: 'join-upload-photo', component: JoinUploadPhotoComponent, canActivate: [AuthGuard]},

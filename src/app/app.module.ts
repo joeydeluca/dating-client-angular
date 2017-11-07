@@ -26,6 +26,8 @@ import {MyDatePickerModule} from "mydatepicker";
 import {JoinUploadPhotoComponent} from "./join-upload-photo/join-upload-photo.component";
 import {SearchComponent} from "./search/search.component";
 import {LoginComponent} from "./login/login.component";
+import {ForgotPasswordComponent} from "./password-reset/forgot-password.component";
+import {PasswordResetComponent} from "./password-reset/password-reset.component";
 import {MessagesComponent} from "./messages/messages.component";
 import {ViewConversationComponent} from "./messages/view-conversation.component";
 import {ViewProfileComponent} from "./view-profile/view-profile.component";
@@ -63,6 +65,8 @@ import { FileDropDirective, FileSelectDirective, FileUploadModule } from 'ng2-fi
     JoinUploadPhotoComponent,
     SearchComponent,
     LoginComponent,
+    ForgotPasswordComponent,
+    PasswordResetComponent,
     ControlMessages,
     ViewProfileComponent,
     UpdateProfileComponent,

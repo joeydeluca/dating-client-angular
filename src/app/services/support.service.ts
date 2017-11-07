@@ -18,6 +18,18 @@ export class SupportService {
       .post(`${this.apiUrl}/contact`, contact, {headers: this.getHeaders()})
       .catch(this.handleError);
   }
+
+  sendPasswordResetLink(email: string): Observable<void> {
+    return this.http
+      .post(`${this.apiUrl}/password-reset`, email, {headers: this.getHeaders()})
+      .catch(this.handleError);
+  }
+
+  resetPassword(requestId: string, password: string): Observable<void> {
+    return this.http
+      .put(`${this.apiUrl}/password-reset`, {requestId: requestId, password: password}, {headers: this.getHeaders()})
+      .catch(this.handleError);
+  }
   
   private getHeaders(): Headers {
     const authContext = this.authService.getAuthContextFromLocal();
