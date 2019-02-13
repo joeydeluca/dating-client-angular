@@ -1,13 +1,13 @@
-import {Component, OnInit} from "@angular/core";
-import {FormBuilder, Validators} from "@angular/forms";
-import {User} from "../models/User";
-import {ValidationService} from "../services/validation.service";
-import {SupportService} from "../services/support.service";
-import {AuthService} from "../services/auth.service";
-import {MatSnackBar} from "@angular/material";
-import {Router, ActivatedRoute, Params} from "@angular/router";
-import {SharedService} from "../services/shared.service";
-import {finalize} from "rxjs/operators";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {User} from '../models/User';
+import {ValidationService} from '../services/validation.service';
+import {SupportService} from '../services/support.service';
+import {AuthService} from '../services/auth.service';
+import {MatSnackBar} from '@angular/material';
+import {Router, ActivatedRoute, Params} from '@angular/router';
+import {SharedService} from '../services/shared.service';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'password-reset',
@@ -21,7 +21,7 @@ export class PasswordResetComponent implements OnInit {
               private supportService: SupportService,
               private snackBar: MatSnackBar,
               private route: ActivatedRoute,
-              private router: Router,) {
+              private router: Router, ) {
     this.form = this.fb.group({
       'password': ['', [Validators.required]],
     });
@@ -31,7 +31,7 @@ export class PasswordResetComponent implements OnInit {
     this.route.queryParams.subscribe((params: Params) => {
       this.requestId = params['requestId'];
 
-      if(!this.requestId) {
+      if (!this.requestId) {
         this.showError('Invalid password reset link');
         this.router.navigate(['/login']);
       }
@@ -50,7 +50,7 @@ export class PasswordResetComponent implements OnInit {
             panelClass: ['bg-success', 'snackbar']
         });
         this.router.navigate(['/login']);
-      }, 
+      },
       () => {
         this.showError('Server error, please try again later');
       }

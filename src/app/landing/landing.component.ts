@@ -1,11 +1,11 @@
-import {Component, OnInit, Input} from "@angular/core";
-import {FormBuilder, Validators, FormGroup} from "@angular/forms";
-import {User} from "../models/User";
-import {ValidationService} from "../services/validation.service";
-import {UserService} from "../services/user.service";
-import {MatSnackBar} from "@angular/material";
-import {Router} from "@angular/router";
-import {SharedService} from "../services/shared.service";
+import {Component, OnInit, Input} from '@angular/core';
+import {FormBuilder, Validators, FormGroup} from '@angular/forms';
+import {User} from '../models/User';
+import {ValidationService} from '../services/validation.service';
+import {UserService} from '../services/user.service';
+import {MatSnackBar} from '@angular/material';
+import {Router} from '@angular/router';
+import {SharedService} from '../services/shared.service';
 
 @Component({
   selector: 'landing',

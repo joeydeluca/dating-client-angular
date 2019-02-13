@@ -1,4 +1,4 @@
-import {ProductPrice} from "./ProductPrice";
+import {ProductPrice} from './ProductPrice';
 
 export class PaymentPageData {
     productPrices: ProductPrice[];

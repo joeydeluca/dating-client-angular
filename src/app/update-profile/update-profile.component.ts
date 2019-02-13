@@ -1,20 +1,20 @@
-import {Component, OnInit} from "@angular/core";
-import {FormBuilder, Validators, FormGroup} from "@angular/forms";
-import {RecipientProfileService} from "../services/recipient-profile.service";
-import {UserService} from "../services/user.service";
-import {PhotoService} from "../services/photo.service";
-import {MatSnackBar} from "@angular/material";
-import {Router, ActivatedRoute, Params} from "@angular/router";
-import {RecipientProfile} from "../models/RecipientProfile";
-import {SharedService} from "../services/shared.service";
-import {Country, Region, City} from "../models/Location";
-import {ValidationService} from "../services/validation.service";
-import {ProfileFieldService} from "../services/profile-field.service";
-import {LocationService} from "../services/location.service";
-import {User} from "../models/User";
-import {Profile} from "../models/Profile";
-import {AuthService} from "../services/auth.service";
-import {AuthContext} from "../models/AuthContext";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators, FormGroup} from '@angular/forms';
+import {RecipientProfileService} from '../services/recipient-profile.service';
+import {UserService} from '../services/user.service';
+import {PhotoService} from '../services/photo.service';
+import {MatSnackBar} from '@angular/material';
+import {Router, ActivatedRoute, Params} from '@angular/router';
+import {RecipientProfile} from '../models/RecipientProfile';
+import {SharedService} from '../services/shared.service';
+import {Country, Region, City} from '../models/Location';
+import {ValidationService} from '../services/validation.service';
+import {ProfileFieldService} from '../services/profile-field.service';
+import {LocationService} from '../services/location.service';
+import {User} from '../models/User';
+import {Profile} from '../models/Profile';
+import {AuthService} from '../services/auth.service';
+import {AuthContext} from '../models/AuthContext';
 
 
 @Component({
@@ -70,7 +70,7 @@ export class UpdateProfileComponent implements OnInit {
   }
 
   private loadProfile(onSuccess): void {
-    this.userService.getUser().subscribe(  
+    this.userService.getUser().subscribe(
         (user) => {
           this.user = user;
           onSuccess();
@@ -159,7 +159,7 @@ export class UpdateProfileComponent implements OnInit {
       .subscribe(
         (result) => {
           this.regions = result;
-          if(this.regions && patch) {
+          if (this.regions && patch) {
             (<FormGroup>this.detailsForm).patchValue({region: this.regions[0]});
           }
         },
@@ -167,8 +167,8 @@ export class UpdateProfileComponent implements OnInit {
       );
   }
 
-  loadCities(region: Region) { 
-    if(!region) {
+  loadCities(region: Region) {
+    if (!region) {
       return;
     }
 
@@ -190,7 +190,7 @@ export class UpdateProfileComponent implements OnInit {
       profile.region = this.detailsForm.value.region;
       profile.city = this.detailsForm.value.city;
       profile.ethnicity = this.detailsForm.value.ethnicity;
-      profile.height = {feet: this.detailsForm.value.heightFeet, inches: this.detailsForm.value.heightInches}
+      profile.height = {feet: this.detailsForm.value.heightFeet, inches: this.detailsForm.value.heightInches};
       profile.bodyType = this.detailsForm.value.bodyType;
       profile.eyeColor = this.detailsForm.value.eyeColor;
       profile.hairColor = this.detailsForm.value.hairColor;
@@ -255,12 +255,12 @@ export class UpdateProfileComponent implements OnInit {
         this.showSucess('Profile photo set');
         this.getUserFromServer();
         window.scrollTo(0, 0);
-      }, 
+      },
       (error) => {
         SharedService.showLoader.next(false);
-        this.showError('Operation failed')
+        this.showError('Operation failed');
       }
-    )
+    );
   }
 
   deletePhoto(photoId: number): void {
@@ -271,12 +271,12 @@ export class UpdateProfileComponent implements OnInit {
         this.showSucess('Photo deleted');
         this.getUserFromServer();
         window.scrollTo(0, 0);
-      }, 
+      },
       (error) => {
         SharedService.showLoader.next(false);
-        this.showError('Operation failed')
+        this.showError('Operation failed');
       }
-    )
+    );
   }
 
   private updateProfile(profile: Profile): void {

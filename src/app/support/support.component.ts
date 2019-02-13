@@ -1,9 +1,9 @@
-import {Component, OnInit} from "@angular/core";
-import {AuthService} from "../services/auth.service";
-import {SupportService} from "../services/support.service";
-import {Contact} from "../models/Contact";
-import {FormBuilder, Validators} from "@angular/forms";
-import {MatSnackBar} from "@angular/material";
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../services/auth.service';
+import {SupportService} from '../services/support.service';
+import {Contact} from '../models/Contact';
+import {FormBuilder, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
 
 
 @Component({
@@ -11,7 +11,7 @@ import {MatSnackBar} from "@angular/material";
   templateUrl: './support.component.html'
 })
 export class SupportComponent {
-    isAuthenticated: boolean = false;
+    isAuthenticated = false;
 
     form: any;
 
@@ -29,7 +29,7 @@ export class SupportComponent {
 
     onSubmit(): void {
         this.isSubmiting = true;
-        
+
         const contact: Contact = {
             name: this.form.value.name,
             email: this.form.value.email,
@@ -38,7 +38,7 @@ export class SupportComponent {
 
         this.supportService.contact(contact).subscribe();
 
-         this.showSuccess("Message Sent");
+         this.showSuccess('Message Sent');
          this.form.reset();
          this.isSubmiting = false;
     }

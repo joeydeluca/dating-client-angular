@@ -1,12 +1,12 @@
-import {Component, OnInit} from "@angular/core";
-import {FormBuilder, Validators} from "@angular/forms";
-import {User} from "../models/User";
-import {ValidationService} from "../services/validation.service";
-import {UserService} from "../services/user.service";
-import {AuthService} from "../services/auth.service";
-import {MatSnackBar} from "@angular/material";
-import {Router, ActivatedRoute} from "@angular/router";
-import {SharedService} from "../services/shared.service";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {User} from '../models/User';
+import {ValidationService} from '../services/validation.service';
+import {UserService} from '../services/user.service';
+import {AuthService} from '../services/auth.service';
+import {MatSnackBar} from '@angular/material';
+import {Router, ActivatedRoute} from '@angular/router';
+import {SharedService} from '../services/shared.service';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class LoginComponent {
               private authService: AuthService,
               private snackBar: MatSnackBar,
               private router: Router,
-              private route: ActivatedRoute,) {
+              private route: ActivatedRoute, ) {
     this.form = this.fb.group({
       'email': ['', [Validators.required]],
       'password': ['', [Validators.required]],
@@ -39,7 +39,7 @@ export class LoginComponent {
         console.log(redirectUrl);
         //this.router.navigate([redirectUrl]);
         this.router.navigateByUrl(redirectUrl);
-      }, 
+      },
       () => {
         SharedService.showLoader.next(false);
         this.snackBar.open('Invalid username or password', null, {

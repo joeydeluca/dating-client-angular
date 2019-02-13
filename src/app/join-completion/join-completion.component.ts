@@ -1,19 +1,19 @@
-import {Component, OnInit, ViewChild, ElementRef} from "@angular/core";
-import {FormBuilder, Validators} from "@angular/forms";
-import {User} from "../models/User";
-import {ValidationService} from "../services/validation.service";
-import {UserService} from "../services/user.service";
-import {MatSnackBar} from "@angular/material";
-import {LocationService} from "../services/location.service";
-import {Country, Region, City} from "../models/Location";
-import {ProfileFieldService} from "../services/profile-field.service";
-import {IMultiSelectOption} from "angular-2-dropdown-multiselect";
-import {Profile} from "../models/Profile";
-import {RecaptchaComponent} from "ng-recaptcha";
-import {IMyDpOptions, MyDatePicker} from "mydatepicker";
-import {DatepickerConfig} from "../common/datepicker.config";
-import {Router} from "@angular/router";
-import {SharedService} from "../services/shared.service";
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {User} from '../models/User';
+import {ValidationService} from '../services/validation.service';
+import {UserService} from '../services/user.service';
+import {MatSnackBar} from '@angular/material';
+import {LocationService} from '../services/location.service';
+import {Country, Region, City} from '../models/Location';
+import {ProfileFieldService} from '../services/profile-field.service';
+import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
+import {Profile} from '../models/Profile';
+import {RecaptchaComponent} from 'ng-recaptcha';
+import {IMyDpOptions, MyDatePicker} from 'mydatepicker';
+import {DatepickerConfig} from '../common/datepicker.config';
+import {Router} from '@angular/router';
+import {SharedService} from '../services/shared.service';
 
 @Component({
   selector: 'join-completion',
@@ -23,7 +23,7 @@ import {SharedService} from "../services/shared.service";
 export class JoinCompletionComponent implements OnInit {
   @ViewChild(RecaptchaComponent) reCaptchaRef: RecaptchaComponent;
   joinForm: any;
-  genders = ["Man", "Woman"];
+  genders = ['Man', 'Woman'];
   submitting: boolean;
   countries: Country[];
   regions: Region[];
@@ -95,7 +95,7 @@ export class JoinCompletionComponent implements OnInit {
   }
 
   loadRegions(country: Country) {
-    if(!country.countryId) {
+    if (!country.countryId) {
       return;
     }
 
@@ -117,7 +117,7 @@ export class JoinCompletionComponent implements OnInit {
   }
 
   loadCities(region: Region) {
-    if(!region.regionId) {
+    if (!region.regionId) {
       return;
     }
 
@@ -148,7 +148,7 @@ export class JoinCompletionComponent implements OnInit {
       const user = new User();
       const profile = this.joinForm.value;
       user.profile = profile;
-      user.birthDate = new Date(this.mydp.getDateModel(this.mydp.selectedDate).jsdate).toISOString().slice(0,10);
+      user.birthDate = new Date(this.mydp.getDateModel(this.mydp.selectedDate).jsdate).toISOString().slice(0, 10);
 
       this.userService.completeUserJoin(user, this.captchaResponse)
         .subscribe(

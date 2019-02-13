@@ -1,5 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {Country,Region,City} from "../models/Location";
+import {Component, Input} from '@angular/core';
+import {Country, Region, City} from '../models/Location';
 
 @Component({
   selector: 'location-display',

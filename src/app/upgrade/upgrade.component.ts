@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
-import {SharedService} from "../services/shared.service";
-import {environment} from "../../environments/environment";
-import {AuthService} from "../services/auth.service";
-import {PaymentService} from "../services/payment.service";
-import {PaymentPageData} from "../models/PaymentPageData";
-import {MatSnackBar} from "@angular/material";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SharedService} from '../services/shared.service';
+import {environment} from '../../environments/environment';
+import {AuthService} from '../services/auth.service';
+import {PaymentService} from '../services/payment.service';
+import {PaymentPageData} from '../models/PaymentPageData';
+import {MatSnackBar} from '@angular/material';
 
 
 @Component({
@@ -15,13 +15,13 @@ import {MatSnackBar} from "@angular/material";
 export class UpgradeComponent implements OnInit {
     paymentPageData: PaymentPageData;
     userId: number;
-    features: string[] = ["Send messages", "Read messages", "Who's viewed your profile", "Rank higher in search results"];
+    features: string[] = ['Send messages', 'Read messages', 'Who\'s viewed your profile', 'Rank higher in search results'];
 
     constructor(
-        private authService: AuthService, 
+        private authService: AuthService,
         private paymentService: PaymentService,
         private snackBar: MatSnackBar) {
-        this.userId = this.authService.getAuthContext().userId
+        this.userId = this.authService.getAuthContext().userId;
     }
 
     ngOnInit() {
@@ -30,9 +30,7 @@ export class UpgradeComponent implements OnInit {
         .subscribe(
             (result) => {
                 result.productPrices.sort((a, b) => {
-                    if (a.positionWeight < b.positionWeight) return 1;
-                    else if (a.positionWeight > b.positionWeight) return -1;
-                    else return 0;
+                    if (a.positionWeight < b.positionWeight) { return 1; } else if (a.positionWeight > b.positionWeight) { return -1; } else { return 0; }
                 });
                 this.paymentPageData = result;
                 SharedService.showLoader.next(false);

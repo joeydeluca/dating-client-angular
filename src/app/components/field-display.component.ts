@@ -1,5 +1,5 @@
-import {Component, Input, OnInit, OnChanges} from "@angular/core";
-import {ProfileFieldService} from "../services/profile-field.service";
+import {Component, Input, OnInit, OnChanges} from '@angular/core';
+import {ProfileFieldService} from '../services/profile-field.service';
 
 @Component({
   selector: 'field-display',
@@ -21,33 +21,33 @@ export class FieldDisplayComponent implements OnChanges {
         this.fields = result;
 
         const field = this.fields[this.type];
-        if(!field) {
+        if (!field) {
           console.error('Profile field type does not exist: ' + this.type);
           this.displayValue = this.getNullFieldDisplay();
           return;
         }
 
         const options = field['options'];
-        if(!options) {
+        if (!options) {
           this.displayValue = this.getNullFieldDisplay();
           return;
         }
 
         options.forEach(option => {
-          if(this.isValueInOptions(option)) {
-            if(this.displayValue) {
-              this.displayValue = this.displayValue + ", " +  option.name;
+          if (this.isValueInOptions(option)) {
+            if (this.displayValue) {
+              this.displayValue = this.displayValue + ', ' +  option.name;
             } else {
               this.displayValue = option.name;
             }
           }
         });
 
-        if(!this.displayValue) {
+        if (!this.displayValue) {
           this.displayValue = this.getNullFieldDisplay();
         }
 
-      }, 
+      },
       (error) => {
         console.error(error);
       }
@@ -55,27 +55,27 @@ export class FieldDisplayComponent implements OnChanges {
   }
 
   private getNullFieldDisplay(): string {
-    return "Contact me to find out";
+    return 'Contact me to find out';
   }
 
   private isValueInOptions(option: any): boolean {
     let isInOptions = false;
-    if(Array.isArray(this.ids)) {
-     
+    if (Array.isArray(this.ids)) {
+
       this.ids.forEach(x => {
-        if(x === option.id) {
+        if (x === option.id) {
           isInOptions = true;
           return;
-        } 
+        }
       });
     }
 
-    if(isInOptions) {
+    if (isInOptions) {
       return true;
     }
 
     return this.ids === option.id;
   }
 
-  
+
 }

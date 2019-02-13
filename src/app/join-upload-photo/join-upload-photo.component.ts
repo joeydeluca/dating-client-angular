@@ -1,14 +1,14 @@
-import {Component, OnInit, ViewChild, ElementRef} from "@angular/core";
-import {trigger, transition, style, animate } from "@angular/animations";
-import {FormBuilder} from "@angular/forms";
-import {UserService} from "../services/user.service";
-import {PhotoService} from "../services/photo.service";
-import {MatSnackBar} from "@angular/material";
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {trigger, transition, style, animate } from '@angular/animations';
+import {FormBuilder} from '@angular/forms';
+import {UserService} from '../services/user.service';
+import {PhotoService} from '../services/photo.service';
+import {MatSnackBar} from '@angular/material';
 //import { FileUploader, Headers, FileUploaderOptions } from 'ng2-file-upload';
-import {AuthService} from "../services/auth.service";
-import {SharedService} from "../services/shared.service";
-import {Photo} from "../models/Photo";
-import {Router} from "@angular/router";
+import {AuthService} from '../services/auth.service';
+import {SharedService} from '../services/shared.service';
+import {Photo} from '../models/Photo';
+import {Router} from '@angular/router';
 
 
 @Component({

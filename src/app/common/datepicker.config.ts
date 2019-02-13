@@ -1,4 +1,4 @@
-import {IMyDpOptions} from "mydatepicker";
+import {IMyDpOptions} from 'mydatepicker';
 
 export class DatepickerConfig {
   static config: IMyDpOptions = {

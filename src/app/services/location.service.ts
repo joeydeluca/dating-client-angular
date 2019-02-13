@@ -1,11 +1,11 @@
-import {Injectable} from "@angular/core";
-import {environment} from "../../environments/environment";
-import {Http, Response, Headers} from "@angular/http";
-import {Observable, throwError} from "rxjs";
-import {map, catchError} from "rxjs/operators";
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {Http, Response, Headers} from '@angular/http';
+import {Observable, throwError} from 'rxjs';
+import {map, catchError} from 'rxjs/operators';
 
-import {User} from "../models/User";
-import {Country, Region, City} from "../models/Location";
+import {User} from '../models/User';
+import {Country, Region, City} from '../models/Location';
 
 @Injectable()
 export class LocationService {
@@ -45,7 +45,7 @@ export class LocationService {
 
   private handleError(res: Response | any) {
     let error;
-    if(res.text()) {
+    if (res.text()) {
       error = res.json();
     }
 

@@ -1,8 +1,8 @@
-import {Injectable} from "@angular/core";
-import {environment} from "../../environments/environment";
-import {Http, Response, Headers} from "@angular/http";
-import {Observable, of, throwError} from "rxjs";
-import {map, catchError} from "rxjs/operators";
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {Http, Response, Headers} from '@angular/http';
+import {Observable, of, throwError} from 'rxjs';
+import {map, catchError} from 'rxjs/operators';
 
 @Injectable()
 export class ProfileFieldService {
@@ -16,12 +16,12 @@ export class ProfileFieldService {
   }
 
   getProfileFields(): Observable<object> {
-    if(this.fields) {
+    if (this.fields) {
       return of(this.fields);
     }
 
-    const fieldsInLocalStorage = localStorage.getItem("fields");
-    if(!!fieldsInLocalStorage) {
+    const fieldsInLocalStorage = localStorage.getItem('fields');
+    if (!!fieldsInLocalStorage) {
       return of(JSON.parse(fieldsInLocalStorage));
     }
 
@@ -32,13 +32,13 @@ export class ProfileFieldService {
 
    extractData(res: Response) {
     let body: any;
-    
+
     if (res.text()) {
       body = res.json();
-      
+
       // save to storage
       this.fields = body;
-      localStorage.setItem("fields", JSON.stringify(body));
+      localStorage.setItem('fields', JSON.stringify(body));
     }
 
     return body || {};
@@ -46,7 +46,7 @@ export class ProfileFieldService {
 
   private handleError(res: Response | any) {
     let error;
-    if(res.text()) {
+    if (res.text()) {
       error = res.json();
     }
 

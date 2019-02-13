@@ -1,4 +1,4 @@
-import {City, Region, Country} from "./Location";
+import {City, Region, Country} from './Location';
 
 export class ProfileEvent {
     userId: number;

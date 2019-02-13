@@ -1,4 +1,4 @@
-import {Profile} from "./Profile";
+import {Profile} from './Profile';
 
 export class User {
   id: number;
@@ -7,7 +7,7 @@ export class User {
   email: string;
   username: string;
   profile: Profile;
-  birthDate: string
+  birthDate: string;
   isPaid: boolean;
   createdDate: string;
   emailSubscription: EmailSubscription = new EmailSubscription();

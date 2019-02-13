@@ -1,4 +1,4 @@
-import {City, Region, Country} from "./Location";
+import {City, Region, Country} from './Location';
 
 export class Profile {
   profilePhotoUrl: string;
@@ -28,7 +28,7 @@ export class Profile {
   salary: string;
   partnerSalary: string;
   childrenStatus: string;
-  partnerChildrenStatus: string
+  partnerChildrenStatus: string;
   astroSign: string;
   partnerAstroSign: string;
   education: string;

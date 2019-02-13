@@ -1,11 +1,11 @@
-import {Profile} from "./Profile";
-import {Photo} from "./Photo";
+import {Profile} from './Profile';
+import {Photo} from './Photo';
 
 export class RecipientProfile {
     userId: number;
     username: string;
-    profile: Profile
+    profile: Profile;
     age: number;
-    profilePhotoUrl: string
-    genderSeeking: string
+    profilePhotoUrl: string;
+    genderSeeking: string;
 }

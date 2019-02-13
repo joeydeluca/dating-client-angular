@@ -1,7 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
-import {NgbDatepickerConfig} from "@ng-bootstrap/ng-bootstrap";
-import {SharedService} from "./services/shared.service";
-import {ActivatedRoute} from "@angular/router";
+import {NgbDatepickerConfig} from '@ng-bootstrap/ng-bootstrap';
+import {SharedService} from './services/shared.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class AppComponent {
 
-  showLoader: boolean = false;
+  showLoader = false;
 
   public get childRouteTransition() { return this.activatedRoute.snapshot; }
 

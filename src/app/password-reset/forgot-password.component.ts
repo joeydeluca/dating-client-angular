@@ -1,13 +1,13 @@
-import {Component, OnInit} from "@angular/core";
-import {FormBuilder, Validators} from "@angular/forms";
-import {User} from "../models/User";
-import {ValidationService} from "../services/validation.service";
-import {SupportService} from "../services/support.service";
-import {AuthService} from "../services/auth.service";
-import {MatSnackBar} from "@angular/material";
-import {Router, ActivatedRoute} from "@angular/router";
-import {SharedService} from "../services/shared.service";
-import {finalize} from "rxjs/operators";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {User} from '../models/User';
+import {ValidationService} from '../services/validation.service';
+import {SupportService} from '../services/support.service';
+import {AuthService} from '../services/auth.service';
+import {MatSnackBar} from '@angular/material';
+import {Router, ActivatedRoute} from '@angular/router';
+import {SharedService} from '../services/shared.service';
+import {finalize} from 'rxjs/operators';
 
 
 
@@ -37,7 +37,7 @@ export class ForgotPasswordComponent {
             duration: 5000,
             panelClass: ['bg-success', 'snackbar']
         });
-      }, 
+      },
       () => {
         this.snackBar.open('Server error, please try again later', null, {
             duration: 5000,

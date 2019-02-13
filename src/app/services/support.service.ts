@@ -1,11 +1,11 @@
-import {Injectable} from "@angular/core";
-import {environment} from "../../environments/environment";
-import {Http, Response, Headers} from "@angular/http";
-import {Observable, throwError} from "rxjs";
-import {catchError} from "rxjs/operators";
-import {Contact} from "../models/Contact";
-import {AuthService} from "./auth.service";
-import {AuthContext} from "../models/AuthContext";
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {Http, Response, Headers} from '@angular/http';
+import {Observable, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+import {Contact} from '../models/Contact';
+import {AuthService} from './auth.service';
+import {AuthContext} from '../models/AuthContext';
 
 @Injectable()
 export class SupportService {
@@ -31,12 +31,12 @@ export class SupportService {
       .put(`${this.apiUrl}/password-reset`, {requestId: requestId, password: password}, {headers: this.getHeaders()})
       .pipe(catchError(this.handleError));
   }
-  
+
   private getHeaders(): Headers {
     const authContext = this.authService.getAuthContextFromLocal();
     const headers = new Headers();
-    if(authContext) {
-      headers.set("authorization", authContext.token);
+    if (authContext) {
+      headers.set('authorization', authContext.token);
     }
     headers.set('Content-Type', 'application/json');
     return headers;
@@ -44,7 +44,7 @@ export class SupportService {
 
   private handleError(res: Response | any) {
     let error;
-    if(res.text()) {
+    if (res.text()) {
       error = res.json();
     }
 

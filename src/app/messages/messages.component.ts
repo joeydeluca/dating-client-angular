@@ -1,10 +1,10 @@
-import {Component, OnInit} from "@angular/core";
-import {RecipientProfileService} from "../services/recipient-profile.service";
-import {Message} from "../models/Message";
-import {MatSnackBar} from "@angular/material";
-import {AuthService} from "../services/auth.service";
-import {SharedService} from "../services/shared.service";
-import {Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {RecipientProfileService} from '../services/recipient-profile.service';
+import {Message} from '../models/Message';
+import {MatSnackBar} from '@angular/material';
+import {AuthService} from '../services/auth.service';
+import {SharedService} from '../services/shared.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -15,10 +15,10 @@ import {Router} from "@angular/router";
 export class MessagesComponent implements OnInit {
     items: any = {};
     keys = [];
-    displayZeroStateMessage: boolean = false;
+    displayZeroStateMessage = false;
 
   constructor(
-        private recipientProfileService: RecipientProfileService, 
+        private recipientProfileService: RecipientProfileService,
         private authService: AuthService,
         private snackBar: MatSnackBar,
         private router: Router) {
@@ -30,9 +30,9 @@ export class MessagesComponent implements OnInit {
         (result) => {
             this.setItems(result);
             SharedService.showLoader.next(false);
-        }, 
+        },
         () => {
-            this.handleError("Failed to retrieve messages");
+            this.handleError('Failed to retrieve messages');
             SharedService.showLoader.next(false);
         }
     );
@@ -40,11 +40,11 @@ export class MessagesComponent implements OnInit {
 
   setItems(messages: Message[]) {
     messages.forEach((message: Message) => {
-        const isOutgoingMessage: boolean = message.fromUser.id == this.authService.getAuthContext().userId;
+        const isOutgoingMessage: boolean = message.fromUser.id === this.authService.getAuthContext().userId;
         const recipientUser = isOutgoingMessage ? message.toUser : message.fromUser;
 
         let conversation: Conversation = this.items[recipientUser.id];
-        if(!conversation) {
+        if (!conversation) {
             conversation = new Conversation();
             conversation.recipientUsername = recipientUser.username;
             conversation.recipientProfilePhotoUrl = recipientUser.profile.profilePhotoUrl;
@@ -54,10 +54,9 @@ export class MessagesComponent implements OnInit {
         conversation.lastMessageDate = message.sendDate;
         conversation.lastMessageId = message.id;
 
-        if(isOutgoingMessage) {
+        if (isOutgoingMessage) {
             conversation.numberOfSentMessages++;
-        }
-        else if(!message.readDate) {
+        } else if (!message.readDate) {
             conversation.numberOfUnreadMessagesReceived++;
         }
 
@@ -68,15 +67,15 @@ export class MessagesComponent implements OnInit {
     this.keys = this.generateKeys();
     this.sortKeys();
 
-    if(this.keys && this.keys.length === 0) {
+    if (this.keys && this.keys.length === 0) {
         this.displayZeroStateMessage = true;
     }
   }
 
   private generateKeys(): any {
     const keyList = [];
-    for(var key in this.items) {
-        if(this.items.hasOwnProperty(key)) {
+    for (const key in this.items) {
+        if (this.items.hasOwnProperty(key)) {
             keyList.push({messageId: this.items[key].lastMessageId, userId: key});
         }
     }
@@ -85,9 +84,7 @@ export class MessagesComponent implements OnInit {
 
   private sortKeys() {
     this.keys.sort((a, b) => {
-        if (a.messageId < b.messageId) return 1;
-        else if (a.messageId > b.messageId) return -1;
-        else return 0;
+        if (a.messageId < b.messageId) { return 1; } else if (a.messageId > b.messageId) { return -1; } else { return 0; }
     });
   }
 
@@ -103,8 +100,8 @@ export class Conversation {
     recipientUserId: number;
     recipientProfilePhotoUrl: string;
     recipientUsername: string;
-    numberOfUnreadMessagesReceived: number = 0;
-    numberOfSentMessages: number = 0;
+    numberOfUnreadMessagesReceived = 0;
+    numberOfSentMessages = 0;
     lastMessageDate: string;
     lastMessageId: number;
 }

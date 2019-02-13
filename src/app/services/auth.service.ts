@@ -1,19 +1,19 @@
-import {Injectable} from "@angular/core";
-import {environment} from "../../environments/environment";
-import {Http, Response, Headers} from "@angular/http";
-import {Observable, throwError} from "rxjs";
-import {map, catchError} from "rxjs/operators";
-import {User} from "../models/User";
-import {AuthDto} from "../models/AuthDto";
-import {Profile} from "../models/Profile";
-import {AuthContext} from "../models/AuthContext";
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {Http, Response, Headers} from '@angular/http';
+import {Observable, throwError} from 'rxjs';
+import {map, catchError} from 'rxjs/operators';
+import {User} from '../models/User';
+import {AuthDto} from '../models/AuthDto';
+import {Profile} from '../models/Profile';
+import {AuthContext} from '../models/AuthContext';
 
 @Injectable()
 export class AuthService {
   private apiUrl = environment.apiUrl + '/auth';
   private headers: Headers;
   private authContext: AuthContext;
-  private LOCAL_STORAGE_KEY:string = "authContext";
+  private LOCAL_STORAGE_KEY = 'authContext';
 
   constructor(private http: Http) {
     this.headers = new Headers();
@@ -26,7 +26,7 @@ export class AuthService {
     return this.http
       .post(`${this.apiUrl}`, JSON.stringify(authDto), {headers: this.headers})
       .pipe(map((res: Response) => {
-        let body = this.extractData(res);
+        const body = this.extractData(res);
         this.saveAuthContextToLocal(body);
         return body;
       }), catchError(this.handleError));
@@ -41,13 +41,13 @@ export class AuthService {
     return this.getAuthContextFromLocal();
   }
 
-  saveAuthContextToLocal(authContext: AuthContext):void {
+  saveAuthContextToLocal(authContext: AuthContext): void {
     this.authContext = authContext;
     localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(authContext));
   }
 
   getAuthContextFromLocal(): AuthContext {
-    if(!!this.authContext) {
+    if (!!this.authContext) {
       return this.authContext;
     }
     return JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_KEY));
@@ -57,7 +57,7 @@ export class AuthService {
     return this.http
       .post(`${this.apiUrl}/refresh`, null, {headers: this.getHeaders()})
       .pipe(map((res: Response) => {
-        let body = this.extractData(res);
+        const body = this.extractData(res);
         this.saveAuthContextToLocal(body);
         return body;
       }), catchError(this.handleError));
@@ -73,7 +73,7 @@ export class AuthService {
 
   private handleError(res: Response | any) {
     let error;
-    if(res.text()) {
+    if (res.text()) {
       error = res.json();
     }
 
@@ -85,7 +85,7 @@ export class AuthService {
   private getHeaders(): Headers {
     const authContext = this.getAuthContextFromLocal();
     const headers = new Headers();
-    headers.set("authorization", authContext.token);
+    headers.set('authorization', authContext.token);
     headers.set('Content-Type', 'application/json');
     return headers;
   }

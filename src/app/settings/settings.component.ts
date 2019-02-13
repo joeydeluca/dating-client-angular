@@ -1,13 +1,13 @@
-import {Component, OnInit} from "@angular/core";
-import {Router} from "@angular/router";
-import {AuthService} from "../services/auth.service";
-import {UserService} from "../services/user.service";
-import {MatSnackBar} from "@angular/material";
-import {SharedService} from "../services/shared.service";
-import {Subscription} from "../models/Subscription";
-import {PaymentService} from "../services/payment.service";
-import {PaymentPageData} from "../models/PaymentPageData";
-import {User} from "../models/User";
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthService} from '../services/auth.service';
+import {UserService} from '../services/user.service';
+import {MatSnackBar} from '@angular/material';
+import {SharedService} from '../services/shared.service';
+import {Subscription} from '../models/Subscription';
+import {PaymentService} from '../services/payment.service';
+import {PaymentPageData} from '../models/PaymentPageData';
+import {User} from '../models/User';
 
 
 @Component({
@@ -31,12 +31,12 @@ export class SettingsComponent implements OnInit {
 
     ngOnInit() {
         SharedService.showLoader.next(true);
-        this.accountStatus = this.authService.getAuthContext().paid ? "UPGRADED" : "BASIC";
+        this.accountStatus = this.authService.getAuthContext().paid ? 'UPGRADED' : 'BASIC';
 
         this.userService.getUser().subscribe(
             (user) => {
                 this.user = user;
-            }, 
+            },
             (error) => {
                 this.showError(error);
             },
@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit {
             (subscription) => {
                 this.subscription = subscription;
                 this.isSubscriptionExpired = new Date(subscription.endDate) < new Date();
-            }, 
+            },
             (error) => {},
             () => SharedService.showLoader.next(false)
         );
@@ -68,8 +68,8 @@ export class SettingsComponent implements OnInit {
     onSubmit(): void {
         SharedService.showLoader.next(true);
         this.userService.updateEmailSubscription(this.user.emailSubscription).subscribe(
-            () => {this.showSuccess('Done');SharedService.showLoader.next(false);},
-            () => {this.showError('Request failed');SharedService.showLoader.next(false);} 
+            () => {this.showSuccess('Done'); SharedService.showLoader.next(false); },
+            () => {this.showError('Request failed'); SharedService.showLoader.next(false); }
         );
     }
 
@@ -77,16 +77,16 @@ export class SettingsComponent implements OnInit {
         SharedService.showLoader.next(true);
         this.userService.deleteAccount().subscribe(
             () => {
-                let message = "Your account has been deleted. We are sorry to see you go. ";
-                if(this.subscription && !this.isSubscriptionExpired) {
-                    message += "If you have a PayPal subscription, please cancel through PayPal.com."; 
+                let message = 'Your account has been deleted. We are sorry to see you go. ';
+                if (this.subscription && !this.isSubscriptionExpired) {
+                    message += 'If you have a PayPal subscription, please cancel through PayPal.com.';
                 }
                 this.showSuccess(message);
                 SharedService.showLoader.next(false);
                 this.authService.logout();
                 this.router.navigate(['/']);
             },
-            () => {this.showError('Request failed');SharedService.showLoader.next(false);} 
+            () => {this.showError('Request failed'); SharedService.showLoader.next(false); }
         );
     }
 

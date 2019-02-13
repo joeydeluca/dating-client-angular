@@ -1,4 +1,4 @@
-import {ProfileEvent} from "./ProfileEvent";
+import {ProfileEvent} from './ProfileEvent';
 
 export class Favorites {
     myFavorites: ProfileEvent[];

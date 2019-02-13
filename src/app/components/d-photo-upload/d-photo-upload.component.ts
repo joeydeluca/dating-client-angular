@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from "@angular/core";
-import {trigger, transition, style, animate } from "@angular/animations";
+import {Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import {trigger, transition, style, animate } from '@angular/animations';
 import Cropper from 'cropperjs/dist/cropper.esm.js';
-import {Photo} from "../../models/Photo";
-import {SharedService} from "../../services/shared.service";
-import {PhotoService} from "../../services/photo.service";
-import {MatSnackBar} from "@angular/material";
+import {Photo} from '../../models/Photo';
+import {SharedService} from '../../services/shared.service';
+import {PhotoService} from '../../services/photo.service';
+import {MatSnackBar} from '@angular/material';
 
 
 @Component({
@@ -26,15 +26,15 @@ import {MatSnackBar} from "@angular/material";
 })
 export class DPhotoUploadComponent {
   cropper: Cropper;
-  isUploading: boolean = false;
-  isCroppingView: boolean = false;
+  isUploading = false;
+  isCroppingView = false;
   photo: Photo;
   @ViewChild('file') fileSelector: ElementRef;
   @ViewChild('image') imageSelector: ElementRef;
 
   @Output()
   complete = new EventEmitter<Photo>();
-  
+
   constructor(
       private snackBar: MatSnackBar,
       private photoService: PhotoService
@@ -44,7 +44,7 @@ export class DPhotoUploadComponent {
   upload() {
     SharedService.showLoader.next(true);
     this.isUploading = true;
-    let formData = new FormData();
+    const formData = new FormData();
     this.photoService.uploadPhoto(this.fileSelector.nativeElement.files.item(0))
       .subscribe(
         (uploadPhotoResponse) => {
@@ -52,7 +52,7 @@ export class DPhotoUploadComponent {
           SharedService.showLoader.next(false);
           this.isUploading = false;
           this.isCroppingView = true;
-          this.fileSelector.nativeElement.value = "";
+          this.fileSelector.nativeElement.value = '';
         },
         (error) => {
           this.snackBar.open(error, null, {
@@ -61,12 +61,12 @@ export class DPhotoUploadComponent {
           });
           this.isUploading = false;
           SharedService.showLoader.next(false);
-          this.fileSelector.nativeElement.value = "";
-      })
+          this.fileSelector.nativeElement.value = '';
+      });
   }
 
   initCropper(): void {
-    
+
     this.cropper = new Cropper(this.imageSelector.nativeElement, {
         aspectRatio: 191 / 212,
         scalable: false,
@@ -96,7 +96,7 @@ export class DPhotoUploadComponent {
                 duration: 8000,
                 panelClass: ['bg-success', 'snackbar']
         });
-      }, 
+      },
       (error) => {
         SharedService.showLoader.next(false);
         this.snackBar.open(error, null, {
@@ -104,11 +104,11 @@ export class DPhotoUploadComponent {
                 panelClass: ['bg-danger', 'snackbar']
         });
       }
-    )
+    );
   }
 
 
-  
+
 
 }
 

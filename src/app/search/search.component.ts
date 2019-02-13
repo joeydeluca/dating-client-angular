@@ -1,17 +1,17 @@
-import {Component, OnInit, OnDestroy} from "@angular/core";
-import {FormBuilder} from "@angular/forms";
-import {UserService} from "../services/user.service";
-import {AuthService} from "../services/auth.service";
-import {MatSnackBar} from "@angular/material";
-import {Country, Region, City} from "../models/Location";
-import {SharedService} from "../services/shared.service";
-import {LocationService} from "../services/location.service";
-import {RecipientProfileService} from "../services/recipient-profile.service";
-import {Profile} from "../models/Profile";
-import {Page} from "../models/Page";
-import {RecipientProfile} from "../models/RecipientProfile";
-import {AuthContext} from "../models/AuthContext";
-import {Router, ActivatedRoute, Params} from "@angular/router";
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
+import {UserService} from '../services/user.service';
+import {AuthService} from '../services/auth.service';
+import {MatSnackBar} from '@angular/material';
+import {Country, Region, City} from '../models/Location';
+import {SharedService} from '../services/shared.service';
+import {LocationService} from '../services/location.service';
+import {RecipientProfileService} from '../services/recipient-profile.service';
+import {Profile} from '../models/Profile';
+import {Page} from '../models/Page';
+import {RecipientProfile} from '../models/RecipientProfile';
+import {AuthContext} from '../models/AuthContext';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'search',
@@ -20,7 +20,7 @@ import {Router, ActivatedRoute, Params} from "@angular/router";
 })
 export class SearchComponent implements OnInit, OnDestroy {
 
-  SELECT_ALL: string = "All";
+  SELECT_ALL = 'All';
 
   countries: Country[];
   regions: Region[];
@@ -30,8 +30,8 @@ export class SearchComponent implements OnInit, OnDestroy {
   selectedRegion: Region;
   selectedCity: City;
 
-  selectedAgeFrom: number = 18;
-  selectedAgeTo: number = 65;
+  selectedAgeFrom = 18;
+  selectedAgeTo = 65;
 
   profile: Profile;
 
@@ -52,38 +52,38 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    for(let x = 18; x <= 100; x++) {
+    for (let x = 18; x <= 100; x++) {
       this.ages.push(x);
     }
-  
+
     this.genderSeeking = this.getGenderSeeking();
 
     this.route.params.subscribe((params: Params) => {
- 
+
       this.selectedAgeFrom = params['ageFrom'] ? params['ageFrom'] : this.selectedAgeFrom;
       this.selectedAgeTo = params['ageTo'] ? params['ageTo'] : this.selectedAgeTo;
 
-      this.userService.getUser().subscribe(  
+      this.userService.getUser().subscribe(
         (user) => {
           this.profile = user.profile;
 
           const useProfileValues = Object.keys(params).length === 0;
 
-          if(params['countryId'] && params['countryName']) {
+          if (params['countryId'] && params['countryName']) {
             const country = <Country>{countryId: params['countryId'], countryName: params['countryName']};
             this.selectedCountry = country;
           } else {
             this.selectedCountry = this.profile.country;
           }
 
-          if(params['regionId'] && params['regionName']) {
+          if (params['regionId'] && params['regionName']) {
             const region = <any>{regionId: params['regionId'], regionName: params['regionName']};
             this.selectedRegion = region;
           } else {
             this.selectedRegion = useProfileValues ? this.profile.region : this.getSelectAllRegion();
           }
 
-          if(params['cityId'] && params['cityName']) {
+          if (params['cityId'] && params['cityName']) {
             const city = <any>{cityId: params['cityId'], cityName: params['cityName']};
             this.selectedCity = city;
           } else {
@@ -95,7 +95,7 @@ export class SearchComponent implements OnInit, OnDestroy {
           this.loadCountries();
           this.loadRegions(this.selectedCountry);
           this.loadCities(this.selectedRegion);
-        }, 
+        },
         () => {
           this.snackBar.open('Error retrieving your profile', null, {
               duration: 4000,
@@ -107,14 +107,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    localStorage.setItem("search-scroll-y", window.scrollY.toString());
+    localStorage.setItem('search-scroll-y', window.scrollY.toString());
   }
 
-  getGenderSeeking(): string { 
-      return this.authService.getAuthContextFromLocal().genderSeeking == "M" ? "Men" : "Women";
+  getGenderSeeking(): string {
+      return this.authService.getAuthContextFromLocal().genderSeeking == 'M' ? 'Men' : 'Women';
   }
 
-  loadCountries() {  
+  loadCountries() {
     this.locationService.getCountries()
       .subscribe(
         (result) => {
@@ -130,7 +130,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   loadRegions(country: Country) {
-    if(!country) {
+    if (!country) {
       this.clearRegions();
       this.clearCities();
       return;
@@ -139,7 +139,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.locationService.getRegions(country.countryId)
       .subscribe(
         (result) => {
-          if(result.length > 0) {
+          if (result.length > 0) {
             result.unshift(this.getSelectAllRegion());
             this.regions = result;
           }
@@ -153,8 +153,8 @@ export class SearchComponent implements OnInit, OnDestroy {
       );
   }
 
-   loadCities(region: Region) { 
-    if(!region || !region.regionId) {
+   loadCities(region: Region) {
+    if (!region || !region.regionId) {
       this.clearCities();
       return;
     }
@@ -162,7 +162,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.locationService.getCities(region.regionId)
       .subscribe(
         (result) => {
-          if(result.length > 0) {
+          if (result.length > 0) {
             result.unshift(this.getSelectAllCity());
             this.cities = result;
           }
@@ -179,30 +179,30 @@ export class SearchComponent implements OnInit, OnDestroy {
   loadProfiles(pageNumber: number) {
     SharedService.showLoader.next(true);
     this.userService.searchProfiles(
-          pageNumber, 
-          this.selectedAgeFrom, 
-          this.selectedAgeTo, 
+          pageNumber,
+          this.selectedAgeFrom,
+          this.selectedAgeTo,
           this.selectedCountry ? this.selectedCountry.countryId : '',
           this.selectedRegion ? this.selectedRegion.regionId : '',
           this.selectedCity ? this.selectedCity.cityId : ''
         )
         .subscribe(
           (result) => {
-            this.profilePage = result; 
-            
+            this.profilePage = result;
+
             SharedService.showLoader.next(false);
 
-            const scrollY = localStorage.getItem("search-scroll-y");
-              if(scrollY) {
+            const scrollY = localStorage.getItem('search-scroll-y');
+              if (scrollY) {
                 setTimeout(() => {
                 window.scrollTo(0, parseInt(scrollY));
-                localStorage.removeItem("search-scroll-y");
+                localStorage.removeItem('search-scroll-y');
                 }, 100);
               } else {
                 window.scrollTo(0, 0);
               }
 
-          }, 
+          },
           (error) => {
             SharedService.showLoader.next(false);
             this.snackBar.open(error, null, {
@@ -221,7 +221,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             duration: 4000,
             panelClass: ['bg-success', 'snackbar']
             });
-      }, 
+      },
       (error) => {
         SharedService.showLoader.next(false);
         console.error(error);
@@ -251,14 +251,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.router.navigate(['/view-profile', recipientProfileId]);
   }
 
-  clearRegions():void {
+  clearRegions(): void {
     this.regions = [];
     this.regions.push(this.getSelectAllRegion());
     this.selectedRegion = this.regions[0];
-    
+
   }
 
-  clearCities():void {
+  clearCities(): void {
     this.cities = [];
     this.cities.push(this.getSelectAllCity());
     this.selectedCity = this.cities[0];
@@ -283,12 +283,12 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   getSearchCriteriaParams(pageNumber: number) {
-    return { 
-      page: pageNumber, 
-      ageFrom: this.selectedAgeFrom, 
-      ageTo: this.selectedAgeTo, 
-      countryId: this.selectedCountry.countryId, 
-      countryName: this.selectedCountry.countryName, 
+    return {
+      page: pageNumber,
+      ageFrom: this.selectedAgeFrom,
+      ageTo: this.selectedAgeTo,
+      countryId: this.selectedCountry.countryId,
+      countryName: this.selectedCountry.countryName,
       regionId: this.selectedRegion ? this.selectedRegion.regionId : '',
       regionName: this.selectedRegion ? this.selectedRegion.regionName : '',
       cityId: this.selectedCity ? this.selectedCity.cityId : '',

@@ -1,11 +1,11 @@
-import {Component, OnInit} from "@angular/core";
-import {RecipientProfileService} from "../services/recipient-profile.service";
-import {RecipientProfile} from "../models/RecipientProfile";
-import {MatSnackBar} from "@angular/material";
-import {AuthService} from "../services/auth.service";
-import {SharedService} from "../services/shared.service";
-import {Favorites} from "../models/Favorites";
-import {ProfileEvent} from "../models/ProfileEvent";
+import {Component, OnInit} from '@angular/core';
+import {RecipientProfileService} from '../services/recipient-profile.service';
+import {RecipientProfile} from '../models/RecipientProfile';
+import {MatSnackBar} from '@angular/material';
+import {AuthService} from '../services/auth.service';
+import {SharedService} from '../services/shared.service';
+import {Favorites} from '../models/Favorites';
+import {ProfileEvent} from '../models/ProfileEvent';
 
 
 @Component({
@@ -31,18 +31,18 @@ export class FavoritesComponent implements OnInit {
                 this.favoritedMeProfiles = result.favoritedMe;
                 this.favoritedProfiles = result.myFavorites;
 
-                if(this.favoritedMeProfiles.length === 0) {
-                    this.emptyListMessageFavoritedMe = "No one has favorited you";
+                if (this.favoritedMeProfiles.length === 0) {
+                    this.emptyListMessageFavoritedMe = 'No one has favorited you';
                 }
-                if(this.favoritedProfiles.length === 0) {
-                    this.emptyListMessageMyFavorites = "You have not added anyone to your favorites list";
+                if (this.favoritedProfiles.length === 0) {
+                    this.emptyListMessageMyFavorites = 'You have not added anyone to your favorites list';
                 }
 
                 SharedService.showLoader.next(false);
-            }, 
+            },
             () => {
                 SharedService.showLoader.next(false);
-                this.handleError("Error loading list");
+                this.handleError('Error loading list');
             }
         );
     }
@@ -52,13 +52,13 @@ export class FavoritesComponent implements OnInit {
         this.recipientProfileService.deleteFavorite(userId).subscribe(
             () => {
                 SharedService.showLoader.next(false);
-                this.handleSuccess("Done");
+                this.handleSuccess('Done');
 
                 this.ngOnInit();
             },
             () => {
                 SharedService.showLoader.next(false);
-                this.handleError("Unable to complete request");
+                this.handleError('Unable to complete request');
             }
         );
     }

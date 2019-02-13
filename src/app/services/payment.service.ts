@@ -1,10 +1,10 @@
-import {Injectable} from "@angular/core";
-import {environment} from "../../environments/environment";
-import {Http, Response, Headers} from "@angular/http";
-import {Observable, throwError} from "rxjs";
-import {map, catchError} from "rxjs/operators";
-import {AuthService} from "./auth.service";
-import {PaymentPageData} from "../models/PaymentPageData";
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {Http, Response, Headers} from '@angular/http';
+import {Observable, throwError} from 'rxjs';
+import {map, catchError} from 'rxjs/operators';
+import {AuthService} from './auth.service';
+import {PaymentPageData} from '../models/PaymentPageData';
 
 @Injectable()
 export class PaymentService {
@@ -29,7 +29,7 @@ export class PaymentService {
 
   private handleError(res: Response | any) {
     let error;
-    if(res.text()) {
+    if (res.text()) {
       error = res.json();
     }
 
@@ -41,7 +41,7 @@ export class PaymentService {
   private getHeaders(): Headers {
     const authContext = this.authService.getAuthContextFromLocal();
     const headers = new Headers();
-    headers.set("authorization", authContext.token);
+    headers.set('authorization', authContext.token);
     headers.set('Content-Type', 'application/json');
     return headers;
   }

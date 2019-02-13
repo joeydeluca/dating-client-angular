@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  //apiUrl: 'http://datingapi-test.us-east-1.elasticbeanstalk.com/api'
+  // apiUrl: 'http://datingapi-test.us-east-1.elasticbeanstalk.com/api'
   apiUrl: 'https://d2vsxmtba5ou2b.cloudfront.net/api'
 };

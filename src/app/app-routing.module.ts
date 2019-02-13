@@ -1,27 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {LandingComponent} from "./landing/landing.component";
-import {JoinCompletionComponent} from "./join-completion/join-completion.component";
-import {JoinUploadPhotoComponent} from "./join-upload-photo/join-upload-photo.component";
-import {SearchComponent} from "./search/search.component";
-import {LoginComponent} from "./login/login.component";
-import {ForgotPasswordComponent} from "./password-reset/forgot-password.component";
-import {PasswordResetComponent} from "./password-reset/password-reset.component";
-import {ViewProfileComponent} from "./view-profile/view-profile.component";
-import {UpdateProfileComponent} from "./update-profile/update-profile.component";
-import {MessagesComponent} from "./messages/messages.component";
-import {ViewConversationComponent} from "./messages/view-conversation.component";
-import {FavoritesComponent} from "./favorites/favorites.component";
-import {FlirtsComponent} from "./flirts/flirts.component";
-import {ProfileViewsComponent} from "./profile-views/profile-views.component";
-import {UpgradeComponent} from "./upgrade/upgrade.component";
-import {VerifyPaymentComponent} from "./upgrade/verify-payment.component";
-import {SettingsComponent} from "./settings/settings.component";
-import {SupportComponent} from "./support/support.component";
+import {LandingComponent} from './landing/landing.component';
+import {JoinCompletionComponent} from './join-completion/join-completion.component';
+import {JoinUploadPhotoComponent} from './join-upload-photo/join-upload-photo.component';
+import {SearchComponent} from './search/search.component';
+import {LoginComponent} from './login/login.component';
+import {ForgotPasswordComponent} from './password-reset/forgot-password.component';
+import {PasswordResetComponent} from './password-reset/password-reset.component';
+import {ViewProfileComponent} from './view-profile/view-profile.component';
+import {UpdateProfileComponent} from './update-profile/update-profile.component';
+import {MessagesComponent} from './messages/messages.component';
+import {ViewConversationComponent} from './messages/view-conversation.component';
+import {FavoritesComponent} from './favorites/favorites.component';
+import {FlirtsComponent} from './flirts/flirts.component';
+import {ProfileViewsComponent} from './profile-views/profile-views.component';
+import {UpgradeComponent} from './upgrade/upgrade.component';
+import {VerifyPaymentComponent} from './upgrade/verify-payment.component';
+import {SettingsComponent} from './settings/settings.component';
+import {SupportComponent} from './support/support.component';
 
-import {AuthGuard} from "./guards/auth.guard";
-import {PaidGuard} from "./guards/paid.guard";
-import {NonMemberGuard} from "./guards/nonmember.guard";
+import {AuthGuard} from './guards/auth.guard';
+import {PaidGuard} from './guards/paid.guard';
+import {NonMemberGuard} from './guards/nonmember.guard';
 
 
 const routes: Routes = [
