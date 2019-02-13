@@ -36,9 +36,10 @@ export class FieldDisplayComponent implements OnChanges {
         options.forEach(option => {
           if(this.isValueInOptions(option)) {
             if(this.displayValue) {
-              this.displayValue = ", "
+              this.displayValue = this.displayValue + ", " +  option.name;
+            } else {
+              this.displayValue = option.name;
             }
-            this.displayValue = option.name;
           }
         });
 
@@ -60,6 +61,7 @@ export class FieldDisplayComponent implements OnChanges {
   private isValueInOptions(option: any): boolean {
     let isInOptions = false;
     if(Array.isArray(this.ids)) {
+     
       this.ids.forEach(x => {
         if(x === option.id) {
           isInOptions = true;

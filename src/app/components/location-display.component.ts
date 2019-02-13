@@ -4,9 +4,9 @@ import {Country,Region,City} from "../models/Location";
 @Component({
   selector: 'location-display',
   template: `
-        <span *ngIf="!!country && !!city && !!city.cityId">{{city.cityName}},</span>
-        <span *ngIf="!!country && !!region && !!region.regionId">{{region.regionName}},</span>
-        <span *ngIf="!!country">{{country.countryName}}</span>
+        <span *ngIf="!!country && !!city && !!city.cityId">{{city.cityName}}, </span>
+        <span *ngIf="!!country && !!region && !!region.regionId">{{region.regionName}}, </span>
+        <span *ngIf="!!country">{{country.countryName}} </span>
   `
 })
 export class LocationDisplayComponent {

@@ -4,9 +4,10 @@ import {User} from "../models/User";
 import {ValidationService} from "../services/validation.service";
 import {SupportService} from "../services/support.service";
 import {AuthService} from "../services/auth.service";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {SharedService} from "../services/shared.service";
+import {finalize} from "rxjs/operators";
 
 @Component({
   selector: 'password-reset',
@@ -18,7 +19,7 @@ export class PasswordResetComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private supportService: SupportService,
-              private snackBar: MdSnackBar,
+              private snackBar: MatSnackBar,
               private route: ActivatedRoute,
               private router: Router,) {
     this.form = this.fb.group({
@@ -41,12 +42,12 @@ export class PasswordResetComponent implements OnInit {
     SharedService.showLoader.next(true);
 
     this.supportService.resetPassword(this.requestId, this.form.value.password)
-    .finally(() => SharedService.showLoader.next(false))
+    .pipe(finalize(() => SharedService.showLoader.next(false)))
     .subscribe(
       () => {
         this.snackBar.open('Password updated. Please enter your new password to login', null, {
             duration: 5000,
-            extraClasses: ['bg-success', 'snackbar']
+            panelClass: ['bg-success', 'snackbar']
         });
         this.router.navigate(['/login']);
       }, 
@@ -59,7 +60,7 @@ export class PasswordResetComponent implements OnInit {
   showError(msg) {
     this.snackBar.open(msg, null, {
       duration: 5000,
-      extraClasses: ['bg-danger', 'snackbar']
+      panelClass: ['bg-danger', 'snackbar']
     });
   }
 }

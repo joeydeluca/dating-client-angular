@@ -4,7 +4,7 @@
         <div class="card-header">
           View Profile: <span class="text-primary">{{recipientProfile?.username}}</span>
         </div>
-        <div class="card-block">
+        <div class="card-body">
             <div class="d-flex">
                 <div class="">
                     <div class="row small" style="margin: 0 auto">
@@ -18,8 +18,9 @@
                             <div><span class="text-muted">Body:</span> <span class="text-primary"><field-display type="BODY_TYPE" [ids]="recipientProfile?.profile.bodyType"></field-display></span></div>
                             <div><span class="text-muted">Children:</span> <span class="text-primary"><field-display type="CHILDREN_STATUS" [ids]="recipientProfile?.profile.childrenStatus"></field-display></span></div>
                             <div><span class="text-muted">I am looking for:</span> <span class="text-primary">{{recipientProfile?.genderSeeking === 'M' ? 'Men' : 'Women'}}</span></div>
+                            
                             <div class="mt-3">
-                                <button (click)="sendFlirt(recipientProfile?.userId, recipientProfile?.username)" class="btn btn-outline-primary btn-sm" type="button"><i class="material-icons align-middle">whatshot</i> Send Flirt</button>
+                                <button (click)="sendFlirt(recipientProfile?.userId, recipientProfile?.username)" class="btn btn-outline-primary btn-sm" type="button" style="margin-right:5px"><i class="material-icons align-middle">whatshot</i> Send Flirt</button>
                                 <button (click)="addFavorite(recipientProfile?.userId, recipientProfile?.username)" class="btn btn-outline-primary btn-sm" type="button"><i class="material-icons align-middle">favorite_border</i> Favorite</button>
                             </div>
                         </div>

@@ -4,14 +4,14 @@
         <div class="card-header">
           Conversations
         </div>
-        <div class="card-block">
+        <div class="card-body">
 
             <div *ngIf="displayZeroStateMessage" class="alert alert-warning text-center" role="alert">
                 You do not have any messages!
             </div>
 
             <div class="card card-outline-secondary mb-3" [class.card-outline-warning]="items[key.userId].numberOfUnreadMessagesReceived > 0" *ngFor="let key of keys">
-                <div class="card-block">
+                <div class="card-body">
                     <div class="media"  >
                         <img routerLink="/messages/{{key.userId}}" class="d-flex mr-3" [src]="items[key.userId].recipientProfilePhotoUrl" alt="Photo">
                         <div class="media-body">

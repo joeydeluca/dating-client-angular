@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {RecipientProfileService} from "../services/recipient-profile.service";
 import {Message} from "../models/Message";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 import {AuthService} from "../services/auth.service";
 import {SharedService} from "../services/shared.service";
 import {Router} from "@angular/router";
@@ -20,7 +20,7 @@ export class MessagesComponent implements OnInit {
   constructor(
         private recipientProfileService: RecipientProfileService, 
         private authService: AuthService,
-        private snackBar: MdSnackBar,
+        private snackBar: MatSnackBar,
         private router: Router) {
   }
 
@@ -94,7 +94,7 @@ export class MessagesComponent implements OnInit {
   private handleError(message: string): void {
     this.snackBar.open(message, null, {
         duration: 4000,
-        extraClasses: ['bg-danger', 'snackbar']
+        panelClass: ['bg-danger', 'snackbar']
     });
   }
 }

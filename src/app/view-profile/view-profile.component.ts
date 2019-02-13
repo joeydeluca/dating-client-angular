@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder, Validators} from "@angular/forms";
 import {RecipientProfileService} from "../services/recipient-profile.service";
 import {UserService} from "../services/user.service";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {RecipientProfile} from "../models/RecipientProfile";
 import {SharedService} from "../services/shared.service";
@@ -25,7 +25,7 @@ export class ViewProfileComponent implements OnInit {
   constructor(
     private router: Router ,
     private route: ActivatedRoute,
-    private snackBar: MdSnackBar,
+    private snackBar: MatSnackBar,
     private recipientProfileService: RecipientProfileService,
     private authService: AuthService) {
       window.scrollTo(0, 0);
@@ -89,7 +89,7 @@ export class ViewProfileComponent implements OnInit {
     if(!this.authService.getAuthContext().paid) {
       this.snackBar.open('This feature requires an upgraded membership', null, {
         duration: 4000,
-        extraClasses: ['bg-warning', 'snackbar']
+        panelClass: ['bg-warning', 'snackbar']
       });
       this.router.navigate(['/upgrade']);
       return;
@@ -116,14 +116,14 @@ export class ViewProfileComponent implements OnInit {
     private handleError(message: string): void {
       this.snackBar.open(message, null, {
           duration: 4000,
-          extraClasses: ['bg-danger', 'snackbar']
+          panelClass: ['bg-danger', 'snackbar']
       });
     }
 
     private handleSuccess(message: string): void {
       this.snackBar.open(message, null, {
           duration: 4000,
-          extraClasses: ['bg-success', 'snackbar']
+          panelClass: ['bg-success', 'snackbar']
       });
     }
 

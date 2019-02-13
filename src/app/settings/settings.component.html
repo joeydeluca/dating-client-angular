@@ -7,7 +7,7 @@
                 <div class="card-header">
                     Membership
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Date Joined</label>
                         <div class="col-sm-9">
@@ -51,23 +51,23 @@
                 <div class="card-header">
                     Email Notifications
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     <div class="row">
                         <div class="col">
                             <span>Message Alert</span>
                             <small class="form-text text-muted">Notify me when someone sends a message</small>
                         </div>
                         <div class="col">
-                            <label class="custom-control custom-radio">
-                                <input type="radio" name="message" class="custom-control-input" [value]="true" [(ngModel)]="user.emailSubscription.isSubscribedNewMailAlert">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">On</span>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="message" [value]="true" [(ngModel)]="user.emailSubscription.isSubscribedNewMailAlert">On
                                 </label>
-                                <label class="custom-control custom-radio">
-                                <input type="radio" name="message" class="custom-control-input" [value]="false" [(ngModel)]="user.emailSubscription.isSubscribedNewMailAlert">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">Off</span>
-                            </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="message" [value]="false" [(ngModel)]="user.emailSubscription.isSubscribedNewMailAlert">Off
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -76,16 +76,16 @@
                             <small class="form-text text-muted">Notify me when someone sends a flirt</small>
                         </div>
                         <div class="col">
-                            <label class="custom-control custom-radio">
-                                <input type="radio" name="flirt" class="custom-control-input" [value]="true" [(ngModel)]="user.emailSubscription.isSubscribedNewFlirtAlert">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">On</span>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="flirt" [value]="true" [(ngModel)]="user.emailSubscription.isSubscribedNewFlirtAlert">On
                                 </label>
-                                <label class="custom-control custom-radio">
-                                <input type="radio" name="flirt" class="custom-control-input" [value]="false" [(ngModel)]="user.emailSubscription.isSubscribedNewFlirtAlert">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">Off</span>
-                            </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="flirt" [value]="false" [(ngModel)]="user.emailSubscription.isSubscribedNewFlirtAlert">Off
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -94,16 +94,16 @@
                             <small class="form-text text-muted">Notify me when someone adds me to their favorites list</small>
                         </div>
                         <div class="col">
-                            <label class="custom-control custom-radio">
-                                <input type="radio" name="favorited-me" class="custom-control-input" [value]="true" [(ngModel)]="user.emailSubscription.isSubscribedFavoritedMeAlert">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">On</span>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="favorited-me" [value]="true" [(ngModel)]="user.emailSubscription.isSubscribedFavoritedMeAlert">On
                                 </label>
-                                <label class="custom-control custom-radio">
-                                <input type="radio" name="favorited-me" class="custom-control-input" [value]="false" [(ngModel)]="user.emailSubscription.isSubscribedFavoritedMeAlert">
-                                <span class="custom-control-indicator"></span>
-                                <span class="custom-control-description">Off</span>
-                            </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="favorited-me" [value]="false" [(ngModel)]="user.emailSubscription.isSubscribedFavoritedMeAlert">Off
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <button (click)="onSubmit()" class="btn btn-primary mt-3"><i class="material-icons align-middle">settings_power</i> Save</button>

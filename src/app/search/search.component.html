@@ -9,7 +9,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="criteria collapse" id="criteria">
-        <div class="card-block">
+        <div class="card-body">
           <form>
             <div class="form-group row">
               <label class="col-2 col-form-label">Age</label>
@@ -60,14 +60,14 @@
 
   <div class="card">
     <div class="card-header">Search</div>
-    <div class="card-block">
+    <div class="card-body">
       <div *ngIf="profilePage && profilePage.content.length === 0" class="alert alert-warning mt-3" role="alert">
         No profiles found that match your search results. Expand your search criteria and try again.
       </div>
 
       <div class="card mb-3 text-center" *ngFor="let userDto of profilePage?.content" >
         <img (click)="viewRecipientProfile(userDto.userId)" class="rounded" [src]="userDto.profilePhotoUrl" alt="Photo" style="margin:0 auto;margin-top:1.25rem">
-        <div class="card-block">
+        <div class="card-body">
           <h4 class="card-title" (click)="viewRecipientProfile(userDto.userId)">{{userDto.username}}</h4>
           <p class="card-text text-muted">{{userDto.age}} | <location-display [country]="userDto.profile.country" [region]="userDto.profile.region" [city]="userDto.profile.city"></location-display></p>
         </div>

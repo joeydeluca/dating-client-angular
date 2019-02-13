@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewChild, ElementRef, trigger, transition, style, animate, Output, EventEmitter } from "@angular/core";
-import * as Cropper from 'cropperjs';
-import {Photo} from "../../models/photo";
+import {Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from "@angular/core";
+import {trigger, transition, style, animate } from "@angular/animations";
+import Cropper from 'cropperjs/dist/cropper.esm.js';
+import {Photo} from "../../models/Photo";
 import {SharedService} from "../../services/shared.service";
 import {PhotoService} from "../../services/photo.service";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 
 
 @Component({
@@ -35,7 +36,7 @@ export class DPhotoUploadComponent {
   complete = new EventEmitter<Photo>();
   
   constructor(
-      private snackBar: MdSnackBar,
+      private snackBar: MatSnackBar,
       private photoService: PhotoService
       ) {
   }
@@ -56,7 +57,7 @@ export class DPhotoUploadComponent {
         (error) => {
           this.snackBar.open(error, null, {
                 duration: 8000,
-                extraClasses: ['bg-danger', 'snackbar']
+                panelClass: ['bg-danger', 'snackbar']
           });
           this.isUploading = false;
           SharedService.showLoader.next(false);
@@ -65,6 +66,7 @@ export class DPhotoUploadComponent {
   }
 
   initCropper(): void {
+    
     this.cropper = new Cropper(this.imageSelector.nativeElement, {
         aspectRatio: 191 / 212,
         scalable: false,
@@ -92,14 +94,14 @@ export class DPhotoUploadComponent {
         this.cropper.destroy();
         this.snackBar.open('Photo uploaded successfully', null, {
                 duration: 8000,
-                extraClasses: ['bg-success', 'snackbar']
+                panelClass: ['bg-success', 'snackbar']
         });
       }, 
       (error) => {
         SharedService.showLoader.next(false);
         this.snackBar.open(error, null, {
                 duration: 8000,
-                extraClasses: ['bg-danger', 'snackbar']
+                panelClass: ['bg-danger', 'snackbar']
         });
       }
     )

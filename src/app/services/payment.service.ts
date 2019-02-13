@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 import {Http, Response, Headers} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
+import {map, catchError} from "rxjs/operators";
 import {AuthService} from "./auth.service";
 import {PaymentPageData} from "../models/PaymentPageData";
 
@@ -15,8 +16,7 @@ export class PaymentService {
   getPaymentPageData(): Observable<PaymentPageData> {
     return this.http
       .get(`${this.apiUrl}/request`, {headers: this.getHeaders()})
-      .map(this.extractData)
-      .catch(this.handleError);
+      .pipe(map(this.extractData), catchError(this.handleError));
   }
 
   private extractData(res: Response) {
@@ -35,7 +35,7 @@ export class PaymentService {
 
     const errMsg = (error && error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    return Observable.throw(errMsg);
+    return throwError(errMsg);
   }
 
   private getHeaders(): Headers {

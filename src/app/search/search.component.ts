@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from "@angular/core";
 import {FormBuilder} from "@angular/forms";
 import {UserService} from "../services/user.service";
 import {AuthService} from "../services/auth.service";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 import {Country, Region, City} from "../models/Location";
 import {SharedService} from "../services/shared.service";
 import {LocationService} from "../services/location.service";
@@ -43,7 +43,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
               private userService: UserService,
-              private snackBar: MdSnackBar,
+              private snackBar: MatSnackBar,
               private locationService: LocationService,
               private authService: AuthService,
               private recipientProfileService: RecipientProfileService,
@@ -99,7 +99,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         () => {
           this.snackBar.open('Error retrieving your profile', null, {
               duration: 4000,
-              extraClasses: ['bg-danger', 'snackbar']
+              panelClass: ['bg-danger', 'snackbar']
             });
         }
       );
@@ -123,7 +123,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         (error) => {
           this.snackBar.open('Error fetching Country list', null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
           });
         }
       );
@@ -147,7 +147,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         (error) => {
           this.snackBar.open('Error fetching Region list', null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
           });
         }
       );
@@ -170,7 +170,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         (error) => {
           this.snackBar.open('Error fetching City list', null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
           });
         }
       );
@@ -207,7 +207,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             SharedService.showLoader.next(false);
             this.snackBar.open(error, null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
             });
         });
   }
@@ -219,7 +219,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         SharedService.showLoader.next(false);
          this.snackBar.open(`You sent a flirt to ${recipientUsername}`, null, {
             duration: 4000,
-            extraClasses: ['bg-success', 'snackbar']
+            panelClass: ['bg-success', 'snackbar']
             });
       }, 
       (error) => {
@@ -227,21 +227,24 @@ export class SearchComponent implements OnInit, OnDestroy {
         console.error(error);
          this.snackBar.open('Error sending flirt', null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
             });
       });
   }
 
   loadFirstPage() {
     this.router.navigate(['/search', this.getSearchCriteriaParams(0)]);
+    this.profilePage = null;
   }
 
   loadNextPage() {
     this.router.navigate(['/search', this.getSearchCriteriaParams(this.profilePage.number + 1)]);
+    this.profilePage = null;
   }
 
   loadPreviousPage() {
     this.router.navigate(['/search', this.getSearchCriteriaParams(this.profilePage.number - 1)]);
+    this.profilePage = null;
   }
 
   viewRecipientProfile(recipientProfileId: number) {

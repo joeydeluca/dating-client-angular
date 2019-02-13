@@ -3,7 +3,7 @@ import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import {RecipientProfileService} from "../services/recipient-profile.service";
 import {UserService} from "../services/user.service";
 import {PhotoService} from "../services/photo.service";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 import {Router, ActivatedRoute, Params} from "@angular/router";
 import {RecipientProfile} from "../models/RecipientProfile";
 import {SharedService} from "../services/shared.service";
@@ -45,7 +45,7 @@ export class UpdateProfileComponent implements OnInit {
     private fieldsService: ProfileFieldService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private snackBar: MdSnackBar,
+    private snackBar: MatSnackBar,
     private recipientProfileService: RecipientProfileService) {
       this.user = new User();
       this.user.profile = new Profile();
@@ -299,14 +299,14 @@ export class UpdateProfileComponent implements OnInit {
   private showError(message: string) {
     this.snackBar.open(message, null, {
       duration: 4000,
-      extraClasses: ['bg-danger', 'snackbar']
+      panelClass: ['bg-danger', 'snackbar']
     });
   }
 
   private showSucess(message: string) {
     this.snackBar.open(message, null, {
       duration: 4000,
-      extraClasses: ['bg-success', 'snackbar']
+      panelClass: ['bg-success', 'snackbar']
     });
   }
 

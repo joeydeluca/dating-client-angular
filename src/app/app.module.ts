@@ -11,11 +11,11 @@ import {ControlMessages} from "./common/control-messages.component";
 import {ValidationService} from "./services/validation.service";
 import {UserService} from "./services/user.service";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MdProgressBarModule, MdSnackBarModule} from "@angular/material";
+import {MatProgressBarModule, MatSnackBarModule} from "@angular/material";
 import {JoinCompletionComponent} from "./join-completion/join-completion.component";
 import {LocationService} from "./services/location.service";
 import {RecaptchaModule} from "ng-recaptcha";
-import {RecaptchaFormsModule} from "ng-recaptcha/recaptcha/recaptcha-forms.module";
+import {RecaptchaFormsModule} from "ng-recaptcha/forms";
 import {ProfileFieldService} from "./services/profile-field.service";
 import {MultiselectDropdownModule} from "angular-2-dropdown-multiselect";
 import {AuthService} from "./services/auth.service";
@@ -53,9 +53,10 @@ import {DNavComponent} from "./components/d-nav/d-nav.component";
 import {DPhotoUploadComponent} from "./components/d-photo-upload/d-photo-upload.component";
 
 import {RoundPipe} from "./pipes/round.pipe";
+import { AdsenseModule } from 'ng2-adsense';
 
 
-import { FileDropDirective, FileSelectDirective, FileUploadModule } from 'ng2-file-upload';
+//import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,9 @@ import { FileDropDirective, FileSelectDirective, FileUploadModule } from 'ng2-fi
     RoundPipe
   ],
   imports: [
+    AdsenseModule.forRoot({
+      adClient: 'ca-pub-2476579159077839'
+    }),
     AppRoutingModule,
     RecaptchaModule.forRoot(),
     RecaptchaFormsModule,
@@ -97,11 +101,11 @@ import { FileDropDirective, FileSelectDirective, FileUploadModule } from 'ng2-fi
     FormsModule,
     HttpModule,
     BrowserAnimationsModule,
-    MdProgressBarModule,
-    MdSnackBarModule,
+    MatProgressBarModule,
+    MatSnackBarModule,
     MultiselectDropdownModule,
     MyDatePickerModule,
-    FileUploadModule,
+    //FileUploadModule,
     NgbModule.forRoot()
   ],
   providers: [

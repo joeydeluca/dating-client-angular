@@ -1,7 +1,9 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 import {Http, Response, Headers} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
+import {map, catchError} from "rxjs/operators";
+
 import {User} from "../models/User";
 import {Country, Region, City} from "../models/Location";
 
@@ -18,22 +20,19 @@ export class LocationService {
   getCountries(): Observable<Country[]> {
     return this.http
       .get(`${this.apiUrl}/countries`, {headers: this.headers})
-      .map(this.extractData)
-      .catch(this.handleError);
+      .pipe(map(this.extractData), catchError(this.handleError));
   }
 
   getRegions(countryId: string): Observable<Region[]> {
     return this.http
       .get(`${this.apiUrl}/regions?countryId=${countryId}`, {headers: this.headers})
-      .map(this.extractData)
-      .catch(this.handleError);
+      .pipe(map(this.extractData), catchError(this.handleError));
   }
 
   getCities(regionId: string): Observable<City[]> {
     return this.http
       .get(`${this.apiUrl}/cities?regionId=${regionId}`, {headers: this.headers})
-      .map(this.extractData)
-      .catch(this.handleError);
+      .pipe(map(this.extractData), catchError(this.handleError));
   }
 
   private extractData(res: Response) {
@@ -52,7 +51,7 @@ export class LocationService {
 
     const errMsg = (error && error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    return Observable.throw(errMsg);
+    return throwError(errMsg);
   }
 
 }

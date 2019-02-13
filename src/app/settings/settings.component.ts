@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {AuthService} from "../services/auth.service";
 import {UserService} from "../services/user.service";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 import {SharedService} from "../services/shared.service";
 import {Subscription} from "../models/Subscription";
 import {PaymentService} from "../services/payment.service";
@@ -25,7 +25,7 @@ export class SettingsComponent implements OnInit {
         private authService: AuthService,
         private userService: UserService,
         private paymentService: PaymentService,
-        private snackBar: MdSnackBar,
+        private snackBar: MatSnackBar,
         private router: Router) {
     }
 
@@ -61,7 +61,7 @@ export class SettingsComponent implements OnInit {
     logout(): void {
         this.authService.logout();
         this.userService.clearCache();
-        this.snackBar.open('You have logged out', null, { duration: 4000, extraClasses: ['bg-success', 'snackbar'] });
+        this.snackBar.open('You have logged out', null, { duration: 4000, panelClass: ['bg-success', 'snackbar'] });
         this.router.navigate(['/login']);
     }
 
@@ -93,14 +93,14 @@ export class SettingsComponent implements OnInit {
     private showError(message: string) {
         this.snackBar.open(message, null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
         });
     }
 
     private showSuccess(message: string) {
         this.snackBar.open(message, null, {
             duration: 4000,
-            extraClasses: ['bg-success', 'snackbar']
+            panelClass: ['bg-success', 'snackbar']
         });
     }
 

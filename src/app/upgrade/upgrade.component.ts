@@ -4,7 +4,7 @@ import {environment} from "../../environments/environment";
 import {AuthService} from "../services/auth.service";
 import {PaymentService} from "../services/payment.service";
 import {PaymentPageData} from "../models/PaymentPageData";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 
 
 @Component({
@@ -20,7 +20,7 @@ export class UpgradeComponent implements OnInit {
     constructor(
         private authService: AuthService, 
         private paymentService: PaymentService,
-        private snackBar: MdSnackBar) {
+        private snackBar: MatSnackBar) {
         this.userId = this.authService.getAuthContext().userId
     }
 
@@ -41,7 +41,7 @@ export class UpgradeComponent implements OnInit {
                 SharedService.showLoader.next(false);
                 this.snackBar.open('Error loading payment data', null, {
                     duration: 4000,
-                    extraClasses: ['bg-danger', 'snackbar']
+                    panelClass: ['bg-danger', 'snackbar']
             });
             }
         );

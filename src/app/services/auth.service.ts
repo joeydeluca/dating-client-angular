@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 import {Http, Response, Headers} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
+import {map, catchError} from "rxjs/operators";
 import {User} from "../models/User";
 import {AuthDto} from "../models/AuthDto";
 import {Profile} from "../models/Profile";
@@ -24,12 +25,11 @@ export class AuthService {
 
     return this.http
       .post(`${this.apiUrl}`, JSON.stringify(authDto), {headers: this.headers})
-      .map((res: Response) => {
+      .pipe(map((res: Response) => {
         let body = this.extractData(res);
         this.saveAuthContextToLocal(body);
         return body;
-      })
-      .catch(this.handleError);
+      }), catchError(this.handleError));
   }
 
   logout(): void {
@@ -56,12 +56,11 @@ export class AuthService {
   refreshContext(): Observable<AuthContext> {
     return this.http
       .post(`${this.apiUrl}/refresh`, null, {headers: this.getHeaders()})
-      .map((res: Response) => {
+      .pipe(map((res: Response) => {
         let body = this.extractData(res);
         this.saveAuthContextToLocal(body);
         return body;
-      })
-      .catch(this.handleError);
+      }), catchError(this.handleError));
   }
 
   private extractData(res: Response) {
@@ -80,7 +79,7 @@ export class AuthService {
 
     const errMsg = (error && error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    return Observable.throw(errMsg);
+    return throwError(errMsg);
   }
 
   private getHeaders(): Headers {

@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 import {Http, Response, Headers} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
+import {catchError} from "rxjs/operators";
 import {Contact} from "../models/Contact";
 import {AuthService} from "./auth.service";
 import {AuthContext} from "../models/AuthContext";
@@ -13,22 +14,22 @@ export class SupportService {
   constructor(private http: Http, private authService: AuthService) {
   }
 
-  contact(contact: Contact): Observable<void> {
+  contact(contact: Contact): Observable<Response> {
     return this.http
       .post(`${this.apiUrl}/contact`, contact, {headers: this.getHeaders()})
-      .catch(this.handleError);
+      .pipe(catchError(this.handleError));
   }
 
-  sendPasswordResetLink(email: string): Observable<void> {
+  sendPasswordResetLink(email: string): Observable<Response> {
     return this.http
       .post(`${this.apiUrl}/password-reset`, email, {headers: this.getHeaders()})
-      .catch(this.handleError);
+      .pipe(catchError(this.handleError));
   }
 
-  resetPassword(requestId: string, password: string): Observable<void> {
+  resetPassword(requestId: string, password: string): Observable<Response> {
     return this.http
       .put(`${this.apiUrl}/password-reset`, {requestId: requestId, password: password}, {headers: this.getHeaders()})
-      .catch(this.handleError);
+      .pipe(catchError(this.handleError));
   }
   
   private getHeaders(): Headers {
@@ -49,6 +50,6 @@ export class SupportService {
 
     const errMsg = (error && error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    return Observable.throw(errMsg);
+    return throwError(errMsg);
   }
 }

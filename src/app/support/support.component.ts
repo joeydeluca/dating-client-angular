@@ -1,9 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import {AuthService} from "../services/auth.service";
 import {SupportService} from "../services/support.service";
-import {Contact} from "../models/contact";
+import {Contact} from "../models/Contact";
 import {FormBuilder, Validators} from "@angular/forms";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 
 
 @Component({
@@ -17,7 +17,7 @@ export class SupportComponent {
 
     isSubmiting: boolean;
 
-    constructor(private supportService: SupportService, private authService: AuthService, private fb: FormBuilder, private snackBar: MdSnackBar) {
+    constructor(private supportService: SupportService, private authService: AuthService, private fb: FormBuilder, private snackBar: MatSnackBar) {
         this.isAuthenticated = !!this.authService.getAuthContext();
 
         this.form = this.fb.group({
@@ -46,14 +46,14 @@ export class SupportComponent {
     private showError(message: string) {
         this.snackBar.open(message, null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
         });
     }
 
     private showSuccess(message: string) {
         this.snackBar.open(message, null, {
             duration: 4000,
-            extraClasses: ['bg-success', 'snackbar']
+            panelClass: ['bg-success', 'snackbar']
         });
     }
 }

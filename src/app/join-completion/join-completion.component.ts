@@ -3,7 +3,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {User} from "../models/User";
 import {ValidationService} from "../services/validation.service";
 import {UserService} from "../services/user.service";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 import {LocationService} from "../services/location.service";
 import {Country, Region, City} from "../models/Location";
 import {ProfileFieldService} from "../services/profile-field.service";
@@ -37,7 +37,7 @@ export class JoinCompletionComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private userService: UserService,
               private locationService: LocationService,
-              private snackBar: MdSnackBar,
+              private snackBar: MatSnackBar,
               private fieldsService: ProfileFieldService,
               private router: Router) {
     this.joinForm = this.fb.group({
@@ -66,7 +66,7 @@ export class JoinCompletionComponent implements OnInit {
           SharedService.showLoader.next(false);
           this.snackBar.open('Error loading fields', null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
           });
         }
       );
@@ -88,7 +88,7 @@ export class JoinCompletionComponent implements OnInit {
           SharedService.showLoader.next(false);
           this.snackBar.open('Error fetching Country list', null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
           });
         }
       );
@@ -110,7 +110,7 @@ export class JoinCompletionComponent implements OnInit {
           SharedService.showLoader.next(false);
           this.snackBar.open('Error fetching Region list', null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
           });
         }
       );
@@ -132,7 +132,7 @@ export class JoinCompletionComponent implements OnInit {
           SharedService.showLoader.next(false);
           this.snackBar.open('Error fetching City list', null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
           });
         }
       );
@@ -163,7 +163,7 @@ export class JoinCompletionComponent implements OnInit {
           this.reCaptchaRef.reset();
           this.snackBar.open(error, null, {
             duration: 4000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
           });
         }
       );

@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 import {Http, Response, Headers} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable, of, throwError} from "rxjs";
+import {map, catchError} from "rxjs/operators";
 
 @Injectable()
 export class ProfileFieldService {
@@ -16,18 +17,17 @@ export class ProfileFieldService {
 
   getProfileFields(): Observable<object> {
     if(this.fields) {
-      return Observable.of(this.fields);
+      return of(this.fields);
     }
 
     const fieldsInLocalStorage = localStorage.getItem("fields");
     if(!!fieldsInLocalStorage) {
-      return Observable.of(JSON.parse(fieldsInLocalStorage));
+      return of(JSON.parse(fieldsInLocalStorage));
     }
 
     return this.http
       .get(`${this.apiUrl}`, {headers: this.headers})
-      .map(this.extractData)
-      .catch(this.handleError);
+      .pipe(map(this.extractData), catchError(this.handleError));
   }
 
    extractData(res: Response) {
@@ -52,7 +52,7 @@ export class ProfileFieldService {
 
     const errMsg = (error && error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    return Observable.throw(errMsg);
+    return throwError(errMsg);
   }
 
 }

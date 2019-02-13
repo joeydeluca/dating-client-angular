@@ -13,7 +13,7 @@
                 <button (click)="onDelete(item.userId)" class="btn btn-outline-secondary btn-sm"><i class="material-icons">highlight_off</i></button>
             </span>
         </div>
-        <div class="card-block">
+        <div class="card-body">
             <h4 class="card-title">{{item.username}}</h4>
             <p class="card-text text-muted">{{item.age}} | <location-display [country]="item.country" [region]="item.region" [city]="item.city"></location-display></p>
         </div>

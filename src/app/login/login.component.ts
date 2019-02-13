@@ -4,7 +4,7 @@ import {User} from "../models/User";
 import {ValidationService} from "../services/validation.service";
 import {UserService} from "../services/user.service";
 import {AuthService} from "../services/auth.service";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 import {Router, ActivatedRoute} from "@angular/router";
 import {SharedService} from "../services/shared.service";
 
@@ -19,7 +19,7 @@ export class LoginComponent {
   constructor(private fb: FormBuilder,
               private userService: UserService,
               private authService: AuthService,
-              private snackBar: MdSnackBar,
+              private snackBar: MatSnackBar,
               private router: Router,
               private route: ActivatedRoute,) {
     this.form = this.fb.group({
@@ -44,7 +44,7 @@ export class LoginComponent {
         SharedService.showLoader.next(false);
         this.snackBar.open('Invalid username or password', null, {
             duration: 5000,
-            extraClasses: ['bg-danger', 'snackbar']
+            panelClass: ['bg-danger', 'snackbar']
           });
       }
     );

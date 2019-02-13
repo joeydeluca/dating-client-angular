@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 import {Http, Response, Headers} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
+import {map, catchError} from "rxjs/operators";
 import {User} from "../models/User";
 import {Profile} from "../models/Profile";
 import {Page} from "../models/Page";
@@ -19,89 +20,86 @@ export class RecipientProfileService {
   constructor(private http: Http, private authService: AuthService) {
   }
 
-  sendFlirt(recipientUserId: number): Observable<void> {
+  sendFlirt(recipientUserId: number): Observable<Response> {
     return this.http
       .post(`${this.apiUrl}/${recipientUserId}/flirt`, null, {headers: this.getHeaders()})
-      .catch(this.handleError);
+      .pipe(catchError(this.handleError))
   }
 
-  addFavorite(recipientUserId: number): Observable<void> {
+  addFavorite(recipientUserId: number): Observable<Response> {
     return this.http
       .post(`${this.apiUrl}/${recipientUserId}/favorite`, null, {headers: this.getHeaders()})
-      .catch((res) => {
+      .pipe(catchError((res) => {
         if(res.status == 304) {
-          return Observable.throw('Already added as favorite');
+          return throwError('Already added as favorite');
         }
         return this.handleError(res);
-      });
+      }));
   }
 
-  deleteFavorite(recipientUserId: number): Observable<void> {
+  deleteFavorite(recipientUserId: number): Observable<Response> {
     return this.http
       .delete(`${this.apiUrl}/${recipientUserId}/favorite`, {headers: this.getHeaders()})
-      .catch(this.handleError);
+      .pipe(catchError(this.handleError));
   }
 
   getRecipientProfile(recipientUserId: number): Observable<RecipientProfile> {
     return this.http
       .get(`${this.apiUrl}/${recipientUserId}`, {headers: this.getHeaders()})
-      .map((res: Response) => {
+      .pipe(map((res: Response) => {
         let body = this.extractData(res);
         return body;
-      })
-      .catch(this.handleError);
+      }), catchError(this.handleError))
+      
   }
 
   getMessages(): Observable<Message[]> {
     return this.http
       .get(`${this.apiUrl}/messages`, {headers: this.getHeaders()})
-      .map((res: Response) => {
+      .pipe(map((res: Response) => {
         let body = this.extractData(res);
         return body;
-      })
-      .catch(this.handleError);
+      }), catchError(this.handleError));
   }
 
-  sendMessage(recipientUserId: number, message: string): Observable<void> {
+  sendMessage(recipientUserId: number, message: string): Observable<Response> {
     return this.http
       .post(`${this.apiUrl}/${recipientUserId}/message`, message, {headers: this.getHeaders()})
-      .catch(this.handleError);
+      .pipe(catchError(this.handleError))
+   
   }
 
-  markMessagesAsRead(recipientUserId: number): Observable<void> {
+  markMessagesAsRead(recipientUserId: number): Observable<Response> {
     return this.http
       .put(`${this.apiUrl}/${recipientUserId}/message/read`, null, {headers: this.getHeaders()})
-      .catch(this.handleError);
+      .pipe(catchError(this.handleError))
   }
 
   getFavorites(): Observable<Favorites> {
     return this.http
       .get(`${this.apiUrl}/favorites`, {headers: this.getHeaders()})
-      .map((res: Response) => {
+      .pipe(map((res: Response) => {
         let body = this.extractData(res);
         return body;
-      })
-      .catch(this.handleError);
+      }), catchError(this.handleError))
   }
 
   getFlirts(): Observable<ProfileEvent[]> {
     return this.http
       .get(`${this.apiUrl}/flirts`, {headers: this.getHeaders()})
-      .map((res: Response) => {
+      .pipe(map((res: Response) => {
         let body = this.extractData(res);
         return body;
-      })
-      .catch(this.handleError);
+      }), catchError(this.handleError));
   }
 
   getProfileViews(): Observable<ProfileEvent[]> {
     return this.http
       .get(`${this.apiUrl}/profile-views`, {headers: this.getHeaders()})
-      .map((res: Response) => {
+      .pipe(map((res: Response) => {
         let body = this.extractData(res);
         return body;
-      })
-      .catch(this.handleError);
+      }), catchError(this.handleError));
   }
   
   private getHeaders(): Headers {
@@ -128,6 +126,6 @@ export class RecipientProfileService {
 
     const errMsg = (error && error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-    return Observable.throw(errMsg);
+    return throwError(errMsg);
   }
 }

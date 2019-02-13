@@ -5,8 +5,10 @@ import {AuthService} from "../services/auth.service";
 import {PaymentService} from "../services/payment.service";
 import {UserService} from "../services/user.service";
 import {User} from "../models/User";
-import {MdSnackBar} from "@angular/material";
-import {Observable} from "rxjs";
+import {MatSnackBar} from "@angular/material";
+import {Observable, interval} from "rxjs";
+import { mergeMap, takeWhile } from 'rxjs/operators';
+
 
 
 @Component({
@@ -22,15 +24,15 @@ export class VerifyPaymentComponent implements OnInit {
     constructor(
         private authService: AuthService, 
         private userService: UserService,
-        private snackBar: MdSnackBar) {
+        private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
         SharedService.showLoader.next(true);
 
-        Observable.interval(3000)
-        .mergeMap(() => this.userService.isPaid())
-        .takeWhile(() => this.poll)
+        interval(3000).pipe(
+        mergeMap(() => this.userService.isPaid()),
+        takeWhile(() => this.poll))
         .subscribe(
             (isPaid: boolean) => {
                 this.pollCount++;
@@ -56,7 +58,7 @@ export class VerifyPaymentComponent implements OnInit {
                 this.poll = false;
                 this.snackBar.open('An error has occured.', null, {
                     duration: 4000,
-                    extraClasses: ['bg-danger', 'snackbar']
+                    panelClass: ['bg-danger', 'snackbar']
                 })
             });
             

@@ -1,14 +1,15 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../environments/environment";
 import {Http, Response, Headers} from "@angular/http";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
+import {map, catchError} from "rxjs/operators";
 import {User} from "../models/User";
 import {Profile} from "../models/Profile";
 import {Photo} from "../models/Photo";
 import {PhotoCrop} from "../models/PhotoCrop";
 import {AuthService} from "./auth.service";
 import {AuthContext} from "../models/AuthContext";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material";
 
 @Injectable()
 export class PhotoService {
@@ -20,18 +21,18 @@ export class PhotoService {
 
   constructor(private http: Http, 
     private authService: AuthService, 
-    private snackBar: MdSnackBar) {
+    private snackBar: MatSnackBar) {
   }
 
   uploadPhoto(file: File): Observable<Photo> {
     if(!file) {
-      return Observable.throw('No file selected');
+      return throwError('No file selected');
     }
     else if(this.supportedMimeTypes.indexOf(file.type) === -1) {
-      return Observable.throw(`File must be one of the supported formats: ${this.supportedMimeTypes.join(', ')}`);
+      return throwError(`File must be one of the supported formats: ${this.supportedMimeTypes.join(', ')}`);
     }
     else if(file.size > this.maxFileSizeMB * 1024 * 1024) {
-      return Observable.throw(`File exceeds maximum size of ${this.maxFileSizeMB}MB`);
+      return throwError(`File exceeds maximum size of ${this.maxFileSizeMB}MB`);
     }
 
     const authContext = this.authService.getAuthContextFromLocal();
@@ -42,22 +43,20 @@ export class PhotoService {
 
     return this.http
       .post(`${this.apiUrl}`, formData, {headers: headers})
-      .map(this.extractData)
-      .catch((this.handleError));
+      .pipe(map(this.extractData), catchError((this.handleError))); 
   }
 
   setProfilePhoto(photoId: number): Observable<Photo> {
     return this.http
           .put(`${this.apiUrl}/${photoId}/profile`, null, {headers: this.getHeaders()})
-          .map(this.extractData)
-          .catch((this.handleError));
+          .pipe(map(this.extractData), catchError((this.handleError))); 
+
   }
 
     deletePhoto(photoId: number): Observable<void> {
       return this.http
           .delete(`${this.apiUrl}/${photoId}`, {headers: this.getHeaders()})
-          .map(this.extractData)
-          .catch((this.handleError));
+          .pipe(map(this.extractData), catchError((this.handleError))); 
   }
 
   cropPhoto(photoId: number, x: number, y: number, width: number, height: number): Observable<Photo> {
@@ -74,8 +73,8 @@ export class PhotoService {
 
     return this.http
       .put(`${this.apiUrl}/${photoId}/crop`, JSON.stringify(photoCrop), {headers: headers})
-      .map((res: Response) => this.extractData(res))
-      .catch(this.handleError);
+      .pipe(map(this.extractData), catchError((this.handleError))); 
+
   }
 
   private extractData(res: Response) {
@@ -88,7 +87,7 @@ export class PhotoService {
 
   private handleError(res: Response | any) {
     if(res.status === 413) {
-      return Observable.throw('File is too large');
+      return throwError('File is too large');
     }
 
     let error;
@@ -99,7 +98,7 @@ export class PhotoService {
     const errMsg = (error && error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
 
-    return Observable.throw(errMsg);
+    return throwError(errMsg);
   }
 
   private getHeaders(): Headers {

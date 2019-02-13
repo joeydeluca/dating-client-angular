@@ -4,7 +4,7 @@
         <div class="card-header">
           Conversations: <span class="text-primary">{{recipientUsername}} <span class="float-right" routerLink="/messages"><i class="material-icons">keyboard_return</i></span></span>
         </div>
-        <div class="card-block">
+        <div class="card-body">
             <div class="pb-3">
                 <textarea class="form-control mb-1" [(ngModel)]="newMessageText" placeholder="write a message to {{recipientUsername}}..." [disabled]="isSending"></textarea>
                 <button (click)="sendMessage()" class="btn btn-primary btn-sm form-control" [disabled]="isSending"><i class="material-icons align-middle">email</i> Send</button>
@@ -13,7 +13,7 @@
             <div *ngFor="let message of messages">                
                 <div *ngIf="userId !== message.fromUser.id">
                     <span class="small text-muted"><b>Received:</b> {{message.sendDate}}</span> <span *ngIf="!message.readDate" class="text-warning small">NEW</span>
-                    <div class="card-block card alert-info mb-3">
+                    <div class="card-body card alert-info mb-3">
                         <div class="media"  >
                             <img class="d-flex mr-3" [src]="message.fromUser.profile.profilePhotoUrl" alt="Photo">
                             <div class="media-body">
@@ -28,7 +28,7 @@
 
                 <div *ngIf="userId === message.fromUser.id">
                     <span class="small text-muted"><b>Sent:</b> {{message.sendDate}}</span>
-                    <div class="card-block card bg-faded mb-3">
+                    <div class="card-body card bg-faded mb-3">
                         <div class="media"  >
                             <div class="media-body">
                                 <h5 class="mt-0 text-right">{{message.fromUser.username}}</h5> 

@@ -17,7 +17,7 @@ body {
   padding: .10rem 1.25rem;
 }
 
-md-progress-bar {
+mat-progress-bar {
   position: fixed !important;
   z-index: 2000;
   top: 0;
@@ -107,4 +107,16 @@ md-progress-bar {
     transform: scale(1.0);
     -webkit-transform: scale(1.0);
   }
+}
+
+.card {
+  flex: initial !important;
+}
+
+profile-list {
+  margin: 0 auto;
+}
+
+profile-list .card-deck {
+  margin-left: 0;
 }
