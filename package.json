@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "aws-deploy": "ng build --prod && aws s3 sync dist/dating-client-angular s3://dating-client"
   },
   "private": true,
   "dependencies": {
@@ -29,8 +30,11 @@
     "cropperjs": "1.4.1",
     "jquery": "3.3.1",
     "mydatepicker": "2.6.4",
+    "ng": "0.0.0",
     "ng-recaptcha": "4.0.0-beta.1",
     "ng2-adsense": "5.3.2",
+    "node-gyp": "^7.1.2",
+    "node-sass": "^4.14.1",
     "rxjs": "6.0.0",
     "tether": "1.4.4",
     "zone.js": "0.8.26"
