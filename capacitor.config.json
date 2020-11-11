@@ -1,0 +1,13 @@
+{
+  "appId": "com.uglyschmucks",
+  "appName": "Ugly Schmucks",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist/dating-client-angular",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

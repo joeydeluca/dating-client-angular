@@ -43,7 +43,6 @@ const routes: Routes = [
   { path: 'upgrade', component: UpgradeComponent, canActivate: [AuthGuard]},
   { path: 'verify-payment', component: VerifyPaymentComponent, canActivate: [AuthGuard]},
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]}
-
 ];
 
 const appRoutingProviders: any[] = [];
