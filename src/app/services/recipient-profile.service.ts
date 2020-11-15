@@ -53,6 +53,12 @@ export class RecipientProfileService {
 
   }
 
+  reportProfile(recipientUserId: number): Observable<Response> {
+    return this.http
+      .get(`${this.apiUrl}/${recipientUserId}/report-profile`, {headers: this.getHeaders()})
+      .pipe(catchError(this.handleError));
+  }
+
   getMessages(): Observable<Message[]> {
     return this.http
       .get(`${this.apiUrl}/messages`, {headers: this.getHeaders()})

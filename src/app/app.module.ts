@@ -22,7 +22,7 @@ import {AuthService} from './services/auth.service';
 import {PhotoService} from './services/photo.service';
 import {SharedService} from './services/shared.service';
 import {PaymentService} from './services/payment.service';
-import {MyDatePickerModule} from 'mydatepicker';
+import {AngularMyDatePickerModule} from 'angular-mydatepicker';
 import {JoinUploadPhotoComponent} from './join-upload-photo/join-upload-photo.component';
 import {SearchComponent} from './search/search.component';
 import {LoginComponent} from './login/login.component';
@@ -104,7 +104,7 @@ import { AdsenseModule } from 'ng2-adsense';
     MatProgressBarModule,
     MatSnackBarModule,
     MultiselectDropdownModule,
-    MyDatePickerModule,
+    AngularMyDatePickerModule,
     //FileUploadModule,
     NgbModule.forRoot()
   ],

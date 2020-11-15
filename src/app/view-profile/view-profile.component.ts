@@ -22,6 +22,8 @@ export class ViewProfileComponent implements OnInit {
   newMessageText: string;
   isSendingMessage: boolean;
 
+  isProfileReported: boolean = false;
+
   constructor(
     private router: Router ,
     private route: ActivatedRoute,
@@ -83,6 +85,25 @@ export class ViewProfileComponent implements OnInit {
       .subscribe(() => {
         SharedService.showLoader.next(false);
         this.handleSuccess(`You favorited ${recipientUsername}`);
+      },
+      (error) => {
+        SharedService.showLoader.next(false);
+         this.handleError(error);
+      });
+  }
+
+  reportProfile(): void {
+    if (this.isProfileReported) {
+      this.handleSuccess(`You have already reported this profile`);
+      return;
+    }
+
+    SharedService.showLoader.next(true);
+    this.recipientProfileService.reportProfile(this.recipientProfile.userId)
+      .subscribe(() => {
+        SharedService.showLoader.next(false);
+        this.handleSuccess(`Profile has been reported and will be reviewed. Thank you.`);
+        this.isProfileReported = true;
       },
       (error) => {
         SharedService.showLoader.next(false);

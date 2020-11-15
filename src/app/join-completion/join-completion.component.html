@@ -14,8 +14,11 @@
           <label class="col-2 col-form-label">Birthday</label>
           <div class="col-10">
             <div class="input-group">
-              <my-date-picker id="birthday" #mydp="mydatepicker" name="birthday" [options]="myDatePickerOptions"
-                              formControlName="birthday"></my-date-picker>
+              <!-- <my-date-picker id="birthday" #mydp="mydatepicker" name="birthday" [options]="myDatePickerOptions"
+                              formControlName="birthday"></my-date-picker> -->
+
+              <input (click)="dp.toggleCalendar()" class="form-control" placeholder="Select a date" angular-mydatepicker name="birthday" 
+                              formControlName="birthday" [options]="myDatePickerOptions" #dp="angular-mydatepicker"/>                
 
             </div>
             <control-messages [control]="joinForm.controls.birthday"></control-messages>

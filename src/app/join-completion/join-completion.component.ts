@@ -10,8 +10,7 @@ import {ProfileFieldService} from '../services/profile-field.service';
 import {IMultiSelectOption} from 'angular-2-dropdown-multiselect';
 import {Profile} from '../models/Profile';
 import {RecaptchaComponent} from 'ng-recaptcha';
-import {IMyDpOptions, MyDatePicker} from 'mydatepicker';
-import {DatepickerConfig} from '../common/datepicker.config';
+import {IAngularMyDpOptions, IMyDateModel} from 'angular-mydatepicker';
 import {Router} from '@angular/router';
 import {SharedService} from '../services/shared.service';
 
@@ -30,9 +29,7 @@ export class JoinCompletionComponent implements OnInit {
   cities: City[];
   fieldOptions: object;
   captchaResponse: string;
-  myDatePickerOptions: IMyDpOptions = DatepickerConfig.config;
-  @ViewChild('mydp') mydp: MyDatePicker;
-
+  myDatePickerOptions: IAngularMyDpOptions;
 
   constructor(private fb: FormBuilder,
               private userService: UserService,
@@ -40,8 +37,20 @@ export class JoinCompletionComponent implements OnInit {
               private snackBar: MatSnackBar,
               private fieldsService: ProfileFieldService,
               private router: Router) {
+              
+    let earliestDate = new Date();
+    earliestDate.setFullYear( earliestDate.getFullYear() - 18);
+    this.myDatePickerOptions = {
+      dateRange: false,
+      defaultView: 3,
+      minYear: earliestDate.getFullYear() - 120,
+      maxYear: earliestDate.getFullYear()
+    };
+    
+    let model: IMyDateModel = {isRange: false, singleDate: {jsDate: earliestDate}, dateRange: null};
+
     this.joinForm = this.fb.group({
-      'birthday': [{date: `${new Date().getFullYear() - 18}-01-01`}, [Validators.required]],
+      'birthday': [model, Validators.required],
       'country': ['', [Validators.required]],
       'region': ['', [Validators.required]],
       'city': ['', [Validators.required]],
@@ -143,12 +152,13 @@ export class JoinCompletionComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.joinForm.value.birthday.singleDate.jsDate.toISOString().slice(0, 10));
     if (this.joinForm.dirty && this.joinForm.valid) {
       SharedService.showLoader.next(true);
       const user = new User();
       const profile = this.joinForm.value;
       user.profile = profile;
-      user.birthDate = new Date(this.mydp.getDateModel(this.mydp.selectedDate).jsdate).toISOString().slice(0, 10);
+      user.birthDate = this.joinForm.value.birthday.singleDate.jsDate.toISOString().slice(0, 10)
 
       this.userService.completeUserJoin(user, this.captchaResponse)
         .subscribe(
