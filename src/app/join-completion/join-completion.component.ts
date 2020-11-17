@@ -13,6 +13,8 @@ import {RecaptchaComponent} from 'ng-recaptcha';
 import {IAngularMyDpOptions, IMyDateModel} from 'angular-mydatepicker';
 import {Router} from '@angular/router';
 import {SharedService} from '../services/shared.service';
+import { Plugins } from '@capacitor/core';
+const { Geolocation } = Plugins;
 
 @Component({
   selector: 'join-completion',
@@ -27,6 +29,9 @@ export class JoinCompletionComponent implements OnInit {
   countries: Country[];
   regions: Region[];
   cities: City[];
+  defaultCountry: Country;
+  defaultRegion: Region;
+  defaultCity: City;
   fieldOptions: object;
   captchaResponse: string;
   myDatePickerOptions: IAngularMyDpOptions;
@@ -64,6 +69,7 @@ export class JoinCompletionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setCurrentLocation();
     this.loadCountries();
     this.fieldsService.getProfileFields()
       .subscribe(
@@ -82,6 +88,27 @@ export class JoinCompletionComponent implements OnInit {
 
   }
 
+  async setCurrentLocation() {
+    const coordinates = await Geolocation.getCurrentPosition();
+    if(!coordinates) {
+      return;
+    }
+
+    this.locationService.getCurrentLocation(coordinates.coords.latitude, coordinates.coords.longitude)
+    .subscribe(
+      (result) => {
+        this.defaultCountry = {countryId:result.countryId, countryName: result.countryName};
+        this.defaultRegion = {regionId:result.regionId, regionName:result.regionName};
+        this.defaultCity = {cityId:result.cityId, cityName:result.cityName};
+
+        this.joinForm.patchValue({ country: this.countries.find(c => c.countryId === this.defaultCountry.countryId) });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   loadCountries() {
     SharedService.showLoader.next(true);
     this.locationService.getCountries()
@@ -90,7 +117,7 @@ export class JoinCompletionComponent implements OnInit {
           this.countries = result;
           this.countries.unshift(this.countries.find(c => c.countryName === 'Canada'));
           this.countries.unshift(this.countries.find(c => c.countryName === 'United States'));
-          this.joinForm.patchValue({ country: this.countries[0] });
+          this.joinForm.patchValue({ country:  this.defaultCountry ? this.countries.find(c => c.countryId === this.defaultCountry.countryId) : this.countries[0] });
           SharedService.showLoader.next(false);
         },
         (error) => {
@@ -113,6 +140,11 @@ export class JoinCompletionComponent implements OnInit {
       .subscribe(
         (result) => {
           this.regions = result;
+          this.cities = null;
+
+          if (this.defaultRegion && country.countryId === this.defaultCountry.countryId) {
+            this.joinForm.patchValue({ region: this.regions.find(r => r.regionId === this.defaultRegion.regionId)  });
+          }
           SharedService.showLoader.next(false);
         },
         (error) => {
@@ -135,6 +167,9 @@ export class JoinCompletionComponent implements OnInit {
       .subscribe(
         (result) => {
           this.cities = result;
+          if (this.defaultCity && region.regionId === this.defaultRegion.regionId) {
+            this.joinForm.patchValue({ city: this.cities.find(c => c.cityId === this.defaultCity.cityId)  });
+          }
           SharedService.showLoader.next(false);
         },
         (error) => {

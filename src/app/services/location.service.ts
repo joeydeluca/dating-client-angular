@@ -5,7 +5,7 @@ import {Observable, throwError} from 'rxjs';
 import {map, catchError} from 'rxjs/operators';
 
 import {User} from '../models/User';
-import {Country, Region, City} from '../models/Location';
+import {Country, Region, City, CurrentLocation} from '../models/Location';
 
 @Injectable()
 export class LocationService {
@@ -32,6 +32,12 @@ export class LocationService {
   getCities(regionId: string): Observable<City[]> {
     return this.http
       .get(`${this.apiUrl}/cities?regionId=${regionId}`, {headers: this.headers})
+      .pipe(map(this.extractData), catchError(this.handleError));
+  }
+
+  getCurrentLocation(latitide: number, longitude: number): Observable<any> {
+    return this.http
+      .get(`${this.apiUrl}/findme?latitude=${latitide}&longitude=${longitude}`, {headers: this.headers})
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 
