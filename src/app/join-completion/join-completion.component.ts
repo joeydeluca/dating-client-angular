@@ -187,7 +187,6 @@ export class JoinCompletionComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.joinForm.value.birthday.singleDate.jsDate.toISOString().slice(0, 10));
     if (this.joinForm.dirty && this.joinForm.valid) {
       SharedService.showLoader.next(true);
       const user = new User();
