@@ -5,7 +5,7 @@ import {Observable, throwError} from 'rxjs';
 import {map, catchError} from 'rxjs/operators';
 
 import {User} from '../models/User';
-import {Country, Region, City, CurrentLocation} from '../models/Location';
+import {Country, Region, City} from '../models/Location';
 
 @Injectable()
 export class LocationService {

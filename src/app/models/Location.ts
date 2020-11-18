@@ -24,9 +24,3 @@ export class City {
     this.cityId = cityId;
   }
 }
-
-export class CurrentLocation {
-  country: Country;
-  region: Region;
-  city: City;
-}
