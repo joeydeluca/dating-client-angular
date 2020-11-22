@@ -57,15 +57,6 @@ export class ViewProfileComponent implements OnInit {
   }
 
   sendFlirt(recipientUserId: number, recipientUsername: string): void {
-    if (!this.authService.getAuthContext().paid) {
-      this.snackBar.open('This feature requires an upgraded membership', null, {
-        duration: 4000,
-        panelClass: ['bg-warning', 'snackbar']
-      });
-      this.router.navigate(['/upgrade']);
-      return;
-    }
-
     SharedService.showLoader.next(true);
     this.recipientProfileService.sendFlirt(recipientUserId)
       .subscribe(() => {
