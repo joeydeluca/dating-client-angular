@@ -95,7 +95,7 @@ export class UpdateProfileComponent implements OnInit {
       'religion': [this.getDefaultValue(this.user.profile.religion), [Validators.required]],
       'occupation': [this.getDefaultValue(this.user.profile.occupation), [Validators.required]],
       'salary': [this.getDefaultValue(this.user.profile.salary)],
-      'childrenStatus': [this.getDefaultValue(this.user.profile.salary), [Validators.required]],
+      'childrenStatus': [this.getDefaultValue(this.user.profile.childrenStatus), [Validators.required]],
       'astroSign': [this.getDefaultValue(this.user.profile.astroSign)],
       'education': [this.getDefaultValue(this.user.profile.education), [Validators.required]],
       'smoke': [this.getDefaultValue(this.user.profile.smoke), [Validators.required]],
