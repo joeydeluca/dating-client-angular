@@ -3,7 +3,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {User} from '../models/User';
 import {ValidationService} from '../services/validation.service';
 import {UserService} from '../services/user.service';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar, MatDialog} from '@angular/material';
 import {LocationService} from '../services/location.service';
 import {Country, Region, City} from '../models/Location';
 import {ProfileFieldService} from '../services/profile-field.service';
@@ -41,7 +41,8 @@ export class JoinCompletionComponent implements OnInit {
               private locationService: LocationService,
               private snackBar: MatSnackBar,
               private fieldsService: ProfileFieldService,
-              private router: Router) {
+              private router: Router,
+              public dialog: MatDialog) {
               
     let earliestDate = new Date();
     earliestDate.setFullYear( earliestDate.getFullYear() - 18);
@@ -69,6 +70,8 @@ export class JoinCompletionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dialog.open(MediaDialog);
+
     this.setCurrentLocation();
     this.loadCountries();
     this.fieldsService.getProfileFields()
@@ -214,3 +217,9 @@ export class JoinCompletionComponent implements OnInit {
     }
   }
 }
+
+@Component({
+  selector: 'media-dialog',
+  templateUrl: 'media-dialog.html',
+})
+export class MediaDialog {}

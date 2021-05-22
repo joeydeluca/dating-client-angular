@@ -11,8 +11,8 @@ import {ControlMessages} from './common/control-messages.component';
 import {ValidationService} from './services/validation.service';
 import {UserService} from './services/user.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatProgressBarModule, MatSnackBarModule} from '@angular/material';
-import {JoinCompletionComponent} from './join-completion/join-completion.component';
+import {MatProgressBarModule, MatSnackBarModule, MatDialogModule} from '@angular/material';
+import {JoinCompletionComponent, MediaDialog} from './join-completion/join-completion.component';
 import {LocationService} from './services/location.service';
 import {RecaptchaModule} from 'ng-recaptcha';
 import {RecaptchaFormsModule} from 'ng-recaptcha/forms';
@@ -87,7 +87,9 @@ import { AdsenseModule } from 'ng2-adsense';
     DPhotoUploadComponent,
     ProfileListComponent,
 
-    RoundPipe
+    RoundPipe,
+
+    MediaDialog
   ],
   imports: [
     AdsenseModule.forRoot({
@@ -106,6 +108,7 @@ import { AdsenseModule } from 'ng2-adsense';
     MultiselectDropdownModule,
     AngularMyDatePickerModule,
     //FileUploadModule,
+    MatDialogModule,
     NgbModule.forRoot()
   ],
   providers: [
@@ -122,6 +125,9 @@ import { AdsenseModule } from 'ng2-adsense';
     PaymentService,
     SupportService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    MediaDialog
+  ]
 })
 export class AppModule { }
