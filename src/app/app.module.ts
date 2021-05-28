@@ -54,6 +54,7 @@ import {DPhotoUploadComponent} from './components/d-photo-upload/d-photo-upload.
 
 import {RoundPipe} from './pipes/round.pipe';
 import { AdsenseModule } from 'ng2-adsense';
+import { DocComponent } from './doc/doc.component';
 
 
 //import { FileUploadModule } from 'ng2-file-upload';
@@ -89,7 +90,8 @@ import { AdsenseModule } from 'ng2-adsense';
 
     RoundPipe,
 
-    MediaDialog
+    MediaDialog,
+    DocComponent
   ],
   imports: [
     AdsenseModule.forRoot({

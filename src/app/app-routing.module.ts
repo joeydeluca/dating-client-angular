@@ -22,11 +22,13 @@ import {SupportComponent} from './support/support.component';
 import {AuthGuard} from './guards/auth.guard';
 import {PaidGuard} from './guards/paid.guard';
 import {NonMemberGuard} from './guards/nonmember.guard';
+import { DocComponent } from './doc/doc.component';
 
 
 const routes: Routes = [
   { path: '', component: LandingComponent, canActivate: [NonMemberGuard]},
   { path: 'login', component: LoginComponent, canActivate: [NonMemberGuard]},
+  { path: 'doc', component: DocComponent},
   { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NonMemberGuard]},
   { path: 'password-reset', component: PasswordResetComponent, canActivate: [NonMemberGuard]},
   { path: 'support', component: SupportComponent},
