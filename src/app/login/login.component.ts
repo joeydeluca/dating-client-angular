@@ -7,6 +7,8 @@ import {AuthService} from '../services/auth.service';
 import {MatSnackBar} from '@angular/material';
 import {Router, ActivatedRoute} from '@angular/router';
 import {SharedService} from '../services/shared.service';
+import {environment} from '../../environments/environment';
+
 
 
 @Component({
@@ -35,9 +37,14 @@ export class LoginComponent {
       () => {
         SharedService.showLoader.next(false);
 
+        if (this.route.snapshot.queryParams['sso']) {
+          console.info('Redirecting to Discourse');
+          window.location.href = environment.apiUrl + `/sso/discourse-callback/${window.location.search}&token=${this.authService.getAuthContext().token}`;
+          return;
+        }
+
         const redirectUrl = this.route.snapshot.queryParams['redirect'] || '/search';
-        console.log(redirectUrl);
-        //this.router.navigate([redirectUrl]);
+
         this.router.navigateByUrl(redirectUrl);
       },
       () => {

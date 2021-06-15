@@ -35,6 +35,7 @@ import {UpdateProfileComponent} from './update-profile/update-profile.component'
 import {AuthGuard} from './guards/auth.guard';
 import {PaidGuard} from './guards/paid.guard';
 import {NonMemberGuard} from './guards/nonmember.guard';
+import {DiscourseSSOGuard} from './guards/discourse-sso-redirect.guard';
 import {LocationDisplayComponent} from './components/location-display.component';
 import {FieldDisplayComponent} from './components/field-display.component';
 import {FavoritesComponent} from './favorites/favorites.component';
@@ -122,6 +123,7 @@ import { DocComponent } from './doc/doc.component';
     AuthGuard,
     PaidGuard,
     NonMemberGuard,
+    DiscourseSSOGuard,
     PhotoService,
     RecipientProfileService,
     PaymentService,

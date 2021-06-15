@@ -120,3 +120,7 @@ profile-list {
 profile-list .card-deck {
   margin-left: 0;
 }
+
+.dropdown-item.active, .dropdown-item:active {
+  color: inherit;
+}
