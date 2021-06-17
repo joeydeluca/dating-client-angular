@@ -32,6 +32,10 @@
       <li class="nav-item active" *ngIf="navType === 'MEMBER'">
         <a class="nav-link" routerLink="/profile-views">Profile Views</a>
       </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" href="https://community.uglyschmucks.com/" target="_blank">Community</a>
+      </li>
     </ul>
     <button routerLink="/upgrade" class="btn btn-outline-success my-2 my-sm-0" *ngIf="navType === 'MEMBER' && showUpgradeButton">Upgrade</button>
     <ul class="navbar-nav" *ngIf="navType === 'MEMBER'">
