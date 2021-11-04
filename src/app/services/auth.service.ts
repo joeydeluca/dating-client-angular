@@ -7,6 +7,7 @@ import {User} from '../models/User';
 import {AuthDto} from '../models/AuthDto';
 import {Profile} from '../models/Profile';
 import {AuthContext} from '../models/AuthContext';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
   private headers: Headers;
   private authContext: AuthContext;
   private LOCAL_STORAGE_KEY = 'authContext';
+  private jwthelper = new JwtHelperService();
 
   constructor(private http: Http) {
     this.headers = new Headers();
@@ -38,7 +40,18 @@ export class AuthService {
   }
 
   getAuthContext(): AuthContext {
-    return this.getAuthContextFromLocal();
+    const auth = this.getAuthContextFromLocal();
+    if(auth) {
+      try {
+        if (this.jwthelper.isTokenExpired(auth.token)) {
+          return null;
+        }
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    return auth;
   }
 
   saveAuthContextToLocal(authContext: AuthContext): void {
@@ -47,6 +60,7 @@ export class AuthService {
   }
 
   getAuthContextFromLocal(): AuthContext {
+    
     if (!!this.authContext) {
       return this.authContext;
     }

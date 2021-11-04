@@ -12,7 +12,7 @@ import {ValidationService} from './services/validation.service';
 import {UserService} from './services/user.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatProgressBarModule, MatSnackBarModule, MatDialogModule} from '@angular/material';
-import {JoinCompletionComponent, MediaDialog} from './join-completion/join-completion.component';
+import {JoinCompletionComponent} from './join-completion/join-completion.component';
 import {LocationService} from './services/location.service';
 import {RecaptchaModule} from 'ng-recaptcha';
 import {RecaptchaFormsModule} from 'ng-recaptcha/forms';
@@ -91,7 +91,7 @@ import { DocComponent } from './doc/doc.component';
 
     RoundPipe,
 
-    MediaDialog,
+    //MediaDialog,
     DocComponent
   ],
   imports: [
@@ -131,7 +131,7 @@ import { DocComponent } from './doc/doc.component';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    MediaDialog
+    //MediaDialog
   ]
 })
 export class AppModule { }

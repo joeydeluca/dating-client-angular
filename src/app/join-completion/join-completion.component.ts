@@ -70,7 +70,7 @@ export class JoinCompletionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dialog.open(MediaDialog);
+    //this.dialog.open(MediaDialog);
 
     this.setCurrentLocation();
     this.loadCountries();
@@ -218,8 +218,8 @@ export class JoinCompletionComponent implements OnInit {
   }
 }
 
-@Component({
-  selector: 'media-dialog',
-  templateUrl: 'media-dialog.html',
-})
-export class MediaDialog {}
+// @Component({
+//   selector: 'media-dialog',
+//   templateUrl: 'media-dialog.html',
+// })
+// export class MediaDialog {}
