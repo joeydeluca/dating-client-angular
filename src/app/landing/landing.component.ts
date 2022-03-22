@@ -25,8 +25,8 @@ export class LandingComponent {
       'gender': ['', [Validators.required]],
       'genderSeeking': ['', [Validators.required]],
       'email': ['', [Validators.required, ValidationService.emailValidator]],
-      'username': ['', [Validators.required, Validators.maxLength(12)]],
-      'password': ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]]
+      'username': ['', [Validators.required, Validators.maxLength(20)]],
+      'password': ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]]
     });
   }
 

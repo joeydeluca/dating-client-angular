@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {User} from '../models/User';
 import {ValidationService} from '../services/validation.service';
 import {UserService} from '../services/user.service';
@@ -214,7 +214,19 @@ export class JoinCompletionComponent implements OnInit {
           });
         }
       );
+    } else {
+      this.markFormGroupTouched(this.joinForm);
     }
+  }
+
+  private markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach(control => {
+      if (control.controls) { // control is a FormGroup
+        this.markFormGroupTouched(control);
+      } else { // control is a FormControl
+        control.markAsTouched();
+      }
+    });
   }
 }
 
