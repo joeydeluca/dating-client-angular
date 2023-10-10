@@ -1,18 +1,19 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {Http, Response, Headers} from '@angular/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 import {map, catchError} from 'rxjs/operators';
 
 @Injectable()
 export class ProfileFieldService {
   private apiUrl = environment.apiUrl + '/fields';
-  headers: Headers;
+  headers: HttpHeaders;
   fields: object;
 
-  constructor(private http: Http) {
-    this.headers = new Headers();
-    this.headers.append('Content-Type', 'application/json');
+  constructor(private http: HttpClient) {
+    this.headers = new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
   }
 
   getProfileFields(): Observable<object> {
@@ -30,7 +31,7 @@ export class ProfileFieldService {
       .pipe(map(this.extractData), catchError(this.handleError));
   }
 
-   extractData(res: Response) {
+   extractData(res: any) {
     let body: any;
 
     if (res.text()) {
@@ -44,7 +45,7 @@ export class ProfileFieldService {
     return body || {};
   }
 
-  private handleError(res: Response | any) {
+  private handleError(res: any) {
     let error;
     if (res.text()) {
       error = res.json();

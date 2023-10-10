@@ -3,7 +3,8 @@ import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {User} from '../models/User';
 import {ValidationService} from '../services/validation.service';
 import {UserService} from '../services/user.service';
-import {MatSnackBar, MatDialog} from '@angular/material';
+import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {LocationService} from '../services/location.service';
 import {Country, Region, City} from '../models/Location';
 import {ProfileFieldService} from '../services/profile-field.service';
@@ -187,6 +188,8 @@ export class JoinCompletionComponent implements OnInit {
 
   captchaSubmitted(captcha: string) {
     this.captchaResponse = captcha;
+    console.log(`Resolved captcha with response: ${captcha}`);
+
   }
 
   onSubmit() {

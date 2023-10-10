@@ -3,7 +3,7 @@ import {AuthService} from '../services/auth.service';
 import {SupportService} from '../services/support.service';
 import {Contact} from '../models/Contact';
 import {FormBuilder, Validators} from '@angular/forms';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({

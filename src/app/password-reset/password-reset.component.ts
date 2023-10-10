@@ -4,7 +4,7 @@ import {User} from '../models/User';
 import {ValidationService} from '../services/validation.service';
 import {SupportService} from '../services/support.service';
 import {AuthService} from '../services/auth.service';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {SharedService} from '../services/shared.service';
 import {finalize} from 'rxjs/operators';

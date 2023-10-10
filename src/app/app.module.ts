@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
@@ -11,11 +11,12 @@ import {ControlMessages} from './common/control-messages.component';
 import {ValidationService} from './services/validation.service';
 import {UserService} from './services/user.service';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatProgressBarModule, MatSnackBarModule, MatDialogModule} from '@angular/material';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
 import {JoinCompletionComponent} from './join-completion/join-completion.component';
 import {LocationService} from './services/location.service';
-import {RecaptchaModule} from 'ng-recaptcha';
-import {RecaptchaFormsModule} from 'ng-recaptcha/forms';
+import {RecaptchaModule, RecaptchaFormsModule} from 'ng-recaptcha';
 import {ProfileFieldService} from './services/profile-field.service';
 import {MultiselectDropdownModule} from 'angular-2-dropdown-multiselect';
 import {AuthService} from './services/auth.service';
@@ -99,12 +100,12 @@ import { DocComponent } from './doc/doc.component';
       adClient: 'ca-pub-2476579159077839'
     }),
     AppRoutingModule,
-    RecaptchaModule.forRoot(),
+    RecaptchaModule,
     RecaptchaFormsModule,
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatProgressBarModule,
     MatSnackBarModule,
@@ -112,7 +113,7 @@ import { DocComponent } from './doc/doc.component';
     AngularMyDatePickerModule,
     //FileUploadModule,
     MatDialogModule,
-    NgbModule.forRoot()
+    NgbModule
   ],
   providers: [
     ValidationService,
@@ -132,6 +133,9 @@ import { DocComponent } from './doc/doc.component';
   bootstrap: [AppComponent],
   entryComponents: [
     //MediaDialog
-  ]
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
 })
 export class AppModule { }

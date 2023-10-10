@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {Http, Response, Headers} from '@angular/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 import {map, catchError} from 'rxjs/operators';
 import {User, EmailSubscription} from '../models/User';
@@ -14,19 +14,19 @@ import {Subscription} from '../models/Subscription';
 @Injectable()
 export class UserService {
   private apiUrl = environment.apiUrl + '/users';
-  headers: Headers;
+  headers: HttpHeaders;
   user: User;
 
-  constructor(private http: Http, private authService: AuthService) {
-    this.headers = new Headers();
-    this.headers.append('Content-Type', 'application/json');
+  constructor(private http: HttpClient, private authService: AuthService) {
+    this.headers = new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
   }
 
   createUser(user: User): Observable<AuthContext> {
     return this.http
-      .post(`${this.apiUrl}`, JSON.stringify(user), {headers: this.headers})
-      .pipe(map((res: Response) => {
-        const body = this.extractData(res);
+      .post<AuthContext>(`${this.apiUrl}`, JSON.stringify(user), {headers: this.headers})
+      .pipe(map((body: AuthContext) => {
         this.authService.saveAuthContextToLocal(body);
         return body;
       }), catchError(this.handleError));
@@ -34,14 +34,16 @@ export class UserService {
 
   completeUserJoin(user: User, captcha: string): Observable<User> {
     const authContext = this.authService.getAuthContextFromLocal();
-    const putHeaders = this.headers;
-    putHeaders.set('captcha', captcha);
-    putHeaders.set('authorization', authContext.token);
+
+    console.log(captcha);
 
     return this.http
-      .put(`${this.apiUrl}/${authContext.userId}/join-completion`, JSON.stringify(user), {headers: this.headers})
-      .pipe(map((res: Response) => {
-        const body = this.extractData(res);
+      .put<User>(`${this.apiUrl}/${authContext.userId}/join-completion`, JSON.stringify(user), {headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'authorization': authContext.token,
+        'captcha':  captcha || ''
+      })})
+      .pipe(map((body: User) => {
         this.saveToLocal(body);
         return body;
       }), catchError(this.handleError));
@@ -49,13 +51,10 @@ export class UserService {
 
   updateProfile(profile: Profile): Observable<User> {
     const authContext = this.authService.getAuthContextFromLocal();
-    const putHeaders = this.headers;
-    putHeaders.set('authorization', authContext.token);
 
     return this.http
-      .put(`${this.apiUrl}/${authContext.userId}/profile`, JSON.stringify(profile), {headers: this.headers})
-      .pipe(map((res: Response) => {
-        const body = this.extractData(res);
+      .put<User>(`${this.apiUrl}/${authContext.userId}/profile`, JSON.stringify(profile), {headers: this.getHeaders()})
+      .pipe(map((body: any) => {
         this.saveToLocal(body);
         return body;
       }), catchError(this.handleError));
@@ -63,13 +62,10 @@ export class UserService {
 
   updateEmailSubscription(emailSubscription: EmailSubscription): Observable<User> {
     const authContext = this.authService.getAuthContextFromLocal();
-    const putHeaders = this.headers;
-    putHeaders.set('authorization', authContext.token);
 
     return this.http
-      .put(`${this.apiUrl}/${authContext.userId}/email-subscription`, JSON.stringify(emailSubscription), {headers: this.headers})
-      .pipe(map((res: Response) => {
-        const body = this.extractData(res);
+      .put<User>(`${this.apiUrl}/${authContext.userId}/email-subscription`, JSON.stringify(emailSubscription), {headers: this.getHeaders()})
+      .pipe(map((body: any) => {
         this.saveToLocal(body);
         return body;
       }), catchError(this.handleError));
@@ -90,39 +86,30 @@ export class UserService {
 
   getUserFromServer(): Observable<User> {
     return this.http
-      .get(`${this.apiUrl}/${this.authService.getAuthContextFromLocal().userId}`, {headers: this.getHeaders()})
-      .pipe(map((res: Response) => {
-        const body = this.extractData(res);
-        this.saveToLocal(body);
-        return body;
+      .get<User>(`${this.apiUrl}/${this.authService.getAuthContextFromLocal().userId}`, {headers: this.getHeaders()})
+      .pipe(map((res: User) => {
+        this.saveToLocal(res);
+        return res;
       }), catchError(this.handleError));
   }
 
   searchProfiles(pageNumber: number, ageFrom: number, ageTo: number, countryId: string, regionId: string = '', cityId: string = ''): Observable<any> {
-    const authContext = this.authService.getAuthContextFromLocal();
-    const headers = new Headers();
-    headers.set('authorization', authContext.token);
-    headers.set('Content-Type', 'application/json');
-
     return this.http
-      .get(`${this.apiUrl}/profiles?page=${pageNumber}&age-from=${ageFrom}&age-to=${ageTo}&country=${countryId}&region=${regionId}&city=${cityId}`, {headers: headers})
-      .pipe(map((res: Response) => {
-        const body = this.extractData(res);
-        // cache here
-        return body;
+      .get<Page<RecipientProfile>>(`${this.apiUrl}/profiles?page=${pageNumber}&age-from=${ageFrom}&age-to=${ageTo}&country=${countryId}&region=${regionId}&city=${cityId}`, {headers: this.getHeaders()})
+      .pipe(map((res: Page<RecipientProfile>) => {
+        return res;
       }), catchError(this.handleError));
   }
 
   isPaid(): Observable<boolean> {
     return this.http
-      .get(`${this.apiUrl}/payment-status`, {headers: this.getHeaders()})
-      .pipe(map((res: Response) => {
-        console.log(res.text());
-        return res.text() === 'PAID';
+      .get(`${this.apiUrl}/payment-status`, {headers: this.getHeaders(), responseType: 'text'})
+      .pipe(map((res: any) => {
+        return res === 'PAID';
       }), catchError(this.handleError));
   }
 
-  deleteAccount(): Observable<Response> {
+  deleteAccount(): Observable<any> {
     return this.http
       .delete(`${this.apiUrl}/${this.authService.getAuthContextFromLocal().userId}`, {headers: this.getHeaders()})
       .pipe(catchError(this.handleError));
@@ -130,9 +117,8 @@ export class UserService {
 
   getSubscription(): Observable<Subscription> {
     return this.http
-      .get(`${this.apiUrl}/subscription`, {headers: this.getHeaders()})
-      .pipe(map((res: Response) => {
-        const body = this.extractData(res);
+      .get<Subscription>(`${this.apiUrl}/subscription`, {headers: this.getHeaders()})
+      .pipe(map((body: any) => {
         return body;
       }), catchError(this.handleError));
   }
@@ -142,22 +128,10 @@ export class UserService {
     localStorage.removeItem('user');
   }
 
-  private extractData(res: Response) {
-    let body;
-    if (res.text()) {
-      body = res.json();
-    }
-    return body || {};
-  }
-
-  private handleError(res: Response | any) {
-    let error;
-    if (res.text()) {
-      error = res.json();
-    }
-
-    const errMsg = (error && error.message) ? error.message :
-      (error && error.status) ? `${error.status} - ${error.statusText}` : 'Server error';
+  private handleError(error: any) {
+    error = error.error;
+    const errMsg = (error && error?.message) ? error.message :
+      (error && error?.status) ? `${error.status} - ${error.statusText}` : 'Server error';
     return throwError(errMsg);
   }
 
@@ -166,12 +140,10 @@ export class UserService {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  private getHeaders(): Headers {
-    const authContext = this.authService.getAuthContextFromLocal();
-    const headers = new Headers();
-    headers.set('authorization', authContext.token);
-    headers.set('Content-Type', 'application/json');
-    return headers;
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type':  'application/json',
+      'authorization': this.authService.getAuthContextFromLocal().token
+    });
   }
-
 }

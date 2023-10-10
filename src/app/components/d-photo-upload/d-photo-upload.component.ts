@@ -4,7 +4,7 @@ import Cropper from 'cropperjs/dist/cropper.esm.js';
 import {Photo} from '../../models/Photo';
 import {SharedService} from '../../services/shared.service';
 import {PhotoService} from '../../services/photo.service';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({

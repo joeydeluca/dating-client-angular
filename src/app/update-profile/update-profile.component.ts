@@ -3,18 +3,15 @@ import {FormBuilder, Validators, FormGroup} from '@angular/forms';
 import {RecipientProfileService} from '../services/recipient-profile.service';
 import {UserService} from '../services/user.service';
 import {PhotoService} from '../services/photo.service';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router, ActivatedRoute, Params} from '@angular/router';
-import {RecipientProfile} from '../models/RecipientProfile';
 import {SharedService} from '../services/shared.service';
 import {Country, Region, City} from '../models/Location';
-import {ValidationService} from '../services/validation.service';
 import {ProfileFieldService} from '../services/profile-field.service';
 import {LocationService} from '../services/location.service';
 import {User} from '../models/User';
 import {Profile} from '../models/Profile';
 import {AuthService} from '../services/auth.service';
-import {AuthContext} from '../models/AuthContext';
 
 
 @Component({

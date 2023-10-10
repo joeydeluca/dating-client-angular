@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import {UserService} from '../services/user.service';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {SharedService} from '../services/shared.service';
 import {Subscription} from '../models/Subscription';
 import {PaymentService} from '../services/payment.service';

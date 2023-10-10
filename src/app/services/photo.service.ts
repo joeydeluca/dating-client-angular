@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {Http, Response, Headers} from '@angular/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {map, catchError} from 'rxjs/operators';
 import {User} from '../models/User';
@@ -9,7 +9,7 @@ import {Photo} from '../models/Photo';
 import {PhotoCrop} from '../models/PhotoCrop';
 import {AuthService} from './auth.service';
 import {AuthContext} from '../models/AuthContext';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Injectable()
 export class PhotoService {
@@ -19,7 +19,7 @@ export class PhotoService {
   supportedMimeTypes: Array<string> = ['image/jpeg', 'image/png'];
   maxFileSizeMB = 15;
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
     private authService: AuthService,
     private snackBar: MatSnackBar) {
   }
@@ -33,11 +33,12 @@ export class PhotoService {
       return throwError(`File exceeds maximum size of ${this.maxFileSizeMB}MB`);
     }
 
-    const authContext = this.authService.getAuthContextFromLocal();
-    const headers = new Headers();
-    headers.set('authorization', authContext.token);
     const formData = new FormData();
     formData.append('file', file);
+
+    const headers = new HttpHeaders({
+      'authorization': this.authService.getAuthContextFromLocal().token
+    });
 
     return this.http
       .post(`${this.apiUrl}`, formData, {headers: headers})
@@ -46,7 +47,7 @@ export class PhotoService {
 
   setProfilePhoto(photoId: number): Observable<Photo> {
     return this.http
-          .put(`${this.apiUrl}/${photoId}/profile`, null, {headers: this.getHeaders()})
+          .put<Photo>(`${this.apiUrl}/${photoId}/profile`, null, {headers: this.getHeaders()})
           .pipe(map(this.extractData), catchError((this.handleError)));
 
   }
@@ -64,34 +65,24 @@ export class PhotoService {
     photoCrop.width = width;
     photoCrop.height = height;
 
-    const authContext = this.authService.getAuthContextFromLocal();
-    const headers = new Headers();
-    headers.set('authorization', authContext.token);
-    headers.set('Content-Type', 'application/json');
-
     return this.http
-      .put(`${this.apiUrl}/${photoId}/crop`, JSON.stringify(photoCrop), {headers: headers})
+      .put(`${this.apiUrl}/${photoId}/crop`, JSON.stringify(photoCrop), {headers: this.getHeaders()})
       .pipe(map(this.extractData), catchError((this.handleError)));
 
   }
 
-  private extractData(res: Response) {
-    let body;
-    if (res.text()) {
-      body = res.json();
-    }
-    return body || {};
+  private extractData(res: any) {
+    return res;
   }
 
-  private handleError(res: Response | any) {
-    if (res.status === 413) {
+  private handleError(error: any) {
+    if (error?.status === 413) {
       return throwError('File is too large');
     }
 
-    let error;
-    if (res.text()) {
-      error = res.json();
-    }
+    if(error.error) {
+      error = error.error;
+        }
 
     const errMsg = (error && error.message) ? error.message :
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
@@ -99,12 +90,11 @@ export class PhotoService {
     return throwError(errMsg);
   }
 
-  private getHeaders(): Headers {
-    const authContext = this.authService.getAuthContextFromLocal();
-    const headers = new Headers();
-    headers.set('authorization', authContext.token);
-    headers.set('Content-Type', 'application/json');
-    return headers;
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type':  'application/json',
+      'authorization': this.authService.getAuthContextFromLocal().token
+    });
   }
 
 }

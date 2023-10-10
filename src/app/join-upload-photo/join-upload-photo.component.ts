@@ -3,7 +3,7 @@ import {trigger, transition, style, animate } from '@angular/animations';
 import {FormBuilder} from '@angular/forms';
 import {UserService} from '../services/user.service';
 import {PhotoService} from '../services/photo.service';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 //import { FileUploader, Headers, FileUploaderOptions } from 'ng2-file-upload';
 import {AuthService} from '../services/auth.service';
 import {SharedService} from '../services/shared.service';

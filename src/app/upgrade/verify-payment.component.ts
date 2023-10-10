@@ -5,7 +5,7 @@ import {AuthService} from '../services/auth.service';
 import {PaymentService} from '../services/payment.service';
 import {UserService} from '../services/user.service';
 import {User} from '../models/User';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {Observable, interval} from 'rxjs';
 import { mergeMap, takeWhile } from 'rxjs/operators';
 

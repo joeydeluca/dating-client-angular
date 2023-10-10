@@ -4,7 +4,7 @@ import {environment} from '../../environments/environment';
 import {AuthService} from '../services/auth.service';
 import {PaymentService} from '../services/payment.service';
 import {PaymentPageData} from '../models/PaymentPageData';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -37,6 +37,7 @@ export class UpgradeComponent implements OnInit {
             },
             (error) => {
                 SharedService.showLoader.next(false);
+                console.log(error);
                 this.snackBar.open('Error loading payment data', null, {
                     duration: 4000,
                     panelClass: ['bg-danger', 'snackbar']

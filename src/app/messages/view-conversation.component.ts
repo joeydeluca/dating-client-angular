@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RecipientProfileService} from '../services/recipient-profile.service';
 import {Message} from '../models/Message';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthService} from '../services/auth.service';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {SharedService} from '../services/shared.service';

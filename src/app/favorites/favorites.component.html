@@ -5,20 +5,21 @@
           Favorites
         </div>
         <div class="card-body">
-            <ngb-tabset>
-                <ngb-tab>
-                    <ng-template ngbTabTitle>My Favorites</ng-template>
-                    <ng-template ngbTabContent>
+            <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>My Favorites</a>
+                    <ng-template ngbNavContent>
                         <profile-list [list]="favoritedProfiles" [emptyListMessage]="emptyListMessageMyFavorites" [showDelete]=true (delete)="onDelete($event)"></profile-list>
                     </ng-template>
-                </ngb-tab>
-                <ngb-tab>
-                    <ng-template ngbTabTitle>Favorited Me</ng-template>
-                    <ng-template ngbTabContent>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink>Favorited Me</a>
+                    <ng-template ngbNavContent>
                         <profile-list [list]="favoritedMeProfiles" [emptyListMessage]="emptyListMessageFavoritedMe"></profile-list>
                     </ng-template>
-                </ngb-tab>
-            </ngb-tabset>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
         </div>
     </div>
 </div>

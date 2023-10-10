@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {UserService} from '../services/user.service';
 import {AuthService} from '../services/auth.service';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {Country, Region, City} from '../models/Location';
 import {SharedService} from '../services/shared.service';
 import {LocationService} from '../services/location.service';
@@ -10,7 +10,6 @@ import {RecipientProfileService} from '../services/recipient-profile.service';
 import {Profile} from '../models/Profile';
 import {Page} from '../models/Page';
 import {RecipientProfile} from '../models/RecipientProfile';
-import {AuthContext} from '../models/AuthContext';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({

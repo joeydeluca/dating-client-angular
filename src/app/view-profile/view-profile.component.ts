@@ -2,17 +2,18 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {RecipientProfileService} from '../services/recipient-profile.service';
 import {UserService} from '../services/user.service';
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 import {RecipientProfile} from '../models/RecipientProfile';
 import {SharedService} from '../services/shared.service';
 import {AuthService} from '../services/auth.service';
 
 
+
 @Component({
   selector: 'view-profile',
   templateUrl: './view-profile.component.html',
-  styleUrls: ['./view-profile.component.css']
+  styleUrls: ['./view-profile.component.css'],
 })
 export class ViewProfileComponent implements OnInit {
   recipientProfile: RecipientProfile;
