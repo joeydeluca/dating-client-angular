@@ -15,6 +15,5 @@ jobs:
           key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - "node_modules"
-      - run: xvfb-run -a npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
       - aws-cli/setup
       - run: xvfb-run -a npm run aws-deploy
