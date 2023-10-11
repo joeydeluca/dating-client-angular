@@ -8,12 +8,12 @@ jobs:
     executor: aws-cli/default
     steps:
       - checkout
-      - restore_cache:
-          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
-      - run: npm install
-      - save_cache:
-          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - "node_modules"
+      # - restore_cache:
+      #     key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+      # - run: npm install
+      # - save_cache:
+      #     key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+      #     paths:
+      #       - "node_modules"
       - aws-cli/setup
       - run: xvfb-run -a npm run aws-deploy
