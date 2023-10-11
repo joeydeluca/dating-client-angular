@@ -4,7 +4,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:14.18
     executor: aws-cli/default
     steps:
       - checkout
