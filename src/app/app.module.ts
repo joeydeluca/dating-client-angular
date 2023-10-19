@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -26,6 +26,8 @@ import {PaymentService} from './services/payment.service';
 import {AngularMyDatePickerModule} from 'angular-mydatepicker';
 import {JoinUploadPhotoComponent} from './join-upload-photo/join-upload-photo.component';
 import {SearchComponent} from './search/search.component';
+import {TestChatComponent} from './testchat/search.component';
+
 import {LoginComponent} from './login/login.component';
 import {ForgotPasswordComponent} from './password-reset/forgot-password.component';
 import {PasswordResetComponent} from './password-reset/password-reset.component';
@@ -57,6 +59,9 @@ import {DPhotoUploadComponent} from './components/d-photo-upload/d-photo-upload.
 import {RoundPipe} from './pipes/round.pipe';
 import { AdsenseModule } from 'ng2-adsense';
 import { DocComponent } from './doc/doc.component';
+
+import {FrendUpgradeComponent} from './frend-upgrade/upgrade.component';
+import {FrendVerifyPaymentComponent} from './frend-upgrade/verify-payment.component';
 
 
 //import { FileUploadModule } from 'ng2-file-upload';
@@ -93,7 +98,11 @@ import { DocComponent } from './doc/doc.component';
     RoundPipe,
 
     //MediaDialog,
-    DocComponent
+    DocComponent,
+
+    TestChatComponent,
+    FrendUpgradeComponent,
+    FrendVerifyPaymentComponent
   ],
   imports: [
     AdsenseModule.forRoot({
@@ -128,14 +137,16 @@ import { DocComponent } from './doc/doc.component';
     PhotoService,
     RecipientProfileService,
     PaymentService,
-    SupportService
+    SupportService,
+    { provide: Window, useValue: window }
   ],
   bootstrap: [AppComponent],
   entryComponents: [
     //MediaDialog
   ],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
   ],
 })
 export class AppModule { }

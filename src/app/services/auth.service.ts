@@ -21,6 +21,11 @@ export class AuthService {
     })
   }
 
+  getFrendToken(): Observable<String> {
+    return this.http
+      .get(`${this.apiUrl}/chat/init`, {headers: this.getHeaders(), responseType: 'text'});
+  }
+
   login(email: string, password: string): Observable<AuthContext> {
     const authDto: AuthDto = {email: email, password: password};
 

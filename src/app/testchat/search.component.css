@@ -1,0 +1,31 @@
+body {
+  padding-top: 5rem;
+}
+.content {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.pagination {
+  margin: 30px;
+}
+
+.edit-link, .edit-link i {
+  font-size: 12px;
+}
+
+.card img {
+  width:191px;
+  height:212px;
+}
+
+.card img, h5, .pagination li, .toggle-criteria-icon, .edit-link, .card-title  {
+  cursor: pointer;
+}
+
+.criteria {
+  background-color: #FFFFFF;
+  margin-bottom:15px;
+}
+
+

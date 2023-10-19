@@ -82,6 +82,7 @@ export class JoinCompletionComponent implements OnInit {
           SharedService.showLoader.next(false);
         },
         (error) => {
+          console.error(error)
           SharedService.showLoader.next(false);
           this.snackBar.open('Error loading fields', null, {
             duration: 4000,

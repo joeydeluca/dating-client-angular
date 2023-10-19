@@ -45,4 +45,10 @@
       <a class="nav-link" routerLink="/support"><i class="material-icons align-middle">email</i> Support</a>
     </ul>
   </div>
+  <div *ngIf="navType === 'MEMBER' && !!frendtoken">
+    <frend [attr.token]="frendtoken"
+      >
+    </frend>
+  </div>
+
 </nav>

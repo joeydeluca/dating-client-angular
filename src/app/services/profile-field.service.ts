@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {ComponentFactoryResolver, Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
@@ -8,7 +8,6 @@ import {map, catchError} from 'rxjs/operators';
 export class ProfileFieldService {
   private apiUrl = environment.apiUrl + '/fields';
   headers: HttpHeaders;
-  fields: object;
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({
@@ -17,9 +16,6 @@ export class ProfileFieldService {
   }
 
   getProfileFields(): Observable<object> {
-    if (this.fields) {
-      return of(this.fields);
-    }
 
     const fieldsInLocalStorage = localStorage.getItem('fields');
     if (!!fieldsInLocalStorage) {
@@ -32,28 +28,21 @@ export class ProfileFieldService {
   }
 
    extractData(res: any) {
-    let body: any;
+    let body = res;
 
-    if (res.text()) {
-      body = res.json();
-
-      // save to storage
-      this.fields = body;
-      localStorage.setItem('fields', JSON.stringify(body));
-    }
+    // save to storage
+    localStorage.setItem('fields', JSON.stringify(body));
 
     return body || {};
   }
 
-  private handleError(res: any) {
-    let error;
-    if (res.text()) {
-      error = res.json();
-    }
-
-    const errMsg = (error && error.message) ? error.message :
-      error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+  private handleError(error: any) {
+    console.error(error);
+    error = error.error;
+    const errMsg = (error && error?.message) ? error.message :
+      (error && error?.status) ? `${error.status} - ${error.statusText}` : 'Server error';
     return throwError(errMsg);
   }
+
 
 }

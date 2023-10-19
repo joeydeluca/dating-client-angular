@@ -1,0 +1,90 @@
+<d-nav></d-nav>
+<div class="container mt-3">
+  <div class="mb-3">
+    <span class="text-muted">Searching for {{genderSeeking}} aged {{selectedAgeFrom}} to {{selectedAgeTo}}
+      from <location-display [country]="selectedCountry" [region]="selectedRegion" [city]="selectedCity"></location-display>
+    </span> 
+    <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="collapse" data-target="#criteria"><i class="material-icons align-middle" style="font-size: .875rem;">settings</i> Edit</button>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="criteria collapse" id="criteria">
+        <div class="card-body">
+          <form>
+            <div class="form-group row">
+              <label class="col-2 col-form-label">Age</label>
+              <div class="col-10">
+                <div class="row">
+                  <div class="col-6">
+                    <select class="form-control" [(ngModel)]="selectedAgeFrom" name="age-from" (ngModelChange)="this.loadFirstPage()">
+                      <option *ngFor="let age of ages" [value]="age">{{age}}</option>
+                    </select>
+                  </div>
+                  <div class="col-6">
+                    <select class="form-control" [(ngModel)]="selectedAgeTo" name="age-to" (ngModelChange)="this.loadFirstPage()">
+                      <option *ngFor="let age of ages" [value]="age">{{age}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="country" class="col-2 col-form-label">Country</label>
+              <div class="col-10">
+                <select id="country" class="form-control" name="country" [compareWith]="compareByCountryId" [(ngModel)]="selectedCountry" (ngModelChange)="clearRegions();clearCities();this.loadFirstPage();">
+                  <option *ngFor="let country of countries" [ngValue]="country">{{country.countryName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="region" class="col-2 col-form-label">Region</label>
+              <div class="col-10">
+                <select id="region" class="form-control" name="region" [compareWith]="compareByRegionId" [(ngModel)]="selectedRegion" (ngModelChange)="clearCities();this.loadFirstPage();">
+                  <option *ngFor="let region of regions" [ngValue]="region">{{region.regionName}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="city" class="col-2 col-form-label">City</label>
+              <div class="col-10">
+                <select id="city" class="form-control" [compareWith]="compareByCityId" name="city" [(ngModel)]="selectedCity" (ngModelChange)="this.loadFirstPage()">
+                  <option *ngFor="let city of cities" [ngValue]="city">{{city.cityName}}</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Search</div>
+    <div class="card-body">
+      <div *ngIf="profilePage && profilePage.content.length === 0" class="alert alert-warning mt-3" role="alert">
+        No profiles found that match your search results. Expand your search criteria and try again.
+      </div>
+
+      <div class="card mb-3 text-center" *ngFor="let userDto of profilePage?.content" >
+        <img (click)="viewRecipientProfile(userDto.userId)" class="rounded" [src]="userDto.profilePhotoUrl" alt="Photo" style="margin:0 auto;margin-top:1.25rem">
+        <div class="card-body">
+          <h4 class="card-title" (click)="viewRecipientProfile(userDto.userId)">{{userDto.username}}</h4>
+          <p class="card-text text-muted">{{userDto.age}} | <location-display [country]="userDto.profile.country" [region]="userDto.profile.region" [city]="userDto.profile.city"></location-display></p>
+        </div>
+        <div class="card-footer text-center">
+          <button type="button" (click)="sendFlirt(userDto.userId, userDto.username)" class="btn btn-outline-primary btn-sm"><i class="material-icons align-middle">whatshot</i> Send Flirt</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav aria-label="Page navigation" *ngIf="profilePage?.content?.length">
+    <ul class="pagination pagination-lg justify-content-center">
+      <li class="page-item" [class.disabled]="profilePage?.first">
+        <a class="page-link" (click)="loadPreviousPage()">Previous Page</a>
+      </li>
+      <li class="page-item" [class.disabled]="profilePage?.last">
+        <a class="page-link" (click)="loadNextPage()">Next Page</a>
+      </li>
+    </ul>
+  </nav>
+</div>

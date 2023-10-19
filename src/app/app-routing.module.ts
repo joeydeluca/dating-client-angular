@@ -25,6 +25,11 @@ import {NonMemberGuard} from './guards/nonmember.guard';
 import {DiscourseSSOGuard} from './guards/discourse-sso-redirect.guard';
 import { DocComponent } from './doc/doc.component';
 
+import {TestChatComponent} from './testchat/search.component';
+import {FrendUpgradeComponent} from './frend-upgrade/upgrade.component';
+import {FrendVerifyPaymentComponent} from './frend-upgrade/verify-payment.component';
+
+
 
 const routes: Routes = [
   { path: '', component: LandingComponent, canActivate: [NonMemberGuard]},
@@ -45,7 +50,12 @@ const routes: Routes = [
   { path: 'profile-views', component: ProfileViewsComponent, canActivate: [AuthGuard, PaidGuard]},
   { path: 'upgrade', component: UpgradeComponent, canActivate: [AuthGuard]},
   { path: 'verify-payment', component: VerifyPaymentComponent, canActivate: [AuthGuard]},
-  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]}
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
+
+  { path: 'testchat', component: TestChatComponent, canActivate: [AuthGuard]},
+  { path: 'frend-upgrade', component: FrendUpgradeComponent, canActivate: [AuthGuard]},
+  { path: 'frend-verify-payment', component: FrendVerifyPaymentComponent, canActivate: [AuthGuard]},
+
 ];
 
 const appRoutingProviders: any[] = [];

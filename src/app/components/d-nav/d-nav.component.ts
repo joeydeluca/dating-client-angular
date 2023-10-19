@@ -11,9 +11,10 @@ export class DNavComponent implements OnInit {
   @Input() navType = 'MEMBER';
 
   showUpgradeButton: boolean;
+  frendtoken: String;
 
   constructor(
-    private authService: AuthService) {
+    private authService: AuthService, private window: Window) {
   }
 
   ngOnInit() {
@@ -22,6 +23,18 @@ export class DNavComponent implements OnInit {
     if (this.navType === 'MEMBER' && this.authService.getAuthContext()) {
       this.showUpgradeButton = !this.authService.getAuthContext().paid;
     }
+
+    // if (this.navType === 'MEMBER') {
+    //   this.authService.getFrendToken().subscribe((res) => {
+    //     //this.saveAuthContextToLocal(res);
+    //     this.frendtoken = res;
+    //     try {
+    //       (<any>this.window).initChat(this.frendtoken, 'www.uglyschmucks.com/frend-upgrade');
+    //     } catch (e) {
+    //       console.log(e);
+    //     }
+    //   }, (error) => {console.log(error)});
+    // }
   }
 }
 
