@@ -108,15 +108,15 @@ export class TestChatComponent implements OnInit, OnDestroy {
     });
 
 
-    this.authService.getFrendToken().subscribe((res) => {
-      //this.saveAuthContextToLocal(res);
-      this.frendtoken = res;
-      try {
-        (<any>this.window).initChat(this.frendtoken, 'www.uglyschmucks.com/frend-upgrade');
-      } catch (e) {
-        console.log(e);
-      }
-    }, (error) => {console.log(error)});
+    // this.authService.getFrendToken().subscribe((res) => {
+    //   //this.saveAuthContextToLocal(res);
+    //   this.frendtoken = res;
+    //   try {
+    //     (<any>this.window).initChat(this.frendtoken, 'www.uglyschmucks.com/frend-upgrade');
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // }, (error) => {console.log(error)});
   }
 
   ngOnDestroy(): void {
